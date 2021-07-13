@@ -3,7 +3,6 @@ package com.example.reshoe_fbu.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.style.ParagraphStyle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -23,15 +22,11 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        ParseUser user = ParseUser.getCurrentUser();
+        ParseUser currentUser = ParseUser.getCurrentUser();
 
-        /*
         if (currentUser != null) {
-
             goMainActivity();
         }
-
-         */
 
         context = this;
         // Attempt to login, using the login button

@@ -107,21 +107,18 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="#0EB620"
         android:text="Sign Up" />
 
     <RadioGroup
         android:id="@+id/rgGroup"
-        android:layout_width="295dp"
-        android:layout_height="71dp"
-        android:layout_below="@+id/etLastName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="127dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="-67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -150,10 +147,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etLastName"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="207dp"
+        android:layout_marginTop="10dp"
         android:text="Select account type:" />
 
 </RelativeLayout>

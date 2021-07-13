@@ -10,6 +10,7 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,8 +22,10 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
-    public static final String KEY_LIKED = "usersLiked";
-    public static final String KEY_NUM_LIKED = "numLikes";
+    public static final String KEY_CONDITION = "condition";
+    public static final String KEY_PRICE = "price";
+    public static final String KEY_USERS_LIKED = "usersLiked";
+    public static final String KEY_NUM_LIKED = "numLiked";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -44,26 +47,36 @@ public class Post extends ParseObject {
         return getParseUser(KEY_USER);
     }
 
-    public void setUser(ParseUser user) {
-        put(KEY_USER, user);
+    public void setUser(ParseUser user) { put(KEY_USER, user); }
+
+    public int getCondition() {
+        return getNumber(KEY_USER).intValue();
     }
 
-    public int getNumLikes() { return getNumber("numLikes").intValue(); }
+    public void setCondition(int condition) { put(KEY_CONDITION, condition); }
 
-    public void setLikes(int numLikes) {
-        put(KEY_NUM_LIKED, numLikes);
+    public double getPrice() {
+        return getNumber(KEY_PRICE).doubleValue();
     }
 
-    public JSONArray getLikes() {return getJSONArray(KEY_LIKED);}
+    public void setPrice(double price){ put(KEY_USER, Double.parseDouble(new DecimalFormat(".00").format(price))); }
+
+    public int getNumLikes() {
+        return getNumber(KEY_NUM_LIKED).intValue();
+    }
+
+    public void setLikes(int likes){ put(KEY_NUM_LIKED, likes); }
+
+    public JSONArray getLikes() {return getJSONArray(KEY_USERS_LIKED);}
 
     public void like(ParseUser user) {
-        add(KEY_LIKED, user.getObjectId());
+        add(KEY_USERS_LIKED, user.getObjectId());
         setLikes(getNumLikes() + 1);
         saveInBackground();
     }
 
     public void unlike(ParseUser user) {
-        removeAll(KEY_LIKED, Arrays.asList(user.getObjectId()));
+        removeAll(KEY_USERS_LIKED, Arrays.asList(user.getObjectId()));
         if (getNumLikes() > 0) {
             setLikes(getNumLikes() - 1);
         }
