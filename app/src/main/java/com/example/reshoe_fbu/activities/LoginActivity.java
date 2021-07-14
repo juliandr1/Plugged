@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

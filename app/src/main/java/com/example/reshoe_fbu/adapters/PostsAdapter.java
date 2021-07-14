@@ -1,7 +1,7 @@
 package com.example.reshoe_fbu.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.DetailShoeActivity;
+import com.example.reshoe_fbu.activities.fragments.DetailShoeFragment;
 import com.example.reshoe_fbu.models.Post;
-import com.example.reshoe_fbu.models.User;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -34,7 +32,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private final List<Post> posts;
     private final ParseUser user;
 
-    // Pass in the context and list of tweets
+    // Pass in the context, list of posts, and user
     public PostsAdapter(Context context, List<Post> posts, ParseUser user) {
         this.context = context;
         this.posts = posts;
@@ -74,7 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             super(itemView);
 
             ivImage = itemView.findViewById(R.id.ivImage);
-            tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvDescription = itemView.findViewById(R.id.tvShoeName);
             tvCondition = itemView.findViewById(R.id.tvCondition);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvLikes = itemView.findViewById(R.id.tvLikes);
@@ -141,12 +139,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Log.e(TAG, "Clicked");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                // New intent
-                Intent intent = new Intent(context, DetailShoeActivity.class);
-                // Serialize the tweets using parceler, using the tweets shorter name
-                intent.putExtra(Post.class.getSimpleName(), posts.get(position));
-                // show the activity
-                context.startActivity(intent);
+                Post post = posts.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("post", post);
+                DetailShoeFragment detailShoeFragment = new DetailShoeFragment();
+                detailShoeFragment.setArguments(bundle);
             }
         }
 
@@ -157,7 +154,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             } else {
                 tvLikes.setText(numLikes);
             }
-
         }
     }
 

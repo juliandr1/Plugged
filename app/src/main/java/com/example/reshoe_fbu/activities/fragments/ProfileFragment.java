@@ -39,8 +39,9 @@ public class ProfileFragment extends Fragment {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        Glide.with(view).load(currentUser.getParseFile("profilePic").getUrl()).transform(new RoundedCorners(300)).into(binding.ivProfile);
+        Glide.with(view).load(currentUser.getParseFile("profilePic").getUrl()).circleCrop().into(binding.ivProfile);
 
+        // If the user clicks, then go to the account info fragment
         binding.tvAccountInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +49,9 @@ public class ProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, accountInfoFragment).addToBackStack("back").commit();
             }
         });
+
+        // If the user clicks, then go to the user preferences fragment (note not done
+        // yet). There will be different user preferences depending on the account type.
 
         binding.tvUserPreferences.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +61,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        // Logout of the current session
         binding.tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

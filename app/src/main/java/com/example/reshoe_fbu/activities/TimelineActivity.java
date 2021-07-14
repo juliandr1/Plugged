@@ -8,7 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.fragments.MessageFragment;
+import com.example.reshoe_fbu.activities.fragments.MessagePreviewFragment;
+import com.example.reshoe_fbu.activities.fragments.MessagesFragment;
 import com.example.reshoe_fbu.activities.fragments.ProfileFragment;
 import com.example.reshoe_fbu.activities.fragments.TimelineBuyerFragment;
 import com.example.reshoe_fbu.activities.fragments.TimelineSellerFragment;
@@ -26,8 +27,9 @@ public class TimelineActivity extends AppCompatActivity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
+        // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment fragmentMessage = new MessageFragment();
+        final Fragment fragmentMessage = new MessagePreviewFragment();
         final Fragment fragmentProfile = new ProfileFragment();
         final Fragment fragmentTimeline;
 
@@ -41,6 +43,7 @@ public class TimelineActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;
+            // Based on which item is clicked go to the appropriate fragment
             switch (item.getItemId()) {
                 case R.id.message:
                     fragment = fragmentMessage;

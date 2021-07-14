@@ -13,46 +13,47 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
+import com.example.reshoe_fbu.adapters.MessagePreviewAdapter;
 import com.example.reshoe_fbu.adapters.PostsAdapter;
+import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
 import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
+import com.example.reshoe_fbu.models.MessagePreview;
 import com.example.reshoe_fbu.models.Post;
 import com.parse.ParseUser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimelineBuyerFragment extends Fragment {
+public class MessagePreviewFragment extends Fragment {
 
-    private PostsAdapter adapter;
-    private List<Post> posts;
-
-    public TimelineBuyerFragment() {
-        // Required empty public constructor
-    }
+    private MessagePreviewAdapter adapter;
+    private List<MessagePreview> messagePreviews;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timeline_buyer, container, false);
+        return inflater.inflate(R.layout.fragment_message_preview, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @org.jetbrains.annotations.NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentTimelineBuyerBinding binding = FragmentTimelineBuyerBinding.bind(view);
+        FragmentMessagePreviewBinding binding = FragmentMessagePreviewBinding.bind(view);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         // Find the Recycler View
-        RecyclerView rvPosts = binding.rvPosts;
-        // Init the list of posts and setup the adapter.
-        posts = new ArrayList<>();
-        adapter = new PostsAdapter(getActivity(), posts, currentUser);
+        RecyclerView rvPosts = binding.rvMessagePreviews;
+
+        // Create a list of all the message previews and set up adapter
+        messagePreviews = new ArrayList<>();
+        adapter = new MessagePreviewAdapter(getActivity(), messagePreviews, currentUser, getParentFragmentManager());
         // Recycler view setup: layout manager and the adapter
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
-
     }
 }

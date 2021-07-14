@@ -5,6 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <queries>
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <application
         android:name=".ParseApplication"
         android:allowBackup="true"
@@ -13,6 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Reshoe_FBU">
+        <activity
+            android:name=".activities.PostActivity"
+            android:label="@string/title_activity_post"
+            android:theme="@style/Theme.Reshoe_FBU.NoActionBar"></activity>
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity"></activity>
-        <activity android:name=".activities.TimelineActivity"></activity>
+        <activity android:name=".activities.SignupActivity" />
+        <activity android:name=".activities.TimelineActivity" />
     </application>
 
 </manifest>

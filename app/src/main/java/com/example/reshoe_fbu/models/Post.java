@@ -26,6 +26,7 @@ public class Post extends ParseObject {
     public static final String KEY_PRICE = "price";
     public static final String KEY_USERS_LIKED = "usersLiked";
     public static final String KEY_NUM_LIKED = "numLiked";
+    public static final String KEY_SHOE_NAME = "shoeName";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -54,6 +55,12 @@ public class Post extends ParseObject {
     }
 
     public void setCondition(int condition) { put(KEY_CONDITION, condition); }
+
+    public String getShoeName() {
+        return getString(KEY_SHOE_NAME);
+    }
+
+    public void setShoeName(String name) { put(KEY_SHOE_NAME, name); }
 
     public double getPrice() {
         return getNumber(KEY_PRICE).doubleValue();

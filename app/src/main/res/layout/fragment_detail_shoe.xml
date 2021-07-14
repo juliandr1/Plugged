@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivDetailPic"
+        android:layout_width="272dp"
+        android:layout_height="272dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="142dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvDetailedPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetailPic"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        tools:text="$190" />
+
+    <TextView
+        android:id="@+id/tvDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivDetailPic"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/tvDetailCondition"
+        android:layout_toEndOf="@+id/tvDetailedPrice"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:text="YEEZY 350 BOOST" />
+
+    <TextView
+        android:id="@+id/tvDetailCondition"
+        android:layout_width="48dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/ivDetailPic"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="40dp"
+        android:textSize="20sp"
+        tools:text="9/10" />
+
+    <ImageButton
+        android:id="@+id/ibSellerProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnCheckout"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/checkout" />
+
+    <TextView
+        android:id="@+id/tvDetailedDescription"
+        android:layout_width="307dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/tvDetailName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="40dp" />
+
+    <Button
+        android:id="@+id/btnBackDetail"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/back_arrow" />
+
+    <TextView
+        android:id="@+id/tvDetailSellerUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ibSellerProfile"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        tools:text='"@David"' />
+</RelativeLayout>

@@ -42,4 +42,38 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 
+    <Button
+        android:id="@+id/btnMessage"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="60dp"
+        android:layout_toStartOf="@+id/ivSellerProfilePic"
+        android:background="@drawable/ic_vector_messages" />
+
+    <Button
+        android:id="@+id/btnLikeSeller"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="15dp"
+        android:layout_toEndOf="@+id/ivSellerProfilePic"
+        android:background="@drawable/heart_outline" />
+
+    <Button
+        android:id="@+id/btnBackDetail"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/back_arrow" />
+
 </RelativeLayout>

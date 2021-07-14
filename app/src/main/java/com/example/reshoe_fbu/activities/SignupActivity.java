@@ -21,6 +21,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Binding
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -29,9 +30,12 @@ public class SignupActivity extends AppCompatActivity {
 
         context = this;
 
+        // Fill in all of the data and attempt to create a new user
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // set various data points according to user input
                 user.setUsername(binding.etUsernameCreate.getText().toString());
                 user.setPassword(binding.etPasswordCreate.getText().toString());
                 user.setEmail(binding.etEmail.getText().toString());
@@ -47,6 +51,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(context, "Must select buyer or seller", Toast.LENGTH_SHORT).show();
                 }
 
+                // Attempt to create a new account
                 user.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -64,6 +69,7 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
+    // Go to the main timeline
     private void goMainActivity() {
         Intent intent = new Intent(this, TimelineActivity.class);
         startActivity(intent);

@@ -35,11 +35,13 @@ public class AccountInfoFragment extends Fragment {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
 
+        // Load user data
         binding.tvFirstNameInfo.setText(currentUser.getString("firstName"));
         binding.tvLastNameInfo.setText(currentUser.getString("lastName"));
         binding.tvEmailInfo.setText(currentUser.getEmail());
         binding.tvUsernameInfo.setText(currentUser.getUsername());
 
+        // Goes to a fragment that allows the user to change username
         binding.btnChangeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +49,7 @@ public class AccountInfoFragment extends Fragment {
             }
         });
 
+        // Goes to a fragment that allows the user to change password
         binding.btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +57,7 @@ public class AccountInfoFragment extends Fragment {
             }
         });
 
+        // Goes back to the previous fragment
         binding.btnBackInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
