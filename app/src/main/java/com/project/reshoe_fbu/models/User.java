@@ -67,7 +67,9 @@ public class User  {
 
     public void setIsSeller(Boolean isSeller) { user.put(KEY_IS_SELLER, isSeller); }
 
-    public void setProfilePic(ParseFile file) { user.put(KEY_IS_SELLER, file); }
+    public String getProfilePicURL() { return user.getParseFile(KEY_PROFILE_PIC).getUrl(); }
+
+    public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
 
     public JSONArray getLikes() {return user.getJSONArray(KEY_LIKED_SELLERS);}
 

@@ -36,4 +36,6 @@
     <string name="logout">Logout</string>
     <string name="user_preferences">User Preferences</string>
     <string name="account_info">Account Info</string>
+    <string name="notifications">Notifications</string>
+    <string name="share_location">Share Location</string>
 </resources>

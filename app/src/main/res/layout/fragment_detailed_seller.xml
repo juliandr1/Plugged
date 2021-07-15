@@ -10,48 +10,48 @@
         android:id="@+id/ivSellerProfilePic"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="52dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvSellerDescription"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_height="72dp"
+        android:layout_below="@+id/btnMessage"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
         tools:text="hello i sell jordans and yeezys" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSellerPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvSellerDescription"
+        android:layout_below="@+id/tvSellerUsername"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="6dp" />
 
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivSellerProfilePic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="4dp" />
 
     <Button
         android:id="@+id/btnMessage"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="60dp"
-        android:layout_toStartOf="@+id/ivSellerProfilePic"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="55dp"
+        android:layout_toEndOf="@+id/btnLikeSeller"
         android:background="@drawable/ic_vector_messages" />
 
     <Button
@@ -59,10 +59,8 @@
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="21dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="15dp"
         android:layout_toEndOf="@+id/ivSellerProfilePic"
         android:background="@drawable/heart_outline" />
 
@@ -75,5 +73,47 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="13dp"
         android:background="@drawable/back_arrow" />
+
+    <TextView
+        android:id="@+id/tvSellerUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSellerProfilePic"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text='"@huncho"' />
+
+    <Button
+        android:id="@+id/btnReview"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="31dp"
+        android:layout_toEndOf="@+id/btnMessage"
+        android:background="@drawable/review" />
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSellerProfilePic"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvSellerUsername"
+        tools:text="4.8" />
+
+    <ImageView
+        android:id="@+id/ivStar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/ivSellerProfilePic"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvRating"
+        android:src="@drawable/rating" />
 
 </RelativeLayout>

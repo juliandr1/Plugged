@@ -16,6 +16,7 @@ import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.LoginActivity;
 import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,38 +36,35 @@ public class ProfileFragment extends Fragment {
 
         FragmentProfileBinding binding = FragmentProfileBinding.bind(view);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        User currentUser = new User(ParseUser.getCurrentUser());
 
-        Glide.with(view).load(currentUser.getParseFile("profilePic").getUrl()).circleCrop().into(binding.ivProfile);
+        Glide.with(view).load(currentUser.getProfilePicURL()).circleCrop().into(binding.ivProfile);
 
         // If the user clicks, then go to the account info fragment
-        binding.tvAccountInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment accountInfoFragment = new AccountInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, accountInfoFragment).addToBackStack("back").commit();
-            }
+        binding.tvAccountInfo.setOnClickListener(v -> {
+            Fragment accountInfoFragment = new AccountInfoFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, accountInfoFragment).addToBackStack("back").commit();
         });
 
         // If the user clicks, then go to the user preferences fragment (note not done
         // yet). There will be different user preferences depending on the account type.
 
-        binding.tvUserPreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment userPreferenceFragment = new UserPreferencesFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userPreferenceFragment).commit();
+        binding.tvUserPreferences.setOnClickListener(v -> {
+
+            Fragment userPreferenceFragment;
+            if (currentUser.getIsSeller()) {
+                userPreferenceFragment = new UserPreferencesSellerFragment();
+            } else {
+                userPreferenceFragment = new UserPreferencesBuyerFragment();
             }
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userPreferenceFragment).commit();
         });
 
         // Logout of the current session
-        binding.tvLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
+        binding.tvLogOut.setOnClickListener(v -> {
+            ParseUser.logOut();
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
         });
     }
 }

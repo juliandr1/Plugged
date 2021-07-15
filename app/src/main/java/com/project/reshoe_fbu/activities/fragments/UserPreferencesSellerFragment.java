@@ -12,10 +12,10 @@ import com.example.reshoe_fbu.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserPreferencesFragment#newInstance} factory method to
+ * Use the {@link UserPreferencesSellerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserPreferencesFragment extends Fragment {
+public class UserPreferencesSellerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class UserPreferencesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UserPreferencesFragment() {
+    public UserPreferencesSellerFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +36,11 @@ public class UserPreferencesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UserPreferencesFragment.
+     * @return A new instance of fragment UserPreferencesSellerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserPreferencesFragment newInstance(String param1, String param2) {
-        UserPreferencesFragment fragment = new UserPreferencesFragment();
+    public static UserPreferencesSellerFragment newInstance(String param1, String param2) {
+        UserPreferencesSellerFragment fragment = new UserPreferencesSellerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +61,6 @@ public class UserPreferencesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_preferences, container, false);
+        return inflater.inflate(R.layout.fragment_user_preferences_seller, container, false);
     }
 }
