@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu;
+package com.project.reshoe_fbu;
 
 import android.graphics.Bitmap;
 

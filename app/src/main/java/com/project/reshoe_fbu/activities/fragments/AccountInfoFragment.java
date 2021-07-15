@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 
@@ -12,9 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentAccountInfoBinding;
-import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
-import com.example.reshoe_fbu.models.User;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,11 +32,11 @@ public class AccountInfoFragment extends Fragment {
 
         FragmentAccountInfoBinding binding = FragmentAccountInfoBinding.bind(view);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        User currentUser = new User(ParseUser.getCurrentUser());
 
         // Load user data
-        binding.tvFirstNameInfo.setText(currentUser.getString("firstName"));
-        binding.tvLastNameInfo.setText(currentUser.getString("lastName"));
+        binding.tvFirstNameInfo.setText(currentUser.getFirstName());
+        binding.tvLastNameInfo.setText(currentUser.getLastName());
         binding.tvEmailInfo.setText(currentUser.getEmail());
         binding.tvUsernameInfo.setText(currentUser.getUsername());
 

@@ -1,15 +1,9 @@
-package com.example.reshoe_fbu.models;
+package com.project.reshoe_fbu.models;
 
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-
-import org.json.JSONArray;
 
 import java.util.Date;
-
-import static com.example.reshoe_fbu.models.Post.KEY_DESCRIPTION;
 
 @ParseClassName("UsersMessaged")
 public class UsersMessaged extends ParseObject {

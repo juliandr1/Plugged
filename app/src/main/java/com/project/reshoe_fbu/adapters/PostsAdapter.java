@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.adapters;
+package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.fragments.DetailShoeFragment;
-import com.example.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
+import com.project.reshoe_fbu.models.Post;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 

@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities;
+package com.project.reshoe_fbu.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +63,4 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TimelineActivity.class);
         startActivity(intent);
     }
-
-
 }

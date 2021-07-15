@@ -31,9 +31,10 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textPersonName"
-        android:outlineProvider="none" />
+        android:outlineProvider="none"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/etPasswordCreate"
@@ -48,8 +49,9 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -63,8 +65,8 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Email"
-        />
+        android:hint="@string/email"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/etFirstName"
@@ -79,8 +81,9 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName" />
+        android:hint="@string/first_name"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/etLastName"
@@ -95,8 +98,9 @@
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName" />
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnSignUp"
@@ -110,7 +114,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="#0EB620"
-        android:text="Sign Up" />
+        android:text="@string/sign_up" />
 
     <RadioGroup
         android:id="@+id/rgGroup"
@@ -125,21 +129,17 @@
             android:id="@+id/rbBuyer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentBottom="false"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
-            android:text="Buyer"></RadioButton>
+            android:text="@string/buyer" />
 
         <RadioButton
             android:id="@+id/rbSeller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
-            android:text="Seller"></RadioButton>
+            android:text="@string/seller" />
     </RadioGroup>
 
     <TextView
@@ -149,6 +149,6 @@
         android:layout_below="@+id/etLastName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Select account type:" />
+        android:text="@string/select_account_type" />
 
 </RelativeLayout>

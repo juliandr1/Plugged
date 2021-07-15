@@ -1,17 +1,13 @@
-package com.example.reshoe_fbu;
+package com.project.reshoe_fbu;
 
 import android.app.Application;
 
-import com.example.reshoe_fbu.models.Message;
-import com.example.reshoe_fbu.models.Post;
-import com.example.reshoe_fbu.models.User;
-import com.example.reshoe_fbu.models.UsersMessaged;
+import com.example.reshoe_fbu.R;
+import com.project.reshoe_fbu.models.Message;
+import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.UsersMessaged;
 import com.parse.Parse;
 import com.parse.ParseObject;
-import com.parse.livequery.ParseLiveQueryClient;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,7 +21,6 @@ public class ParseApplication extends Application {
         // Register your parse models
         ParseObject.registerSubclass(Post.class);// Register your parse models
         ParseObject.registerSubclass(Message.class);// Register your parse models
-        ParseObject.registerSubclass(User.class);// Register your parse models
         ParseObject.registerSubclass(UsersMessaged.class);// Register your parse models
 
         // Use for monitoring Parse network traffic

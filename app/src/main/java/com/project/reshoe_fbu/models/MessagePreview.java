@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.models;
+package com.project.reshoe_fbu.models;
 
 import com.parse.ParseDecoder;
 import com.parse.ParseObject;
@@ -8,9 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MessagePreview {
 

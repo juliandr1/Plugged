@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities;
+package com.project.reshoe_fbu.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

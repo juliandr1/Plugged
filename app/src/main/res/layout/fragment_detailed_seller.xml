@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.fragments.TimelineSellerFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineSellerFragment">
 
     <ImageView
         android:id="@+id/ivSellerProfilePic"

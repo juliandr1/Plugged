@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,11 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.CheckoutActivity;
-import com.example.reshoe_fbu.databinding.FragmentAccountInfoBinding;
+import com.project.reshoe_fbu.activities.CheckoutActivity;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
-import com.example.reshoe_fbu.models.Post;
-import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.Post;
 
 import org.jetbrains.annotations.NotNull;
 

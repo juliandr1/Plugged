@@ -1,12 +1,9 @@
-package com.example.reshoe_fbu.adapters;
+package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -15,13 +12,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.fragments.MessagesFragment;
-import com.example.reshoe_fbu.models.Message;
-import com.example.reshoe_fbu.models.MessagePreview;
-import com.example.reshoe_fbu.models.Post;
-import com.parse.ParseFile;
+import com.project.reshoe_fbu.activities.fragments.MessagesFragment;
+import com.project.reshoe_fbu.models.MessagePreview;
 import com.parse.ParseUser;
-import org.json.JSONException;
 
 import java.util.List;
 

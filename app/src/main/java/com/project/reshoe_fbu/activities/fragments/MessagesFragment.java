@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 
@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.adapters.MessagePreviewAdapter;
-import com.example.reshoe_fbu.adapters.MessagesAdapter;
+import com.project.reshoe_fbu.adapters.MessagesAdapter;
 import com.example.reshoe_fbu.databinding.FragmentMessagesBinding;
-import com.example.reshoe_fbu.models.Message;
+import com.project.reshoe_fbu.models.Message;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

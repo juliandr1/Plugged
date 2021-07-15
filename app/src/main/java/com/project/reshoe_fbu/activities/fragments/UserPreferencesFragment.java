@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 

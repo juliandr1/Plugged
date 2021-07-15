@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 
@@ -13,12 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.adapters.MessagePreviewAdapter;
-import com.example.reshoe_fbu.adapters.PostsAdapter;
+import com.project.reshoe_fbu.adapters.MessagePreviewAdapter;
 import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
-import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
-import com.example.reshoe_fbu.models.MessagePreview;
-import com.example.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.MessagePreview;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;

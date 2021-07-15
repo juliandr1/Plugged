@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -20,11 +19,10 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.PostActivity;
-import com.example.reshoe_fbu.adapters.PostsAdapter;
+import com.project.reshoe_fbu.activities.PostActivity;
+import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineSellerBinding;
-import com.example.reshoe_fbu.models.Post;
-import com.parse.Parse;
+import com.project.reshoe_fbu.models.Post;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;

@@ -25,15 +25,15 @@
         android:layout_height="wrap_content" >
         <EditText
             android:id="@+id/etMessage"
-            android:layout_toLeftOf="@+id/ibSend"
+            android:layout_toStartOf="@+id/ibSend"
             android:layout_alignBottom="@+id/ibSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:hint="Message here"
+            android:hint="@string/message_here"
             android:inputType="textShortMessage"
             android:imeOptions="actionSend"
-            />
+            android:autofillHints="" />
         <ImageButton
             android:id="@+id/ibSend"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:paddingRight="10dp"
             android:layout_alignParentRight="true"
-            android:contentDescription="Send"
+            android:contentDescription="@string/send"
             android:textSize="18sp"
             android:src="@drawable/ic_baseline_send_24"/>
     </RelativeLayout>

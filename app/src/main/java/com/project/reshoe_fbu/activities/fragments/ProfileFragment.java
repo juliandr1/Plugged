@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.LoginActivity;
+import com.project.reshoe_fbu.activities.LoginActivity;
 import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;

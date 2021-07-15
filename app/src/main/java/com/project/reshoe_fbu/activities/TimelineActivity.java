@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities;
+package com.project.reshoe_fbu.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.activities.fragments.MessagePreviewFragment;
-import com.example.reshoe_fbu.activities.fragments.MessagesFragment;
-import com.example.reshoe_fbu.activities.fragments.ProfileFragment;
-import com.example.reshoe_fbu.activities.fragments.TimelineBuyerFragment;
-import com.example.reshoe_fbu.activities.fragments.TimelineSellerFragment;
+import com.project.reshoe_fbu.activities.fragments.MessagePreviewFragment;
+import com.project.reshoe_fbu.activities.fragments.ProfileFragment;
+import com.project.reshoe_fbu.activities.fragments.TimelineBuyerFragment;
+import com.project.reshoe_fbu.activities.fragments.TimelineSellerFragment;
+import com.project.reshoe_fbu.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -25,7 +25,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        User currentUser = new User(ParseUser.getCurrentUser());
 
         // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -33,7 +33,7 @@ public class TimelineActivity extends AppCompatActivity {
         final Fragment fragmentProfile = new ProfileFragment();
         final Fragment fragmentTimeline;
 
-        if (currentUser.getBoolean("isSeller")) {
+        if (currentUser.getIsSeller()) {
             fragmentTimeline = new TimelineSellerFragment();
         } else {
             fragmentTimeline = new TimelineBuyerFragment();

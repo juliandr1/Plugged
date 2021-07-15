@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.models;
+package com.project.reshoe_fbu.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

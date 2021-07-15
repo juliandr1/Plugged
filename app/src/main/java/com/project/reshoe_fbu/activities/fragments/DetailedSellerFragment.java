@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities.fragments;
+package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailedSellerBinding;
-import com.example.reshoe_fbu.models.User;
+import com.project.reshoe_fbu.models.User;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +41,7 @@ public class DetailedSellerFragment extends Fragment {
 
         FragmentDetailedSellerBinding binding = FragmentDetailedSellerBinding.bind(view);
 
-        User currentUser = (User) ParseUser.getCurrentUser();
+        User currentUser = new User(ParseUser.getCurrentUser());
 
         // Load user data
         binding.tvUserName.setText(seller.getUsername());
@@ -76,7 +76,7 @@ public class DetailedSellerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("seller", currentUser);
+                bundle.putSerializable("user", User.class);
                 Fragment messageFragment = new MessagesFragment();
                 messageFragment.setArguments(bundle);
             }

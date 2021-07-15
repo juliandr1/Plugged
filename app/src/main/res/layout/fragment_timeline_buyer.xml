@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.fragments.TimelineBuyerFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineBuyerFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

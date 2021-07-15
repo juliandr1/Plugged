@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.adapters;
+package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.models.Message;
+import com.project.reshoe_fbu.models.Message;
 import com.parse.ParseUser;
 
 import java.util.List;

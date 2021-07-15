@@ -13,7 +13,7 @@
     </queries>
 
     <application
-        android:name=".ParseApplication"
+        android:name="com.project.reshoe_fbu.ParseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,18 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Reshoe_FBU">
         <activity
-            android:name=".activities.PostActivity"
+            android:name="com.project.reshoe_fbu.activities.PostActivity"
             android:label="@string/title_activity_post"
             android:theme="@style/Theme.Reshoe_FBU.NoActionBar"></activity>
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name="com.project.reshoe_fbu.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity" />
-        <activity android:name=".activities.TimelineActivity" />
+        <activity android:name="com.project.reshoe_fbu.activities.SignupActivity" />
+        <activity android:name="com.project.reshoe_fbu.activities.TimelineActivity" />
     </application>
 
 </manifest>

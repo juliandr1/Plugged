@@ -1,4 +1,4 @@
-package com.example.reshoe_fbu.activities;
+package com.project.reshoe_fbu.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
-import com.example.reshoe_fbu.models.User;
-import com.parse.ParseException;
-import com.parse.SignUpCallback;
+import com.project.reshoe_fbu.models.User;
+import com.parse.ParseUser;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class SignupActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        User user = new User();
+        User user = new User(new ParseUser());
 
         context = this;
 
@@ -51,19 +50,9 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(context, "Must select buyer or seller", Toast.LENGTH_SHORT).show();
                 }
 
-                // Attempt to create a new account
-                user.signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            goMainActivity();
-                        } else {
-                            // Sign up didn't succeed. Look at the ParseException
-                            // to figure out what went wrong
-                            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                user.signUp(context);
+
+                goMainActivity();
             }
         });
 
@@ -74,5 +63,4 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TimelineActivity.class);
         startActivity(intent);
     }
-
 }
