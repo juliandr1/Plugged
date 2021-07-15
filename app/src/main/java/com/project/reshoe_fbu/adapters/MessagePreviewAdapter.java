@@ -15,6 +15,7 @@ import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.fragments.MessagesFragment;
 import com.project.reshoe_fbu.models.MessagePreview;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class MessagePreviewAdapter extends RecyclerView.Adapter<MessagePreviewAd
     private FragmentManager fragmentManager;
 
     // Pass in the context, list of message previews, the user, and the fragment manager
-    public MessagePreviewAdapter(Context context, List<MessagePreview> messagePreviews, ParseUser user, FragmentManager fragmentManager) {
+    public MessagePreviewAdapter(Context context, List<MessagePreview> messagePreviews, FragmentManager fragmentManager) {
         this.context = context;
         this.messagePreviews = messagePreviews;
         this.fragmentManager = fragmentManager;

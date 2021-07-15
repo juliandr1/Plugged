@@ -51,42 +51,39 @@ public class DetailedSellerFragment extends Fragment {
 
         // If the user click the like button then check if we must like or unlike
         // the user.
-        binding.btnLikeSeller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    // If the user has liked the post before then unlike it.
-                    if (currentUser.didLike(seller)) {
-                        Log.i(TAG, "Unlike");
-                        binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_outline);
-                        currentUser.unlike(seller);
-                    } else {
-                        Log.i(TAG, "Like");
-                        binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_filled);
-                        currentUser.like(seller);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        binding.btnLikeSeller.setOnClickListener(v -> {
+            try {
+                // If the user has liked the post before then unlike it.
+                if (currentUser.didLike(seller)) {
+                    Log.i(TAG, "Unlike");
+                    binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_outline);
+                    currentUser.unlike(seller);
+                } else {
+                    Log.i(TAG, "Like");
+                    binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_filled);
+                    currentUser.like(seller);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
 
         // If the user wants to message the user then go to the messaging fragment
-        binding.btnMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", User.class);
-                Fragment messageFragment = new MessagesFragment();
-                messageFragment.setArguments(bundle);
-            }
+        binding.btnMessage.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", User.class);
+            Fragment messageFragment = new MessagesFragment();
+            messageFragment.setArguments(bundle);
         });
 
         // Return back to the previous fragment (detailed shoe view)
-        binding.btnBackDetail.setOnClickListener(new View.OnClickListener() {
+        binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+
+        binding.btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                Fragment reviewFragment = new ReviewFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, reviewFragment).commit();
             }
         });
     }

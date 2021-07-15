@@ -17,6 +17,7 @@ import com.project.reshoe_fbu.adapters.MessagePreviewAdapter;
 import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
 import com.project.reshoe_fbu.models.MessagePreview;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,13 +42,12 @@ public class MessagePreviewFragment extends Fragment {
 
         FragmentMessagePreviewBinding binding = FragmentMessagePreviewBinding.bind(view);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
         // Find the Recycler View
         RecyclerView rvPosts = binding.rvMessagePreviews;
 
         // Create a list of all the message previews and set up adapter
         messagePreviews = new ArrayList<>();
-        adapter = new MessagePreviewAdapter(getActivity(), messagePreviews, currentUser, getParentFragmentManager());
+        adapter = new MessagePreviewAdapter(getActivity(), messagePreviews, getParentFragmentManager());
         // Recycler view setup: layout manager and the adapter
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);

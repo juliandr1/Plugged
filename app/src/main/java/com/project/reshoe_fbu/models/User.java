@@ -26,6 +26,8 @@ public class User  {
     public static final String KEY_IS_SELLER = "isSeller";
     public static final String KEY_PROFILE_PIC = "profilePic";
     public static final String KEY_LIKED_SELLERS = "likedSellers";
+    public static final String KEY_RATING = "rating";
+    public static final String KEY_NUM_REVIEWS = "numReviews";
 
     private ParseUser user;
 
@@ -70,6 +72,14 @@ public class User  {
     public String getProfilePicURL() { return user.getParseFile(KEY_PROFILE_PIC).getUrl(); }
 
     public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
+
+    public double getRating() { return user.getNumber(KEY_RATING).doubleValue(); }
+
+    public void setRating(double rating) { user.put(KEY_RATING, rating); }
+
+    public int getNumReviews() { return user.getNumber(KEY_NUM_REVIEWS).intValue(); }
+
+    public void setNumReviews(int numReviews) { user.put(KEY_NUM_REVIEWS, numReviews); }
 
     public JSONArray getLikes() {return user.getJSONArray(KEY_LIKED_SELLERS);}
 

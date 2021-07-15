@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.models.Message;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.Review;
 import com.project.reshoe_fbu.models.UsersMessaged;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -22,7 +23,7 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Post.class);// Register your parse models
         ParseObject.registerSubclass(Message.class);// Register your parse models
         ParseObject.registerSubclass(UsersMessaged.class);// Register your parse models
-
+        ParseObject.registerSubclass(Review.class);// Register your parse models
 
         // Use for monitoring Parse network traffic
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
