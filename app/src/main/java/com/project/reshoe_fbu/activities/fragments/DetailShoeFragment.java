@@ -43,10 +43,10 @@ public class DetailShoeFragment extends Fragment {
         binding.tvDetailedPrice.setText("$" + post.getPrice());
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
-        binding.tvDetailSellerUser.setText(post.getUser().getUsername());
+        binding.tvDetailSellerUser.setText("@" + post.getUser().getUsername());
 
         Glide.with(view).load(post.getUser().getParseFile("profilePic").getUrl()).circleCrop().into(binding.ibSellerProfile);
-        Glide.with(view).load(post.getImage().getUrl()).circleCrop().into(binding.ivDetailPic);
+        Glide.with(view).load(post.getImage().getUrl()).into(binding.ivDetailPic);
 
         // Return back to the previous fragment (timeline)
         binding.btnBackDetail.setOnClickListener(new View.OnClickListener() {
@@ -57,13 +57,17 @@ public class DetailShoeFragment extends Fragment {
         });
 
         // Go to checkout (activity or fragment?)
-        binding.btnCheckout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), CheckoutActivity.class);
-                startActivity(i);
-                ((Activity) getActivity()).overridePendingTransition(0, 0);
-            }
+        binding.btnCheckout.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity(), CheckoutActivity.class);
+            startActivity(i);
+            ((Activity) getActivity()).overridePendingTransition(0, 0);
+        });
+
+        binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+
+        binding.ibSellerProfile.setOnClickListener(v -> {
+            Fragment detailedSellerFragment = new DetailedSellerFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, detailedSellerFragment).commit();
         });
 
 

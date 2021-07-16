@@ -38,4 +38,8 @@
     <string name="account_info">Account Info</string>
     <string name="notifications">Notifications</string>
     <string name="share_location">Share Location</string>
+    <string name="title_activity_create_review">CreateReviewActivity</string>
+    <string name="enter_description_here">Enter Description Here</string>
+    <string name="price">Price:</string>
+    <string name="condition">Condition:</string>
 </resources>

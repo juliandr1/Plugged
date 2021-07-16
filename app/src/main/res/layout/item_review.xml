@@ -35,9 +35,8 @@
         android:layout_marginTop="31dp"
         android:layout_toEndOf="@+id/tvReviewerUser"
         android:numStars="5"
-        android:progressBackgroundTint="@color/black"
         android:progressTint="#F5DD02"
-        android:rating="2" />
+        android:isIndicator="true"/>
 
     <TextView
         android:id="@+id/tvReview"

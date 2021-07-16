@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -28,6 +29,7 @@ public class User  {
     public static final String KEY_LIKED_SELLERS = "likedSellers";
     public static final String KEY_RATING = "rating";
     public static final String KEY_NUM_REVIEWS = "numReviews";
+    public static final String KEY_DESCRIPTION = "description";
 
     private ParseUser user;
 
@@ -45,12 +47,16 @@ public class User  {
 
     public void setPassword(String password) { user.put(KEY_PASSWORD, password); }
 
-    public String getEmail() {
-        return user.getString(KEY_EMAIL);
-    }
+    public String getEmail() { return user.getString(KEY_EMAIL); }
 
     public void setEmail(String email) {
         user.put(KEY_EMAIL, email);
+    }
+
+    public String getDescription() { return user.getString(KEY_DESCRIPTION); }
+
+    public void setDescription(String description) {
+        user.put(KEY_DESCRIPTION, description);
     }
 
     public String getFirstName() {
@@ -80,6 +86,10 @@ public class User  {
     public int getNumReviews() { return user.getNumber(KEY_NUM_REVIEWS).intValue(); }
 
     public void setNumReviews(int numReviews) { user.put(KEY_NUM_REVIEWS, numReviews); }
+
+    public String getObjectID() { return user.getString(ParseObject.KEY_OBJECT_ID); }
+
+    public ParseUser getUser() { return user; }
 
     public JSONArray getLikes() {return user.getJSONArray(KEY_LIKED_SELLERS);}
 

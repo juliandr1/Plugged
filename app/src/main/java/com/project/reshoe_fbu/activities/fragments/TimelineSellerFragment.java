@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +20,13 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseQuery;
 import com.project.reshoe_fbu.activities.PostActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineSellerBinding;
 import com.project.reshoe_fbu.models.Post;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,8 +35,11 @@ import java.util.List;
 
 public class TimelineSellerFragment extends Fragment {
 
+    public static final String TAG = "TimelineSellerFragment";
+
     private PostsAdapter adapter;
     private List<Post> posts;
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,27 +60,29 @@ public class TimelineSellerFragment extends Fragment {
 
         FragmentTimelineSellerBinding binding = FragmentTimelineSellerBinding.bind(view);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        user = new User(ParseUser.getCurrentUser());
 
         RecyclerView rvSellerPosts = binding.rvSellerPosts;
 
         // Setup the adapter and create a new list of posts
         posts = new ArrayList<>();
-        adapter = new PostsAdapter(getActivity(), posts, currentUser);
+        adapter = new PostsAdapter(getActivity(), posts, user, getActivity().getSupportFragmentManager());
         // Recycler view setup: layout manager and the adapter
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rvSellerPosts.setLayoutManager(layoutManager);
         rvSellerPosts.setAdapter(adapter);
 
         // Load profile picture
-        Glide.with(view).load(currentUser.getParseFile("profilePic").getUrl()).transform(new RoundedCorners(300)).into(binding.ivSellerProfilePic);
-        binding.tvUserName.setText("@" + currentUser.getUsername());
+        Glide.with(view).load(user.getProfilePicURL()).transform(new RoundedCorners(300)).into(binding.ivSellerProfilePic);
+        binding.tvUserName.setText("@" + user.getUsername());
 
         // Check to see if the user has added a description
-        String description = currentUser.getString("description");
+        String description = user.getDescription();
         if (description != null) {
             binding.tvSellerDescription.setText(description);
         }
+
+        queryPosts();
     }
 
     @Override
@@ -92,5 +100,24 @@ public class TimelineSellerFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Get all the posts in the database, including the ones for the current user.
+    private void queryPosts() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(20);
+        // Order the posts by date
+        query.addDescendingOrder("createdAt");
+        // Get the posts
+        query.findInBackground((newPosts, e) -> {
+            if (e != null) {
+                Log.e(TAG,"Issue with getting posts", e);
+                return;
+            }
+
+            posts.addAll(newPosts);
+            adapter.notifyDataSetChanged();
+        });
     }
 }

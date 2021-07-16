@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.reshoe_fbu.databinding.FragmentUserPreferencesSellerBinding;
 import org.jetbrains.annotations.NotNull;
 
 public class UserPreferencesSellerFragment extends Fragment {
+
+    public static String TAG = "UserPreferencesSellerFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +33,12 @@ public class UserPreferencesSellerFragment extends Fragment {
 
         FragmentUserPreferencesSellerBinding binding = FragmentUserPreferencesSellerBinding.bind(view);
 
-        binding.btnBackUserPrefSeller.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+        binding.btnBackUserPrefSeller.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                Log.i(TAG, "clicked");
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 }

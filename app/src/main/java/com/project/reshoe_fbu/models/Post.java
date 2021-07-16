@@ -50,7 +50,7 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) { put(KEY_USER, user); }
 
     public int getCondition() {
-        return getNumber(KEY_USER).intValue();
+        return getNumber(KEY_CONDITION).intValue();
     }
 
     public void setCondition(int condition) { put(KEY_CONDITION, condition); }
@@ -65,7 +65,7 @@ public class Post extends ParseObject {
         return getNumber(KEY_PRICE).doubleValue();
     }
 
-    public void setPrice(double price){ put(KEY_USER, Double.parseDouble(new DecimalFormat(".00").format(price))); }
+    public void setPrice(double price){ put(KEY_PRICE, Double.parseDouble(new DecimalFormat(".00").format(price))); }
 
     public int getNumLikes() {
         return getNumber(KEY_NUM_LIKED).intValue();
@@ -75,21 +75,21 @@ public class Post extends ParseObject {
 
     public JSONArray getLikes() {return getJSONArray(KEY_USERS_LIKED);}
 
-    public void like(ParseUser user) {
-        add(KEY_USERS_LIKED, user.getObjectId());
+    public void like(User user) {
+        add(KEY_USERS_LIKED, user.getObjectID());
         setLikes(getNumLikes() + 1);
         saveInBackground();
     }
 
-    public void unlike(ParseUser user) {
-        removeAll(KEY_USERS_LIKED, Arrays.asList(user.getObjectId()));
+    public void unlike(User user) {
+        removeAll(KEY_USERS_LIKED, Arrays.asList(user.getObjectID()));
         if (getNumLikes() > 0) {
             setLikes(getNumLikes() - 1);
         }
         saveInBackground();
     }
 
-    public boolean didLike(ParseUser user) throws JSONException {
+    public boolean didLike(User user) throws JSONException {
         JSONArray jsonArray = getLikes();
 
         // Check if the likes list is null
@@ -100,7 +100,7 @@ public class Post extends ParseObject {
 
         // Get the list of userIds and check if the current user has liked the post.
         List<String> userIds = Post.fromJsonArray(jsonArray);
-        return userIds.contains(user.getObjectId());
+        return userIds.contains(user.getObjectID());
     }
 
     public static List<String> fromJsonArray(JSONArray jsonArray) throws JSONException {

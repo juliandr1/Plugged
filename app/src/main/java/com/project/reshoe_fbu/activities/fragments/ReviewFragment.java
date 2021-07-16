@@ -1,5 +1,6 @@
 package com.project.reshoe_fbu.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,6 +20,8 @@ import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
 import com.example.reshoe_fbu.databinding.FragmentReviewBinding;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.activities.CreateReviewActivity;
+import com.project.reshoe_fbu.activities.PostActivity;
 import com.project.reshoe_fbu.adapters.MessagePreviewAdapter;
 import com.project.reshoe_fbu.adapters.ReviewsAdapter;
 import com.project.reshoe_fbu.models.MessagePreview;
@@ -57,5 +63,22 @@ public class ReviewFragment extends Fragment {
         rvReviews.setAdapter(adapter);
 
         binding.btnBackReview.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_review, menu);
+    }
+
+    // Implement review creation view
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+
+        if (item.getItemId() == R.id.post_review) {
+            Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

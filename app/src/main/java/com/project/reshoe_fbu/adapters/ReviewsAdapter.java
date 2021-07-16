@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,6 +70,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         private final ImageView ivReviewerProfile;
         private final TextView tvReviewerUser, tvReview;
+        private final RatingBar ratingBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,6 +78,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             ivReviewerProfile = itemView.findViewById(R.id.ivReviewerProfile);
             tvReviewerUser = itemView.findViewById(R.id.tvReviewerUser);
             tvReview = itemView.findViewById(R.id.tvReview);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
@@ -85,6 +88,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         public void bind(Review review) {
             tvReviewerUser.setText(review.getAuthor().getUsername());
             tvReview.setText(review.getBody());
+            ratingBar.setRating(review.getRating());
 
             ParseFile image = review.getAuthor().getParseFile("profilePic");
 

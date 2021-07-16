@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="130dp"
         android:layout_marginTop="7dp"
         android:text="@string/price"
         android:textSize="8sp" />
