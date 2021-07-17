@@ -42,4 +42,7 @@
     <string name="enter_description_here">Enter Description Here</string>
     <string name="price">Price:</string>
     <string name="condition">Condition:</string>
+    <string name="enter_listing_price">Enter Listing Price:</string>
+    <string name="enter_condition_1_10">Enter Condition (1-10)</string>
+    <string name="enter_shoe_name">Enter Shoe Name:</string>
 </resources>

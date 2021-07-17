@@ -30,6 +30,7 @@ public class User  {
     public static final String KEY_RATING = "rating";
     public static final String KEY_NUM_REVIEWS = "numReviews";
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_OBJECT_ID = "objectId";
 
     private ParseUser user;
 
@@ -87,7 +88,7 @@ public class User  {
 
     public void setNumReviews(int numReviews) { user.put(KEY_NUM_REVIEWS, numReviews); }
 
-    public String getObjectID() { return user.getString(ParseObject.KEY_OBJECT_ID); }
+    public String getObjectID() { return user.getObjectId(); }
 
     public ParseUser getUser() { return user; }
 
@@ -131,7 +132,6 @@ public class User  {
         return userIds.contains(user.getObjectId());
     }
 
-
     public static List<String> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<String> likedUsers = new ArrayList<>();
 
@@ -142,7 +142,7 @@ public class User  {
         return likedUsers;
     }
 
-    public static String fromJson(Object object) throws JSONException {
+    public static String fromJson(Object object) {
         return object.toString();
     }
 }

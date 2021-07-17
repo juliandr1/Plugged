@@ -15,6 +15,7 @@ import com.parse.ParseUser;
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "SignupActivity";
+
     private Context context;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class SignupActivity extends AppCompatActivity {
                 goMainActivity();
             }
         });
-
     }
 
     // Go to the main timeline

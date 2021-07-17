@@ -54,11 +54,6 @@ public class CreateReviewActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnCancelReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        binding.btnCancelReview.setOnClickListener(v -> finish());
     }
 }

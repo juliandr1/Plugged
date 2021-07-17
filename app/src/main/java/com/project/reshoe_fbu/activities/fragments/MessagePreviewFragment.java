@@ -53,4 +53,5 @@ public class MessagePreviewFragment extends Fragment {
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
     }
+    // query messages here
 }

@@ -5,15 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/ivDetailPic"
-        android:layout_width="272dp"
-        android:layout_height="272dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="142dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/tvDetailedPrice"
         android:layout_width="wrap_content"
@@ -29,9 +20,9 @@
         android:id="@+id/tvDetailName"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivDetailPic"
+        android:layout_below="@+id/view_pager"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="15dp"
         android:textAlignment="center"
         android:textSize="20sp"
         tools:text="YEEZY 350 BOOST" />
@@ -76,7 +67,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="42dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="38dp" />
 
     <Button
@@ -118,4 +109,17 @@
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/tvDetailedPrice"
         android:text="@string/condition" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="370dp"
+        android:layout_height="370dp"
+        android:layout_below="@+id/tvDetailSellerUser"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"></androidx.viewpager.widget.ViewPager>
+
 </RelativeLayout>

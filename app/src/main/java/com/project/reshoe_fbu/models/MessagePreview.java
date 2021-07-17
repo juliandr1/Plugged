@@ -56,5 +56,4 @@ public class MessagePreview {
     public static ParseObject fromJsonUsersMessaged(JSONObject jsonObject) throws JSONException {
         return ParseObject.fromJSON(jsonObject, "UsersMessaged.class", ParseDecoder.get());
     }
-
 }

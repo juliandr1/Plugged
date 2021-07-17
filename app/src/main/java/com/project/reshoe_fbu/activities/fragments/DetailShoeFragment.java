@@ -1,6 +1,5 @@
 package com.project.reshoe_fbu.activities.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,20 +12,26 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.project.reshoe_fbu.activities.CheckoutActivity;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
+import com.project.reshoe_fbu.activities.CheckoutActivity;
+import com.project.reshoe_fbu.adapters.PagerAdapter;
 import com.project.reshoe_fbu.models.Post;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+
+import java.util.Objects;
 
 public class DetailShoeFragment extends Fragment {
 
     private Post post;
+    private PagerAdapter pagerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
+        assert getArguments() != null;
         post = getArguments().getParcelable("post");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail_shoe, container, false);
@@ -45,22 +50,16 @@ public class DetailShoeFragment extends Fragment {
         binding.tvDetailName.setText(post.getShoeName());
         binding.tvDetailSellerUser.setText("@" + post.getUser().getUsername());
 
-        Glide.with(view).load(post.getUser().getParseFile("profilePic").getUrl()).circleCrop().into(binding.ibSellerProfile);
-        Glide.with(view).load(post.getImage().getUrl()).into(binding.ivDetailPic);
+        Glide.with(view).load(Objects.requireNonNull(post.getUser().getParseFile("profilePic")).getUrl()).circleCrop().into(binding.ibSellerProfile);
 
         // Return back to the previous fragment (timeline)
-        binding.btnBackDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
+        binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
 
         // Go to checkout (activity or fragment?)
         binding.btnCheckout.setOnClickListener(v -> {
             Intent i = new Intent(getActivity(), CheckoutActivity.class);
             startActivity(i);
-            ((Activity) getActivity()).overridePendingTransition(0, 0);
+            getActivity().overridePendingTransition(0, 0);
         });
 
         binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
@@ -70,7 +69,12 @@ public class DetailShoeFragment extends Fragment {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, detailedSellerFragment).commit();
         });
 
+        try {
+            pagerAdapter = new PagerAdapter(getActivity(), post.getImageUrls(), false);
+        } catch (JSONException e) {
+                e.printStackTrace();
+        }
 
+        binding.viewPager.setAdapter(pagerAdapter);
     }
-
 }

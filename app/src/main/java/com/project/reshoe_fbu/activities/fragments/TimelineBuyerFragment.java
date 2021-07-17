@@ -60,7 +60,6 @@ public class TimelineBuyerFragment extends Fragment {
         rvPosts.setAdapter(adapter);
 
         queryPosts();
-
     }
     // Get all the posts in the database, including the ones for the current user.
     private void queryPosts() {
@@ -80,5 +79,4 @@ public class TimelineBuyerFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
     }
-
 }

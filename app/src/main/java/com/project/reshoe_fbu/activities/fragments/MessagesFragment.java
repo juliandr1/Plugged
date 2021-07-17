@@ -36,7 +36,7 @@ import java.util.List;
 public class MessagesFragment extends Fragment {
 
     public static final String TAG = "MessagesFragment";
-    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    public static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     private List<Message> messages;
     private MessagesAdapter adapter;
@@ -155,6 +155,4 @@ public class MessagesFragment extends Fragment {
             }
         });
     }
-
-
 }

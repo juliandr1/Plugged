@@ -89,5 +89,4 @@ public class MessagePreviewAdapter extends RecyclerView.Adapter<MessagePreviewAd
             fragmentManager.beginTransaction().replace(R.id.flContainer, messagesFragment).commit();
         }
     }
-
 }

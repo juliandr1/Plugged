@@ -25,6 +25,8 @@ import com.project.reshoe_fbu.models.User;
 
 import org.json.JSONException;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -64,7 +66,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         // Get the data at position
         Post post = posts.get(position);
         // Bind the tweet with view holder
-        holder.bind(post);
+        try {
+            holder.bind(post);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Return amount of posts
@@ -96,19 +106,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             if (!user.getIsSeller()) {
                 // Like or unlike posts and update the color of the heart.
                 btnLike.setOnClickListener(v -> {
-                    Post post = posts.get(getAdapterPosition());
                     try {
+                        Post post = posts.get(getAdapterPosition());
                         // If the user has liked the post before then unlike it.
                         if (post.didLike(user)) {
                             Log.i(TAG, "Unlike");
                             btnLike.setBackgroundResource(R.drawable.heart_outline);
-                            post.unlike(user);
+                            post.unlike();
                             int numLikes = post.getNumLikes();
                             checkLikes(numLikes);
                         } else {
                             Log.i(TAG, "Like");
                             btnLike.setBackgroundResource(R.drawable.heart_filled);
-                            post.like(user);
+                            post.like();
                             int numLikes = post.getNumLikes();
                             Log.i("TAG", "" + numLikes);
                             checkLikes(numLikes);
@@ -122,7 +132,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         }
 
-        public void bind(Post post) {
+        public void bind(Post post) throws JSONException, MalformedURLException, URISyntaxException {
             tvDescription.setText(post.getShoeName());
             tvCondition.setText(post.getCondition() + "/10");
             double price = post.getPrice();
@@ -131,11 +141,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             currencyString = currencyString.replaceAll("\\.00", "");
             tvPrice.setText(currencyString);
 
-            Log.i(TAG, post.getCondition() + " " + post.getPrice());
-
-            ParseFile image = post.getImage();
-
-            Glide.with(context).load(image.getUrl()).into(ivImage);
+            Glide.with(context).load(post.getImageUrls().get(0)).into(ivImage);
 
             if (!user.getIsSeller()) {
                 try {
@@ -151,7 +157,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             int numLikes = post.getNumLikes();
             checkLikes(numLikes);
-
         }
 
         @Override

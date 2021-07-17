@@ -44,7 +44,7 @@ public class AccountInfoFragment extends Fragment {
         binding.btnChangeUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // To be implemented in strech
             }
         });
 
@@ -52,7 +52,7 @@ public class AccountInfoFragment extends Fragment {
         binding.btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // To be implemented in stretch
             }
         });
 
@@ -63,6 +63,5 @@ public class AccountInfoFragment extends Fragment {
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-
     }
 }
