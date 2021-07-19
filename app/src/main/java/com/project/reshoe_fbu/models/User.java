@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
+import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -42,9 +44,7 @@ public class User  {
         return user.getString(KEY_USERNAME);
     }
 
-    public void setUsername(String username) {
-        user.put(KEY_USERNAME, username);
-    }
+    public void setUsername(String username) { user.put(KEY_USERNAME, username); }
 
     public void setPassword(String password) { user.put(KEY_PASSWORD, password); }
 
@@ -93,20 +93,6 @@ public class User  {
     public ParseUser getUser() { return user; }
 
     public JSONArray getLikes() {return user.getJSONArray(KEY_LIKED_SELLERS);}
-
-    public void signUp(Context context) {
-        // Attempt to create a new account
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    // Sign up didn't succeed. Look at the ParseException
-                    // to figure out what went wrong
-                    Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
 
     public void like(ParseUser user) {
         user.add(KEY_LIKED_SELLERS, user.getObjectId());

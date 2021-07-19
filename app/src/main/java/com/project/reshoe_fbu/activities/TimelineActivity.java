@@ -27,8 +27,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         User currentUser = new User(ParseUser.getCurrentUser());
 
-        Log.e(TAG, ParseUser.getCurrentUser().getEmail());
-
         // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final Fragment fragmentMessage = new MessagePreviewFragment();

@@ -34,7 +34,7 @@
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:outlineProvider="none"
-        android:autofillHints="" />
+        />
 
     <EditText
         android:id="@+id/etPasswordCreate"
@@ -51,7 +51,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:autofillHints="" />
+       />
 
     <EditText
         android:id="@+id/etEmail"
@@ -66,7 +66,7 @@
         android:background="@drawable/border"
         android:ems="10"
         android:hint="@string/email"
-        android:autofillHints="" />
+        />
 
     <EditText
         android:id="@+id/etFirstName"
@@ -83,7 +83,7 @@
         android:ems="10"
         android:hint="@string/first_name"
         android:inputType="textPersonName"
-        android:autofillHints="" />
+        />
 
     <EditText
         android:id="@+id/etLastName"
@@ -100,7 +100,7 @@
         android:ems="10"
         android:hint="@string/last_name"
         android:inputType="textPersonName"
-        android:autofillHints="" />
+        />
 
     <Button
         android:id="@+id/btnSignUp"

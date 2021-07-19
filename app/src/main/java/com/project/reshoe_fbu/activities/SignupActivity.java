@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
+import com.parse.ParseException;
+import com.parse.SignUpCallback;
 import com.project.reshoe_fbu.models.User;
 import com.parse.ParseUser;
 
@@ -30,31 +32,36 @@ public class SignupActivity extends AppCompatActivity {
 
         context = this;
 
+        // set various data points according to user input
+        user.setUsername(binding.etUsernameCreate.getText().toString());
+        user.setPassword(binding.etPasswordCreate.getText().toString());
+        user.setEmail(binding.etEmail.getText().toString());
+        user.setFirstName(binding.etFirstName.getText().toString());
+        user.setLastName(binding.etLastName.getText().toString());
+
+
         // Fill in all of the data and attempt to create a new user
-        binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnSignUp.setOnClickListener(v -> {
 
-                // set various data points according to user input
-                user.setUsername(binding.etUsernameCreate.getText().toString());
-                user.setPassword(binding.etPasswordCreate.getText().toString());
-                user.setEmail(binding.etEmail.getText().toString());
-                user.setFirstName(binding.etFirstName.getText().toString());
-                user.setLastName(binding.etLastName.getText().toString());
-
-                // Else if needed or else if a person does not click anything
-                if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbBuyer.getId()) {
-                    user.setIsSeller(false);
-                } else if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbSeller.getId()){
-                    user.setIsSeller(true);
-                } else {
-                    Toast.makeText(context, "Must select buyer or seller", Toast.LENGTH_SHORT).show();
-                }
-
-                user.signUp(context);
-
-                goMainActivity();
+            // Else if needed or else if a person does not click anything
+            if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbBuyer.getId()) {
+                user.setIsSeller(false);
+            } else if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbSeller.getId()){
+                user.setIsSeller(true);
+            } else {
+                Toast.makeText(context, "Must select buyer or seller", Toast.LENGTH_SHORT).show();
             }
+
+            user.getUser().signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        goMainActivity();
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
+            });
         });
     }
 

@@ -1,5 +1,6 @@
 package com.project.reshoe_fbu.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,16 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.parse.ParseQuery;
+import com.project.reshoe_fbu.activities.SearchActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
 import com.project.reshoe_fbu.models.Post;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.models.User;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +40,12 @@ public class TimelineBuyerFragment extends Fragment {
 
     public TimelineBuyerFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -78,5 +91,22 @@ public class TimelineBuyerFragment extends Fragment {
             posts.addAll(newPosts);
             adapter.notifyDataSetChanged();
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_buyer, menu);
+    }
+
+    // If the seller clicks, then go to the post activity.
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+
+        if (item.getItemId() == R.id.searchBuyer) {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

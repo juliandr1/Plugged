@@ -47,6 +47,7 @@
         <activity android:name="com.project.reshoe_fbu.activities.CheckoutActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.CreateReviewActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.PostActivity" />
+        <activity android:name="com.project.reshoe_fbu.activities.SearchActivity" />
     </application>
 
 </manifest>

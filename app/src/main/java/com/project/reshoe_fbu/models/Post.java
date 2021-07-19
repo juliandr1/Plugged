@@ -35,6 +35,7 @@ public class Post extends ParseObject {
     public static final String KEY_USERS_LIKED = "usersLiked";
     public static final String KEY_NUM_LIKED = "numLiked";
     public static final String KEY_SHOE_NAME = "shoeName";
+    public static final String KEY_SHOE_NAME_SEARCH = "shoeNameSearch";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -73,6 +74,7 @@ public class Post extends ParseObject {
 
     public void setShoeName(String name) {
         put(KEY_SHOE_NAME, name);
+        put(KEY_SHOE_NAME_SEARCH, name.toLowerCase());
     }
 
     public double getPrice() {
