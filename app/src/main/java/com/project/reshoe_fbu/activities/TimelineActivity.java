@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.reshoe_fbu.R;
-import com.project.reshoe_fbu.activities.fragments.MessagePreviewFragment;
+import com.project.reshoe_fbu.activities.fragments.ThreadFragment;
 import com.project.reshoe_fbu.activities.fragments.ProfileFragment;
 import com.project.reshoe_fbu.activities.fragments.TimelineBuyerFragment;
 import com.project.reshoe_fbu.activities.fragments.TimelineSellerFragment;
@@ -29,7 +29,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment fragmentMessage = new MessagePreviewFragment();
+        final Fragment fragmentMessage = new ThreadFragment();
         final Fragment fragmentProfile = new ProfileFragment();
         final Fragment fragmentTimeline;
 

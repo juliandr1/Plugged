@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivPhotoPreview"
+        android:id="@+id/ivSearchUser"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_alignParentStart="true"
@@ -16,26 +16,14 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvSearchDescription"
-        android:layout_width="282dp"
-        android:layout_height="31dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@+id/ivPhotoPreview" />
-
-    <TextView
-        android:id="@+id/tvShoeTitle"
-        android:layout_width="282dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvSearchUsername"
+        android:layout_width="233dp"
+        android:layout_height="44dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@+id/ivPhotoPreview"
-        android:textSize="20sp"
-        tools:text="YEEZY 350 BOOST BRED V2" />
+        android:layout_toEndOf="@+id/ivSearchUser"
+        android:textSize="20sp" />
 </RelativeLayout>

@@ -13,31 +13,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.fragments.MessagesFragment;
-import com.project.reshoe_fbu.models.MessagePreview;
-import com.parse.ParseUser;
-import com.project.reshoe_fbu.models.User;
+import com.project.reshoe_fbu.models.Thread;
 
 import java.util.List;
 
-public class MessagePreviewAdapter extends RecyclerView.Adapter<MessagePreviewAdapter.ViewHolder> {
+public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder> {
 
     public static String TAG = "MessagesAdapter";
 
     private final Context context;
-    private final List<MessagePreview> messagePreviews;
+    private final List<Thread> threads;
     private FragmentManager fragmentManager;
 
     // Pass in the context, list of message previews, the user, and the fragment manager
-    public MessagePreviewAdapter(Context context, List<MessagePreview> messagePreviews, FragmentManager fragmentManager) {
+    public ThreadAdapter(Context context, List<Thread> threads, FragmentManager fragmentManager) {
         this.context = context;
-        this.messagePreviews = messagePreviews;
+        this.threads = threads;
         this.fragmentManager = fragmentManager;
     }
 
     // For each row, inflate the layout
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_message_preview, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_thread, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,15 +43,15 @@ public class MessagePreviewAdapter extends RecyclerView.Adapter<MessagePreviewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data at position
-        MessagePreview messagePreview = messagePreviews.get(position);
+        Thread thread = threads.get(position);
         // Bind the tweet with view holder
-        holder.bind(messagePreview);
+        holder.bind(thread);
     }
 
     // Return amount of previews
     @Override
     public int getItemCount() {
-        return messagePreviews.size();
+        return threads.size();
     }
 
     // Define a viewholder
@@ -76,7 +74,7 @@ public class MessagePreviewAdapter extends RecyclerView.Adapter<MessagePreviewAd
         }
 
         // Bind data
-        public void bind(MessagePreview messagePreview) {
+        public void bind(Thread messagePreview) {
             tvMessagePreview.setText(messagePreview.getPreview());
             tvOtherUsername.setText(messagePreview.getUsername());
             Glide.with(context).load(messagePreview.getOtherUser().getParseFile("profilePic").getUrl()).circleCrop().into(ivMessageProfilePic);

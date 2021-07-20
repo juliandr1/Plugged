@@ -30,7 +30,8 @@ import java.text.NumberFormat;
 import java.util.List;
 
 public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.ViewHolder>  {
-    public static String TAG = "PostsAdapter";
+
+    public static String TAG = "PostSearchAdapter";
 
     private final Context context;
     private final List<Post> searchPosts;

@@ -107,7 +107,7 @@ public class TimelineSellerFragment extends Fragment {
     // Get all the posts in the database, including the ones for the current user.
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
+        query.whereEqualTo("user", user.getUser());
         query.setLimit(20);
         // Order the posts by date
         query.addDescendingOrder("createdAt");

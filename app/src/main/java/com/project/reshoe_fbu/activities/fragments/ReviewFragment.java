@@ -17,16 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
 import com.example.reshoe_fbu.databinding.FragmentReviewBinding;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.CreateReviewActivity;
-import com.project.reshoe_fbu.activities.PostActivity;
-import com.project.reshoe_fbu.adapters.MessagePreviewAdapter;
 import com.project.reshoe_fbu.adapters.ReviewsAdapter;
-import com.project.reshoe_fbu.models.MessagePreview;
 import com.project.reshoe_fbu.models.Review;
-import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 

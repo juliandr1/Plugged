@@ -8,26 +8,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
-import com.project.reshoe_fbu.adapters.MessagePreviewAdapter;
+import com.parse.ParseQuery;
+import com.project.reshoe_fbu.adapters.ThreadAdapter;
 import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
-import com.project.reshoe_fbu.models.MessagePreview;
-import com.parse.ParseUser;
-import com.project.reshoe_fbu.models.User;
+import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.Thread;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessagePreviewFragment extends Fragment {
+public class ThreadFragment extends Fragment {
 
-    private MessagePreviewAdapter adapter;
-    private List<MessagePreview> messagePreviews;
+    public static final String TAG = "ThreadFragment";
+
+    private ThreadAdapter adapter;
+    private List<Thread> threads;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,12 +49,30 @@ public class MessagePreviewFragment extends Fragment {
         RecyclerView rvPosts = binding.rvMessagePreviews;
 
         // Create a list of all the message previews and set up adapter
-        messagePreviews = new ArrayList<>();
-        adapter = new MessagePreviewAdapter(getActivity(), messagePreviews, getParentFragmentManager());
+        threads = new ArrayList<>();
+        adapter = new ThreadAdapter(getActivity(), threads, getParentFragmentManager());
         // Recycler view setup: layout manager and the adapter
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
     }
-    // query messages here
+
+
+    public void queryThreads() {
+        ParseQuery<Thread> query = ParseQuery.getQuery(Thread.class);
+        query.include(Post.KEY_USER);
+        query.setLimit(20);
+        // Order the posts by date
+        query.addDescendingOrder("last_message_received");
+        // Get the posts
+        query.findInBackground((allThreads, e) -> {
+            if (e != null) {
+                Log.e(TAG,"Issue with getting posts", e);
+                return;
+            }
+            threads.addAll(allThreads);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
 }

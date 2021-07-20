@@ -17,37 +17,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.reshoe_fbu.R;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PostSearchAdapter;
+import com.project.reshoe_fbu.adapters.UserSearchAdapter;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchUserActivity extends AppCompatActivity {
 
-    public static final String TAG = "SearchActivity";
+    public static final String TAG = "SearchUserActivity";
 
-    private RecyclerView rvSearches;
+    private RecyclerView rvSearchUsers;
     private Context context;
-    private PostSearchAdapter adapter;
-    private List<Post> searches;
+    private UserSearchAdapter adapter;
+    private List<ParseUser> searches;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search_post);
 
         context = this;
 
-        Log.i(TAG, "Search Activity");
-
         searches = new ArrayList<>();
-        adapter = new PostSearchAdapter(context, searches);
-        rvSearches = findViewById(R.id.rvSearches);
-        rvSearches.setAdapter(adapter);
+        adapter = new UserSearchAdapter(context, searches);
+        rvSearchUsers = findViewById(R.id.rvSearches);
+        rvSearchUsers.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        rvSearches.setLayoutManager(layoutManager);
+        rvSearchUsers.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
                 searches.clear();
                 adapter.notifyDataSetChanged();
                 // perform query here
-                querySearch(s);
+                queryUsers(s);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
@@ -79,20 +80,22 @@ public class SearchActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void querySearch(String str) {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);;
-        query.whereContains("shoeNameSearch", str.toLowerCase());
+    private void queryUsers(String str) {
+/*
+        query.whereContains("user_search", str.toLowerCase());
         query.setLimit(20);
         // Order the posts by date
         query.addDescendingOrder("createdAt");
         // Get the posts
-        query.findInBackground((newPosts, e) -> {
+        query.findInBackground((users, e) -> {
             if (e != null) {
                 Log.e(TAG,"Issue with getting posts", e);
                 return;
             }
-            searches.addAll(newPosts);
+            searches.addAll(users);
             adapter.notifyDataSetChanged();
         });
+
+ */
     }
 }

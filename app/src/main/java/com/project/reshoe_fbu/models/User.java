@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
+import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -22,6 +23,7 @@ public class User  {
     public static final String TAG = "User";
 
     public static final String KEY_USERNAME = "username";
+    public static final String KEY_USERNAME_SEARCH = "user_search";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_FIRST_NAME = "firstName";
@@ -44,7 +46,9 @@ public class User  {
         return user.getString(KEY_USERNAME);
     }
 
-    public void setUsername(String username) { user.put(KEY_USERNAME, username); }
+    public void setUsername(String username) {
+        user.put(KEY_USERNAME, username);
+        user.put(KEY_USERNAME_SEARCH, username.toLowerCase()); }
 
     public void setPassword(String password) { user.put(KEY_PASSWORD, password); }
 
@@ -64,7 +68,7 @@ public class User  {
         return user.getString(KEY_FIRST_NAME);
     }
 
-    public void setFirstName(String firstName) { user.put (KEY_FIRST_NAME, firstName); }
+    public void setFirstName(String firstName) { user.put(KEY_FIRST_NAME, firstName); }
 
     public String getLastName() {
         return user.getString(KEY_LAST_NAME);
