@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
             } else {
                 userPreferenceFragment = new UserPreferencesBuyerFragment();
             }
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userPreferenceFragment).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userPreferenceFragment).addToBackStack("back").commit();
         });
 
         // Logout of the current session

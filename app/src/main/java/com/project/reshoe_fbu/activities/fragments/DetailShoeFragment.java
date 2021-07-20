@@ -22,6 +22,7 @@ import com.project.reshoe_fbu.models.Post;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
+import java.text.NumberFormat;
 import java.util.Objects;
 
 public class DetailShoeFragment extends Fragment {
@@ -54,9 +55,14 @@ public class DetailShoeFragment extends Fragment {
             Log.e(TAG, "Something has gone terribly wrong with Parse", e);
         }
         binding.tvDetailCondition.setText(post.getCondition() + "/10");
-        binding.tvDetailedPrice.setText("$" + post.getPrice());
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
+
+        double price = post.getPrice();
+        String currencyString = NumberFormat.getCurrencyInstance().format(price);
+        // Handle the weird exception of formatting whole dollar amounts with no decimal
+        currencyString = currencyString.replaceAll("\\.00", "");
+        binding.tvPriceDetailed.setText(currencyString);
 
         Glide.with(view).load(Objects.requireNonNull(post.getUser().getParseFile("profilePic")).getUrl()).circleCrop().into(binding.ibSellerProfile);
 

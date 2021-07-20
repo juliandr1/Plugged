@@ -169,7 +169,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 bundle.putParcelable("post", post);
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.flContainer, detailShoeFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, detailShoeFragment).addToBackStack("back").commit();
             }
         }
 

@@ -90,7 +90,6 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
         public void bind(Post post) throws JSONException {
             tvShoeTitle.setText(post.getShoeName());
             tvSearchDescription.setText(post.getDescription());
-            double price = post.getPrice();
 
             Glide.with(context).load(post.getImageUrls().get(0)).into(ivPhotoPreview);
         }

@@ -70,7 +70,6 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
-
         }
 
         // Bind data
@@ -84,7 +83,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             Fragment messagesFragment = new MessagesFragment();
-            fragmentManager.beginTransaction().replace(R.id.flContainer, messagesFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.flContainer, messagesFragment).addToBackStack("back").commit();
         }
     }
 }

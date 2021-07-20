@@ -82,7 +82,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
-
         }
 
         public void bind(Review review) {
