@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchUserActivity extends AppCompatActivity {
-
+/*
     public static final String TAG = "SearchUserActivity";
 
     private RecyclerView rvSearchUsers;
@@ -59,21 +59,14 @@ public class SearchUserActivity extends AppCompatActivity {
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                searches.clear();
-                adapter.notifyDataSetChanged();
-                // perform query here
-                queryUsers(s);
-                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
-                // see https://code.google.com/p/android/issues/detail?id=24599
-                searchView.clearFocus();
-
-                return true;
-            }
+            public boolean onQueryTextSubmit(String s) { return false; }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
+                // perform query here
+                queryUsers(s);
+
+                return true;
             }
         });
 
@@ -81,7 +74,7 @@ public class SearchUserActivity extends AppCompatActivity {
     }
 
     private void queryUsers(String str) {
-/*
+        ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
         query.whereContains("user_search", str.toLowerCase());
         query.setLimit(20);
         // Order the posts by date
@@ -95,7 +88,7 @@ public class SearchUserActivity extends AppCompatActivity {
             searches.addAll(users);
             adapter.notifyDataSetChanged();
         });
+    }
 
  */
-    }
 }

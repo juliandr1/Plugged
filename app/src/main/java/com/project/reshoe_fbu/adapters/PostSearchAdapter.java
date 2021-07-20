@@ -35,11 +35,13 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
 
     private final Context context;
     private final List<Post> searchPosts;
+    private final FragmentManager fragmentManager;
 
     // Pass in the context, list of posts, and user
-    public PostSearchAdapter(Context context, List<Post> searchPosts) {
+    public PostSearchAdapter(Context context, List<Post> searchPosts, FragmentManager fm) {
         this.context = context;
         this.searchPosts = searchPosts;
+        this.fragmentManager = fm;
     }
 
     // For each row, inflate the layout
@@ -58,10 +60,6 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
         try {
             holder.bind(post);
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
@@ -89,7 +87,7 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Post post) throws JSONException, MalformedURLException, URISyntaxException {
+        public void bind(Post post) throws JSONException {
             tvShoeTitle.setText(post.getShoeName());
             tvSearchDescription.setText(post.getDescription());
             double price = post.getPrice();
@@ -104,6 +102,10 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             if (position != RecyclerView.NO_POSITION) {
                 Post post = searchPosts.get(position);
                 Bundle bundle = new Bundle();
+                bundle.putParcelable("post", post);
+                Fragment detailShoeFragment = new DetailShoeFragment();
+                detailShoeFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.flContainer, detailShoeFragment).addToBackStack("back").commit();
             }
         }
     }

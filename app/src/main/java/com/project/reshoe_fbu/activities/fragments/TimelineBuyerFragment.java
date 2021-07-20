@@ -1,6 +1,5 @@
 package com.project.reshoe_fbu.activities.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.parse.ParseQuery;
-import com.project.reshoe_fbu.activities.SearchPostActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
 import com.project.reshoe_fbu.models.Post;
@@ -103,8 +101,8 @@ public class TimelineBuyerFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
 
         if (item.getItemId() == R.id.searchBuyer) {
-            Intent intent = new Intent(getActivity(), SearchPostActivity.class);
-            startActivity(intent);
+            Fragment searchPost = new SearchPostFragment();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, searchPost).addToBackStack("back").commit();
         }
 
         return super.onOptionsItemSelected(item);

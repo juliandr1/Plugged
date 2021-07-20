@@ -43,11 +43,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.project.reshoe_fbu.activities.SignupActivity" />
-        <activity android:name="com.project.reshoe_fbu.activities.TimelineActivity" />
+        <activity android:name="com.project.reshoe_fbu.activities.TimelineActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name="com.project.reshoe_fbu.activities.CheckoutActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.CreateReviewActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.PostActivity" />
-        <activity android:name="com.project.reshoe_fbu.activities.SearchPostActivity" />
     </application>
 
 </manifest>
