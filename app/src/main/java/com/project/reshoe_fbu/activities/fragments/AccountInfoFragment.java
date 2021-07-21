@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentAccountInfoBinding;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.models.User;
 
@@ -38,7 +39,11 @@ public class AccountInfoFragment extends Fragment {
         binding.tvFirstNameInfo.setText(currentUser.getFirstName());
         binding.tvLastNameInfo.setText(currentUser.getLastName());
         binding.tvEmailInfo.setText(currentUser.getEmail());
-        binding.tvUsernameInfo.setText(currentUser.getUsername());
+        try {
+            binding.tvUsernameInfo.setText(currentUser.getUsername());
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
 
         // Goes to a fragment that allows the user to change username
         binding.btnChangeUsername.setOnClickListener(new View.OnClickListener() {

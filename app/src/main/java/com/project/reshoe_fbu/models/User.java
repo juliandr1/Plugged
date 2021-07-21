@@ -6,18 +6,23 @@ import android.widget.Toast;
 
 import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 public class User  {
     public static final String TAG = "User";
@@ -35,6 +40,7 @@ public class User  {
     public static final String KEY_NUM_REVIEWS = "numReviews";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_OBJECT_ID = "objectId";
+    public static final String KEY_THREADS = "threads";
 
     private ParseUser user;
 
@@ -42,8 +48,8 @@ public class User  {
         this.user = user;
     }
 
-    public String getUsername() {
-        return user.getString(KEY_USERNAME);
+    public String getUsername() throws ParseException {
+        return user.fetchIfNeeded().getString(KEY_USERNAME);
     }
 
     public void setUsername(String username) {
@@ -80,7 +86,7 @@ public class User  {
 
     public void setIsSeller(Boolean isSeller) { user.put(KEY_IS_SELLER, isSeller); }
 
-    public String getProfilePicURL() { return user.getParseFile(KEY_PROFILE_PIC).getUrl(); }
+    public String getProfilePicURL() throws ParseException { return user.fetchIfNeeded().getParseFile(KEY_PROFILE_PIC).getUrl(); }
 
     public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
 
@@ -98,17 +104,63 @@ public class User  {
 
     public JSONArray getLikes() {return user.getJSONArray(KEY_LIKED_SELLERS);}
 
-    public void like(ParseUser user) {
-        user.add(KEY_LIKED_SELLERS, user.getObjectId());
+    public List<Thread> getUserThreads() throws ParseException {
+
+        ParseQuery<Thread> query = ParseQuery.getQuery(Thread.class);
+
+        query.whereEqualTo(Thread.KEY_USER, user);
+
+        List<Thread> userThreads = query.find();
+
+        query = ParseQuery.getQuery(Thread.class);
+
+        query.whereEqualTo(Thread.KEY_OTHER_USER, user);
+
+        userThreads.addAll(query.find());
+
+        return userThreads;
+    }
+
+    public Thread getThreadWith(User otherUser) throws ParseException {
+        List<Thread> threads = getUserThreads();
+        String objectId = otherUser.getObjectID();
+
+        // Brute force. Will implement a hashtable in future to find threads faster.
+        for (int i = 0; i < threads.size(); i++) {
+            if (threads.get(i).getOtherUser().getObjectId().equals(objectId)) {
+                return threads.get(i);
+            }
+        }
+
+        return null;
+    }
+
+    public void addThread(Thread thread) {
+        user.add(KEY_THREADS, thread);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "thread added");
+            }
+        });
+    }
+
+    public void removeThread(Thread thread) { user.removeAll(KEY_THREADS, Arrays.asList(thread));}
+
+    public void like(ParseUser otherUser) {
+        user.add(KEY_LIKED_SELLERS, otherUser.getObjectId());
         user.saveInBackground();
     }
 
-    public void unlike(ParseUser user) {
-        user.removeAll(KEY_LIKED_SELLERS, Arrays.asList(user.getObjectId()));
+    public void unlike(ParseUser otherUser) {
+        user.removeAll(KEY_LIKED_SELLERS, Arrays.asList(otherUser.getObjectId()));
         user.saveInBackground();
     }
 
-    public boolean didLike(ParseUser user) throws JSONException {
+    public boolean didLike(ParseUser otherUser) throws JSONException {
         JSONArray jsonArray = getLikes();
 
         // Check if the likes list is null
@@ -119,7 +171,7 @@ public class User  {
 
         // Get the list of userIds and check if the current user has liked the post.
         List<String> userIds = User.fromJsonArray(jsonArray);
-        return userIds.contains(user.getObjectId());
+        return userIds.contains(otherUser.getObjectId());
     }
 
     public static List<String> fromJsonArray(JSONArray jsonArray) throws JSONException {

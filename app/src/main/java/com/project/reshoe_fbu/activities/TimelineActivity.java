@@ -29,7 +29,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment fragmentMessage = new ThreadFragment();
+        final Fragment fragmentThread = new ThreadFragment();
         final Fragment fragmentProfile = new ProfileFragment();
         final Fragment fragmentTimeline;
 
@@ -46,7 +46,7 @@ public class TimelineActivity extends AppCompatActivity {
             // Based on which item is clicked go to the appropriate fragment
             switch (item.getItemId()) {
                 case R.id.message:
-                    fragment = fragmentMessage;
+                    fragment = fragmentThread;
                     Log.i(TAG,"MESSAGE");
                     break;
                 case R.id.profile:

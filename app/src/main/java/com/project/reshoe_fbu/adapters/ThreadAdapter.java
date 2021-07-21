@@ -1,6 +1,8 @@
 package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +14,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.fragments.MessagesFragment;
+import com.project.reshoe_fbu.models.Message;
+import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.Thread;
+import com.project.reshoe_fbu.models.User;
 
 import java.util.List;
 
@@ -24,6 +32,8 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     private final Context context;
     private final List<Thread> threads;
     private FragmentManager fragmentManager;
+    private ParseUser otherUser;
+    private boolean isAuthor;
 
     // Pass in the context, list of message previews, the user, and the fragment manager
     public ThreadAdapter(Context context, List<Thread> threads, FragmentManager fragmentManager) {
@@ -73,16 +83,47 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         }
 
         // Bind data
-        public void bind(Thread messagePreview) {
-            tvMessagePreview.setText(messagePreview.getPreview());
-            tvOtherUsername.setText(messagePreview.getUsername());
-            Glide.with(context).load(messagePreview.getOtherUser().getParseFile("profilePic").getUrl()).circleCrop().into(ivMessageProfilePic);
+        public void bind(Thread thread) {
+            otherUser = thread.getOtherUser();
+
+            Message message = thread.getLastMessage();
+
+            if (message == null) {
+                tvMessagePreview.setText("");
+            } else {
+                tvMessagePreview.setText(message.getBody());
+            }
+
+            try {
+                String username;
+                ParseFile profilePic;
+                if (otherUser.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                    username = thread.getUser().fetchIfNeeded().getUsername();
+                    profilePic = thread.getUser().fetchIfNeeded().getParseFile("profilePic");
+                    isAuthor = true;
+                } else {
+                    username = thread.getOtherUser().fetchIfNeeded().getUsername();
+                    profilePic = thread.getOtherUser().fetchIfNeeded().getParseFile("profilePic");
+                    isAuthor = false;
+                };
+                tvOtherUsername.setText("@" + username);
+                Glide.with(context).load(profilePic.getUrl()).circleCrop().into(ivMessageProfilePic);
+            } catch (ParseException e) {
+                Log.e(TAG, "Something has gone terribly wrong with Parse", e);
+            }
         }
 
         // If clicked then go to the messages fragment with the other user
         @Override
         public void onClick(View v) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("otherUser", otherUser);
+            bundle.putBoolean("isAuthor", isAuthor);
+            if (isAuthor) {
+                bundle.putParcelable("user", ParseUser.getCurrentUser());
+            }
             Fragment messagesFragment = new MessagesFragment();
+            messagesFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.flContainer, messagesFragment).addToBackStack("back").commit();
         }
     }

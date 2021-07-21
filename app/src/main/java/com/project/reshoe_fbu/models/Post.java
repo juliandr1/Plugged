@@ -117,7 +117,6 @@ public class Post extends ParseObject {
 
         // Check if the likes list is null
         if (jsonArray == null) {
-            Log.i(TAG, "Empty");
             return false;
         }
 

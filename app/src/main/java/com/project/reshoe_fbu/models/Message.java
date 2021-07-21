@@ -6,15 +6,36 @@ import com.parse.ParseObject;
 @ParseClassName("Message")
 public class Message extends ParseObject {
 
-    public static final String AUTHOR_ID = "authorID";
-    public static final String BODY_KEY = "body";
+    public static final String KEY_AUTHOR_ID = "authorID";
+    public static final String KEY_OTHER_ID = "otherUserID";
+    public static final String KEY_AUTHOR = "author";
+    public static final String KEY_OTHER = "otherUser";
+    public static final String KEY_BODY = "body";
 
-    public String getUserId() { return getString(AUTHOR_ID); }
+    public User getAuthor() { return new User(getParseUser(KEY_AUTHOR)); }
 
-    public void setUserId(String userId) { put(AUTHOR_ID, userId); }
+    public void setAuthor(User author) {
+        put(KEY_AUTHOR, author.getUser());
+        setAuthorId(author.getObjectID());
+    }
 
-    public String getBody() { return getString(BODY_KEY); }
+    public User getOtherUser() { return new User(getParseUser(KEY_OTHER)); }
 
-    public void setBody(String body) { put(BODY_KEY, body); }
+    public void setOtherUser(User otherUser) {
+        put(KEY_OTHER, otherUser.getUser());
+        setOtherId(otherUser.getObjectID());
+    }
+
+    public String getAuthorId() { return getString(KEY_AUTHOR_ID); }
+
+    public void setAuthorId(String userId) { put(KEY_AUTHOR_ID, userId); }
+
+    public String getOtherId() { return getString(KEY_OTHER_ID); }
+
+    public void setOtherId(String userId) { put(KEY_OTHER_ID, userId); }
+
+    public String getBody() { return getString(KEY_BODY); }
+
+    public void setBody(String body) { put(KEY_BODY, body); }
 
 }

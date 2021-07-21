@@ -86,7 +86,7 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
         if (isPosting) {
             imageView.setImageBitmap(bitmaps.get(position));
         } else {
-            Glide.with(context).load(images.get(position)).into(imageView);
+            Glide.with(context).load(images.get(position)).override(370, 370).into(imageView);
         }
         // Adding the View
         Objects.requireNonNull(container).addView(itemView);

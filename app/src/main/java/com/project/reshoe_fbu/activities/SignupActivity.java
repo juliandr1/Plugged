@@ -38,6 +38,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // Set the various data points
                 user.setUsername(binding.etUsernameCreate.getText().toString());
                 user.setPassword(binding.etPasswordCreate.getText().toString());
                 user.setEmail(binding.etEmail.getText().toString());

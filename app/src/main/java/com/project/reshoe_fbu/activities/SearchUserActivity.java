@@ -26,6 +26,7 @@ import com.project.reshoe_fbu.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
+// To be changed after messaging feature fully finished
 public class SearchUserActivity extends AppCompatActivity {
 /*
     public static final String TAG = "SearchUserActivity";

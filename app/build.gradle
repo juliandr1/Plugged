@@ -34,6 +34,8 @@ android {
 
 dependencies {
 
+    implementation fileTree(dir: 'libs', include: 'Parse-*.jar')
+
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -52,6 +54,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
-    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.1.0'
+    implementation "com.github.parse-community:ParseLiveQuery-Android:1.2.2"
     implementation "com.google.android.material:material:1.1.0-beta01"
 }

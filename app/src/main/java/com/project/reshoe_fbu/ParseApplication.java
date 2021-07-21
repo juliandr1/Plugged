@@ -22,10 +22,7 @@ public class ParseApplication extends Application {
         // Register your parse models
         ParseObject.registerSubclass(Post.class);// Register your parse models
         ParseObject.registerSubclass(Message.class);// Register your parse models
-        /*
         ParseObject.registerSubclass(Thread.class);// Register your parse models
-
-         */
         ParseObject.registerSubclass(Review.class);// Register your parse models
 
         // Use for monitoring Parse network traffic
@@ -39,9 +36,10 @@ public class ParseApplication extends Application {
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId(getString(R.string.back4app_app_id)) // should correspond to Application Id env variable
-                .clientKey(getString(R.string.back4app_client_key))  // should correspond to Client key env variable
-                .server(getString(R.string.back4app_server_url)).build());
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url)).build()
+        );
 
     }
 }

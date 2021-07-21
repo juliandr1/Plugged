@@ -50,10 +50,11 @@ public class DetailShoeFragment extends Fragment {
 
         try {
             String username = post.getParseUser(Post.KEY_USER).fetchIfNeeded().getUsername();
-            binding.tvDetailSellerUser.setText(username);
+            binding.tvDetailSellerUser.setText("@" + username);
         } catch (ParseException e) {
             Log.e(TAG, "Something has gone terribly wrong with Parse", e);
         }
+
         binding.tvDetailCondition.setText(post.getCondition() + "/10");
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
@@ -76,10 +77,12 @@ public class DetailShoeFragment extends Fragment {
             getActivity().overridePendingTransition(0, 0);
         });
 
-        binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
-
+        // Go to the detailed seller profile
         binding.ibSellerProfile.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("seller", post.getUser());
             Fragment detailedSellerFragment = new DetailedSellerFragment();
+            detailedSellerFragment.setArguments(bundle);
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, detailedSellerFragment).commit();
         });
 

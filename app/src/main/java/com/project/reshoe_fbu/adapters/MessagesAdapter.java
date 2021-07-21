@@ -1,6 +1,7 @@
 package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseException;
 import com.project.reshoe_fbu.models.Message;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.models.User;
 
 import java.util.List;
 
@@ -25,10 +28,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     private final Context context;
     private final List<Message> messages;
-    private final ParseUser user;
+    private final User user;
 
     // Pass in the context, list of messages, and the user
-    public MessagesAdapter(Context context, List<Message> messages, ParseUser user) {
+    public MessagesAdapter(Context context, List<Message> messages, User user) {
         this.context = context;
         this.messages = messages;
         this.user = user;
@@ -39,6 +42,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+
+        Log.i(TAG, ""+viewType);
 
         if (viewType == MESSAGE_INCOMING) {
             View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
@@ -56,8 +61,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         // Get the data at position
         Message message = messages.get(position);
+        Log.i(TAG, message.getBody() + " onBind");
         // Bind the tweet with view holder
-        holder.bindMessage(message);
+        try {
+            holder.bindMessage(message);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
     }
 
     // Return amount of posts
@@ -77,16 +87,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     private boolean isMe(int position) {
         Message message = messages.get(position);
-        return message.getUserId() != null && message.getUserId().equals(user.getObjectId());
+        return message.getAuthorId() != null && message.getAuthorId().equals(user.getObjectID());
     }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+        public MessageViewHolder(@NonNull View itemView) { super(itemView); }
 
-        abstract void bindMessage(Message message);
+        abstract void bindMessage(Message message) throws ParseException;
     }
 
     public class IncomingMessageViewHolder extends MessageViewHolder {
@@ -102,8 +110,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
 
         @Override
-        public void bindMessage(Message message) {
-            // TODO: implement later
+        public void bindMessage(Message message) throws ParseException {
+            Glide.with(context)
+                    .load(message.getAuthor().getProfilePicURL())
+                    .circleCrop() // create an effect of a round profile picture
+                    .into(imageOther);
+            Log.i(TAG, message.getBody());
+            body.setText(message.getBody());
+            name.setText(message.getAuthor().getUsername());
         }
     }
 
@@ -118,12 +132,11 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
 
         @Override
-        public void bindMessage(Message message) {
-            // TODO: implement later
-
+        public void bindMessage(Message message) throws ParseException {
             Glide.with(context)
-                    .load(user.getParseFile("profilePic").getUrl()).circleCrop().into(imageMe);
-
+                    .load(message.getAuthor().getProfilePicURL())
+                    .circleCrop() // create an effect of a round profile picture
+                    .into(imageMe);
             body.setText(message.getBody());
         }
 

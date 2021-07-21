@@ -34,11 +34,8 @@ public class SearchPostFragment extends Fragment {
 
     public static final String TAG = "SearchPostActivity";
 
-    private RecyclerView rvSearches;
-    private Context context;
     private PostSearchAdapter adapter;
     private List<Post> searches;
-    private SearchView searchView;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -50,11 +47,12 @@ public class SearchPostFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         FragmentSearchPostBinding binding = FragmentSearchPostBinding.bind(view);
 
-        context = getActivity();
+        Context context = getActivity();
 
+        // Init
         searches = new ArrayList<>();
         adapter = new PostSearchAdapter(context, searches, getActivity().getSupportFragmentManager());
-        rvSearches = binding.rvSearches;
+        RecyclerView rvSearches = binding.rvSearches;
         rvSearches.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -68,8 +66,11 @@ public class SearchPostFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        searchView = (SearchView) item.getActionView();
+        // Instantiate the search view
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setQueryHint("Search for shoes...");
+        // When somebody clicks on the searchview, query posts with those shoe names
+        // as the user changes the input text.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -86,10 +87,11 @@ public class SearchPostFragment extends Fragment {
         return true;
     }
 
+    // Query for posts that contain the desired shoe.
     private void querySearch(String str) {
         if (!str.isEmpty()) {
             ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-            ;
+
             query.whereContains("shoeNameSearch", str.toLowerCase());
             query.setLimit(20);
             // Order the posts by date
@@ -106,8 +108,6 @@ public class SearchPostFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             });
         }
-
-
     }
 
     @Override

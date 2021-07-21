@@ -33,12 +33,9 @@ public class UserPreferencesSellerFragment extends Fragment {
 
         FragmentUserPreferencesSellerBinding binding = FragmentUserPreferencesSellerBinding.bind(view);
 
-        binding.btnBackUserPrefSeller.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        binding.btnBackUserPrefSeller.setOnClickListener(v -> {
                 Log.i(TAG, "clicked");
                 getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
+            });
     }
 }

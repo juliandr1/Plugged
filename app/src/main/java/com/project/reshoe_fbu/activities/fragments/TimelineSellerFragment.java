@@ -22,6 +22,7 @@ import android.widget.SearchView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.project.reshoe_fbu.activities.PostActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
@@ -75,8 +76,16 @@ public class TimelineSellerFragment extends Fragment {
         rvSellerPosts.setAdapter(adapter);
 
         // Load profile picture
-        Glide.with(view).load(user.getProfilePicURL()).transform(new RoundedCorners(300)).into(binding.ivSellerProfilePic);
-        binding.tvUserName.setText("@" + user.getUsername());
+        try {
+            Glide.with(view).load(user.getProfilePicURL()).transform(new RoundedCorners(300)).into(binding.ivSellerProfilePic);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
+        try {
+            binding.tvUserName.setText("@" + user.getUsername());
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
 
         // Check to see if the user has added a description
         String description = user.getDescription();

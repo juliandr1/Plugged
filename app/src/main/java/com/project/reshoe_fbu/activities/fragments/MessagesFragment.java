@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,23 +26,42 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
+import com.project.reshoe_fbu.models.Thread;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MessagesFragment extends Fragment {
 
     public static final String TAG = "MessagesFragment";
-    public static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
+    private User otherUser, currentUser;
     private List<Message> messages;
     private MessagesAdapter adapter;
     private FragmentMessagesBinding binding;
-    private boolean firstLoad;
+    private boolean firstMessage, isAuthor;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        otherUser = new User(getArguments().getParcelable("otherUser"));
+        currentUser = new User(ParseUser.getCurrentUser());
+        //
+        isAuthor = getArguments().getBoolean("isAuthor");
+
+        if (isAuthor) {
+            otherUser = new User(getArguments().getParcelable("user"));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,10 +75,29 @@ public class MessagesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMessagesBinding.bind(view);
 
-        refreshMessages();
-        setupMessagePosting();
+        messages = new ArrayList<>();
+        adapter = new MessagesAdapter(getActivity(), messages, currentUser);
+        binding.rvChat.setAdapter(adapter);
 
-        String websocketUrl = "wss://reshoe>.back4app.io/";
+        // associate the LayoutManager with the RecylcerView
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        binding.rvChat.setLayoutManager(linearLayoutManager);
+
+        try {
+            firstMessage = isFirstMessage();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "Is first message?: " + firstMessage);
+
+        try {
+            refreshMessages();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String websocketUrl = getString(R.string.back4app_server_uri);
 
         ParseLiveQueryClient parseLiveQueryClient = null;
         try {
@@ -68,91 +107,92 @@ public class MessagesFragment extends Fragment {
         }
 
         ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
-        // This query can even be more granular (i.e. only refresh if the entry was added by some other user)
-        // parseQuery.whereNotEqualTo(USER_ID_KEY, ParseUser.getCurrentUser().getObjectId());
+        parseQuery = parseQuery.whereEqualTo(Message.KEY_OTHER_ID, otherUser.getObjectID());
 
         // Connect to Parse server
         SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
 
         // Listen for CREATE events on the Message class
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
+            Log.i(TAG, "ADDED!");
             messages.add(0, object);
             // RecyclerView updates need to be run on the UI thread
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.notifyDataSetChanged();
-                    binding.rvChat.scrollToPosition(0);
-                }
+            getActivity().runOnUiThread(() -> {
+                adapter.notifyDataSetChanged();
+                binding.rvChat.scrollToPosition(0);
             });
         });
+
+        binding.ibSend.setOnClickListener(view1 -> sendMessage());
     }
 
     // Set up button event handler which posts the entered message to Parse
-    void setupMessagePosting() {
-
-        ParseUser currentUser = ParseUser.getCurrentUser();
-
-        messages = new ArrayList<>();
-        firstLoad = true;
-        final String userId = ParseUser.getCurrentUser().getObjectId();
-        adapter = new MessagesAdapter(getActivity(), messages, currentUser);
-        binding.rvChat.setAdapter(adapter);
-
-        // associate the LayoutManager with the RecylcerView
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setReverseLayout(true);
-        binding.rvChat.setLayoutManager(linearLayoutManager);
-
+    public void sendMessage() {
         // When send button is clicked, create message object on Parse
-        binding.ibSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String data = binding.etMessage.getText().toString();
-                ParseObject message = ParseObject.create("Message");
-                message.put(Message.AUTHOR_ID, ParseUser.getCurrentUser().getObjectId());
-                message.put(Message.BODY_KEY, data);
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Toast.makeText(getActivity(), "Successfully created message on Parse",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e(TAG, "Failed to save message", e);
+            Message newMessage = new Message();
+            newMessage.setAuthor(currentUser);
+            newMessage.setOtherUser(otherUser);
+            newMessage.setBody(binding.etMessage.getText().toString());
+
+            newMessage.saveInBackground(e -> {
+                if (e == null) {
+                    Toast.makeText(getActivity(), "Successfully created message on Parse",
+                            Toast.LENGTH_SHORT).show();
+                    if (firstMessage) {
+                        Log.i(TAG, "New Thread ");
+                        Thread thread = new Thread();
+                        thread.setLastSentTimestamp(new Date());
+                        thread.setUser(currentUser);
+                        thread.setOtherUser(otherUser);
+                        thread.addMessage(newMessage);
+                        currentUser.addThread(thread);
+                        firstMessage = false;
+                    } else {
+                        try {
+                            Thread thread = currentUser.getThreadWith(otherUser);
+                            thread.addMessage(newMessage);
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
                         }
                     }
-                });
-                binding.etMessage.setText(null);
-            }
-        });
+
+                } else {
+                    Log.e(TAG, "Failed to save message", e);
+                }
+            });
+            binding.etMessage.setText(null);
     }
 
-    void refreshMessages() {
-        // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        // Configure limit and sort order
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-
-        // get the latest 50 messages, order will show up newest to oldest of this group
-        query.orderByDescending("createdAt");
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
-        query.findInBackground(new FindCallback<Message>() {
-            public void done(List<Message> messages, ParseException e) {
-                if (e == null) {
-                    messages.clear();
-                    messages.addAll(messages);
-                    adapter.notifyDataSetChanged(); // update adapter
-                    // Scroll to the bottom of the list on initial load
-                    if (firstLoad) {
-                        binding.rvChat.scrollToPosition(0);
-                        firstLoad = false;
-                    }
-                } else {
-                    Log.e("message", "Error Loading Messages" + e);
-                }
+    public void refreshMessages() throws ParseException {
+        if (!firstMessage) {
+            if (isAuthor) {
+                messages.addAll(otherUser.getThreadWith(currentUser).getThreadMessages());
+            } else {
+                messages = currentUser.getThreadWith(otherUser).getThreadMessages();
             }
-        });
+            Log.i(TAG, "# of messages: " + messages.size());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public boolean isFirstMessage() throws ParseException {
+
+        Log.i(TAG, "Current User: " + currentUser.getUsername());
+        Log.i(TAG, "Other User: " + otherUser.getUsername());
+
+        List<Thread> threads = currentUser.getUserThreads();
+
+        if (threads == null) {
+            return true;
+        }
+
+        String otherID = otherUser.getObjectID();
+
+        for (int i = 0; i < threads.size(); i++) {
+            if (threads.get(i).getOtherUser().getObjectId().equals(otherID)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
