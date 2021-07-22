@@ -29,46 +29,33 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
     public static String TAG = "UserSearchAdapter";
 
-    private final Context context;
+    private final Context mContext;
     private final List<ParseUser> searchUsers;
 
-    // Pass in the context, list of posts, and user
     public UserSearchAdapter(Context context, List<ParseUser> searchUsers) {
-        this.context = context;
+        this.mContext = context;
         this.searchUsers = searchUsers;
     }
 
-    // For each row, inflate the layout
     @Override
     public UserSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_user_message_preview, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_user_message_preview,
+                parent, false);
 
         return new UserSearchAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull UserSearchAdapter.ViewHolder holder, int position) {
-        // Get the data at position
         ParseUser user = searchUsers.get(position);
-        // Bind the tweet with view holder
-        try {
-            holder.bind(user);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        holder.bind(user);
     }
 
-    // Return amount of posts
     @Override
     public int getItemCount() {
         return searchUsers.size();
     }
 
-    // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView ivSearchUser;
@@ -84,10 +71,13 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
-        public void bind(ParseUser user) throws JSONException, MalformedURLException, URISyntaxException {
+        public void bind(ParseUser user) {
             tvSearchUsername.setText("@" + user.getUsername());
 
-            Glide.with(context).load(user.getParseFile("profilePic").getUrl()).into(ivSearchUser);
+            Glide.with(mContext).
+                    load(user.getParseFile("profilePic").
+                            getUrl()).
+                    into(ivSearchUser);
         }
 
         @Override

@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.parse.ParseException;
 import com.project.reshoe_fbu.models.Message;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.models.User;
 
 import java.util.List;
@@ -30,33 +29,32 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     private final List<Message> messages;
     private final User user;
 
-    // Pass in the context, list of messages, and the user
     public MessagesAdapter(Context context, List<Message> messages, User user) {
         this.context = context;
         this.messages = messages;
         this.user = user;
     }
 
-    // For each row, inflate the layout
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        Log.i(TAG, ""+viewType);
+        Log.i(TAG, "" + viewType);
 
         if (viewType == MESSAGE_INCOMING) {
-            View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
+            View contactView = inflater.inflate(R.layout.message_incoming, parent,
+                    false);
             return new IncomingMessageViewHolder(contactView);
         } else if (viewType == MESSAGE_OUTGOING) {
-            View contactView = inflater.inflate(R.layout.messages_outgoing, parent, false);
+            View contactView = inflater.inflate(R.layout.messages_outgoing, parent,
+                    false);
             return new OutgoingMessageViewHolder(contactView);
         } else {
             throw new IllegalArgumentException("Unknown view type");
         }
     }
 
-    // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         // Get the data at position
@@ -70,7 +68,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
-    // Return amount of posts
     @Override
     public int getItemCount() {
         return messages.size();
@@ -99,48 +96,47 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     public class IncomingMessageViewHolder extends MessageViewHolder {
         ImageView imageOther;
-        TextView body;
+        TextView tvBodyIncoming;
         TextView name;
 
         public IncomingMessageViewHolder(View itemView) {
             super(itemView);
-            imageOther = (ImageView)itemView.findViewById(R.id.ivProfileOther);
-            body = (TextView)itemView.findViewById(R.id.tvBody);
-            name = (TextView)itemView.findViewById(R.id.tvName);
+            imageOther = itemView.findViewById(R.id.ivProfileOther);
+            tvBodyIncoming = itemView.findViewById(R.id.tvBody);
+            name = itemView.findViewById(R.id.tvName);
         }
 
         @Override
         public void bindMessage(Message message) throws ParseException {
             Glide.with(context)
                     .load(message.getAuthor().getProfilePicURL())
-                    .circleCrop() // create an effect of a round profile picture
+                    .circleCrop()
                     .into(imageOther);
             Log.i(TAG, message.getBody());
-            body.setText(message.getBody());
+            tvBodyIncoming.setText(message.getBody());
             name.setText(message.getAuthor().getUsername());
         }
     }
 
     public class OutgoingMessageViewHolder extends MessageViewHolder {
         ImageView imageMe;
-        TextView body;
+        TextView tvBodyMe;
 
         public OutgoingMessageViewHolder(View itemView) {
             super(itemView);
-            imageMe = (ImageView) itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView) itemView.findViewById(R.id.tvBody);
+            imageMe = itemView.findViewById(R.id.ivProfileMe);
+            tvBodyMe = itemView.findViewById(R.id.tvBody);
         }
 
         @Override
         public void bindMessage(Message message) throws ParseException {
             Glide.with(context)
                     .load(message.getAuthor().getProfilePicURL())
-                    .circleCrop() // create an effect of a round profile picture
+                    .circleCrop()
                     .into(imageMe);
-            body.setText(message.getBody());
+            tvBodyMe.setText(message.getBody());
         }
 
-        // Clean all elements of the recycler
         public void clear() {
             messages.clear();
             notifyDataSetChanged();

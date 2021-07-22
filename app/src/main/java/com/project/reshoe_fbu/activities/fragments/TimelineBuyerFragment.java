@@ -36,9 +36,7 @@ public class TimelineBuyerFragment extends Fragment {
     private PostsAdapter adapter;
     private List<Post> posts;
 
-    public TimelineBuyerFragment() {
-        // Required empty public constructor
-    }
+    public TimelineBuyerFragment() { }
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -54,28 +52,34 @@ public class TimelineBuyerFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull @org.jetbrains.annotations.NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @org.jetbrains.annotations.NotNull View view, @Nullable
+    @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         FragmentTimelineBuyerBinding binding = FragmentTimelineBuyerBinding.bind(view);
 
         User currentUser = new User(ParseUser.getCurrentUser());
-        // Find the Recycler View
+
         RecyclerView rvPosts = binding.rvPosts;
-        // Init the list of posts and setup the adapter.
+
         posts = new ArrayList<>();
-        adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().getSupportFragmentManager());
-        // Recycler view setup: layout manager and the adapter
+        adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
+                getSupportFragmentManager());
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
 
         queryPosts();
     }
-    // Get all the posts in the database, including the ones for the current user.
+
+    /*
+        Get all the posts in the database.
+     */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
+
         query.setLimit(20);
         // Order the posts by date
         query.addDescendingOrder("createdAt");
@@ -102,7 +106,12 @@ public class TimelineBuyerFragment extends Fragment {
 
         if (item.getItemId() == R.id.searchBuyer) {
             Fragment searchPost = new SearchPostFragment();
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, searchPost).addToBackStack("back").commit();
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, searchPost).
+                    addToBackStack("back").
+                    commit();
         }
 
         return super.onOptionsItemSelected(item);

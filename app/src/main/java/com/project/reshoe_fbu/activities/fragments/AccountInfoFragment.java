@@ -23,19 +23,18 @@ public class AccountInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_account_info, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentAccountInfoBinding binding = FragmentAccountInfoBinding.bind(view);
 
         User currentUser = new User(ParseUser.getCurrentUser());
 
-        // Load user data
         binding.tvFirstNameInfo.setText(currentUser.getFirstName());
         binding.tvLastNameInfo.setText(currentUser.getLastName());
         binding.tvEmailInfo.setText(currentUser.getEmail());
@@ -45,28 +44,15 @@ public class AccountInfoFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        // Goes to a fragment that allows the user to change username
-        binding.btnChangeUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To be implemented in strech
-            }
+        binding.btnChangeUsername.setOnClickListener(v -> {
+            // To be implemented in strech
         });
 
-        // Goes to a fragment that allows the user to change password
-        binding.btnChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To be implemented in stretch
-            }
+        binding.btnChangePassword.setOnClickListener(v -> {
+            // To be implemented in stretch
         });
 
-        // Goes back to the previous fragment
-        binding.btnBackInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
+        binding.btnBackInfo.setOnClickListener(v -> getActivity().getSupportFragmentManager().
+                popBackStack());
     }
 }

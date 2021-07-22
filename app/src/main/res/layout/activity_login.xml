@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
 
     android:background="#FFFFFF"
-    tools:context="com.project.reshoe_fbu.activities.LoginActivity">
+    tools:context="com.project.reshoe_fbu.activities.LoginActivity"
+    >
 
     <ImageView
         android:id="@+id/ivLogo2"
@@ -19,7 +20,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="33dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <EditText
         android:id="@+id/etUsername"
@@ -35,7 +37,8 @@
         android:ems="10"
         android:hint="@string/username"
         android:inputType="textPersonName"
-        android:outlineProvider="none" />
+        android:outlineProvider="none"
+        />
 
     <EditText
         android:id="@+id/etPassword"
@@ -50,7 +53,8 @@
         android:background="@drawable/border"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        />
 
     <Button
         android:id="@+id/btnsignup"
@@ -64,7 +68,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="#0EB620"
-        android:text="@string/sign_up" />
+        android:text="@string/sign_up"
+        />
 
     <Button
         android:id="@+id/btnLogin"
@@ -78,6 +83,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="#518FEC"
-        android:text="@string/log_in" />
+        android:text="@string/log_in"
+        />
 
 </RelativeLayout>

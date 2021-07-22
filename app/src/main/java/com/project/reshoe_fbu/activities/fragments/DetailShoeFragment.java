@@ -41,12 +41,11 @@ public class DetailShoeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentDetailShoeBinding binding = FragmentDetailShoeBinding.bind(view);
-
-        // Load post data
 
         try {
             String username = post.getParseUser(Post.KEY_USER).fetchIfNeeded().getUsername();
@@ -65,25 +64,35 @@ public class DetailShoeFragment extends Fragment {
         currencyString = currencyString.replaceAll("\\.00", "");
         binding.tvPriceDetailed.setText(currencyString);
 
-        Glide.with(view).load(Objects.requireNonNull(post.getUser().getParseFile("profilePic")).getUrl()).circleCrop().into(binding.ibSellerProfile);
+        try {
+            Glide.with(view).
+                    load(Objects.requireNonNull(post.getUser().getProfilePicURL())).
+                            circleCrop().
+                            into(binding.ibSellerProfile);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
 
-        // Return back to the previous fragment (timeline)
-        binding.btnBackDetail.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+        binding.btnBackDetail.setOnClickListener(v -> getActivity().
+                getSupportFragmentManager().
+                popBackStack());
 
-        // Go to checkout (activity or fragment?)
         binding.btnCheckout.setOnClickListener(v -> {
             Intent i = new Intent(getActivity(), CheckoutActivity.class);
             startActivity(i);
             getActivity().overridePendingTransition(0, 0);
         });
 
-        // Go to the detailed seller profile
         binding.ibSellerProfile.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putParcelable("seller", post.getUser());
+            bundle.putParcelable("seller", post.getUser().getUser());
             Fragment detailedSellerFragment = new DetailedSellerFragment();
             detailedSellerFragment.setArguments(bundle);
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, detailedSellerFragment).commit();
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, detailedSellerFragment).
+                    commit();
         });
 
         try {

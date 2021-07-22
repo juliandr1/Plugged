@@ -33,30 +33,29 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
 
     public static String TAG = "PostSearchAdapter";
 
-    private final Context context;
+    private final Context mContext;
     private final List<Post> searchPosts;
     private final FragmentManager fragmentManager;
 
-    // Pass in the context, list of posts, and user
     public PostSearchAdapter(Context context, List<Post> searchPosts, FragmentManager fm) {
-        this.context = context;
+        this.mContext = context;
         this.searchPosts = searchPosts;
         this.fragmentManager = fm;
     }
 
-    // For each row, inflate the layout
     @Override
     public PostSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_search_post, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_search_post, parent,
+                false);
 
         return new PostSearchAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull PostSearchAdapter.ViewHolder holder, int position) {
-        // Get the data at position
+    public void onBindViewHolder(@NonNull @NotNull PostSearchAdapter.ViewHolder holder,
+                                 int position) {
         Post post = searchPosts.get(position);
-        // Bind the tweet with view holder
+
         try {
             holder.bind(post);
         } catch (JSONException e) {
@@ -64,13 +63,11 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
         }
     }
 
-    // Return amount of posts
     @Override
     public int getItemCount() {
         return searchPosts.size();
     }
 
-    // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView ivPhotoPreview;
@@ -91,7 +88,7 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             tvShoeTitle.setText(post.getShoeName());
             tvSearchDescription.setText(post.getDescription());
 
-            Glide.with(context).load(post.getImageUrls().get(0)).into(ivPhotoPreview);
+            Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivPhotoPreview);
         }
 
         @Override
@@ -104,7 +101,11 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
                 bundle.putParcelable("post", post);
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.flContainer, detailShoeFragment).addToBackStack("back").commit();
+                fragmentManager.
+                        beginTransaction().
+                        replace(R.id.flContainer, detailShoeFragment).
+                        addToBackStack("back").
+                        commit();
             }
         }
     }

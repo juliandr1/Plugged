@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineBuyerFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineBuyerFragment"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPosts"
@@ -14,6 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="-1dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="56dp" />
+        tools:layout_editor_absoluteY="56dp"
+        />
 
 </RelativeLayout>

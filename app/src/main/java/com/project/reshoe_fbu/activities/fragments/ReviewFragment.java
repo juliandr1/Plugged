@@ -35,12 +35,12 @@ public class ReviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_review, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentReviewBinding binding = FragmentReviewBinding.bind(view);
@@ -48,23 +48,24 @@ public class ReviewFragment extends Fragment {
         // Find the Recycler View
         RecyclerView rvReviews = binding.rvReviews;
 
-        // Create a list of all the message previews and set up adapter
         reviews = new ArrayList<>();
         adapter = new ReviewsAdapter(getActivity(), reviews, getFragmentManager());
-        // Recycler view setup: layout manager and the adapter
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvReviews.setLayoutManager(layoutManager);
         rvReviews.setAdapter(adapter);
 
-        binding.btnBackReview.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+        binding.btnBackReview.setOnClickListener(v -> getActivity().
+                getSupportFragmentManager().
+                popBackStack());
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
+            MenuInflater inflater) {
         inflater.inflate(R.menu.menu_review, menu);
     }
 
-    // Implement review creation view
     @Override
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineSellerFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.TimelineSellerFragment"
+    >
 
     <ImageView
         android:id="@+id/ivSellerProfilePic"
@@ -14,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="52dp"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvSellerDescription"
@@ -28,7 +30,8 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivSellerProfilePic"
-        tools:text="hello i sell jordans and yeezys" />
+        tools:text="hello i sell jordans and yeezys"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSellerPosts"
@@ -37,7 +40,8 @@
         android:layout_below="@+id/tvSellerUsername"
         android:layout_alignParentStart="true"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="6dp"
+        />
 
     <Button
         android:id="@+id/btnMessage"
@@ -47,7 +51,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="55dp"
         android:layout_toEndOf="@+id/btnLikeSeller"
-        android:background="@drawable/ic_vector_messages" />
+        android:background="@drawable/ic_vector_messages"
+        />
 
     <Button
         android:id="@+id/btnLikeSeller"
@@ -57,7 +62,8 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="55dp"
         android:layout_toEndOf="@+id/ivSellerProfilePic"
-        android:background="@drawable/heart_outline" />
+        android:background="@drawable/heart_outline"
+        />
 
     <Button
         android:id="@+id/btnBackDetail"
@@ -67,7 +73,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="13dp"
-        android:background="@drawable/back_arrow" />
+        android:background="@drawable/back_arrow"
+        />
 
     <TextView
         android:id="@+id/tvSellerUsername"
@@ -77,7 +84,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        tools:text='"@huncho"' />
+        tools:text='"@huncho"'
+        />
 
     <Button
         android:id="@+id/btnReview"
@@ -89,7 +97,8 @@
         android:layout_marginTop="55dp"
         android:layout_marginEnd="31dp"
         android:layout_toEndOf="@+id/btnMessage"
-        android:background="@drawable/review" />
+        android:background="@drawable/review"
+        />
 
     <TextView
         android:id="@+id/tvRating"
@@ -99,7 +108,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvSellerUsername"
-        tools:text="4.8" />
+        tools:text="4.8"
+        />
 
     <ImageView
         android:id="@+id/ivStar"
@@ -109,6 +119,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvRating"
-        android:src="@drawable/rating" />
+        android:src="@drawable/rating"
+        />
 
 </RelativeLayout>

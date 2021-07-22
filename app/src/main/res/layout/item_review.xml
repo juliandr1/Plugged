@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/ivReviewerProfile"
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="26dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvReviewerUser"
@@ -23,7 +25,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="29dp"
         android:layout_toEndOf="@+id/ivReviewerProfile"
-        tools:text='"@huncho"' />
+        tools:text='"@huncho"'
+        />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -36,7 +39,8 @@
         android:layout_toEndOf="@+id/tvReviewerUser"
         android:numStars="5"
         android:progressTint="#F5DD02"
-        android:isIndicator="true"/>
+        android:isIndicator="true"
+        />
 
     <TextView
         android:id="@+id/tvReview"
@@ -47,5 +51,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@+id/ivReviewerProfile" />
+        android:layout_toEndOf="@+id/ivReviewerProfile"
+        />
+
 </RelativeLayout>

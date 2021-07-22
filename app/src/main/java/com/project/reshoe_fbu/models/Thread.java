@@ -44,13 +44,14 @@ public class Thread extends ParseObject {
 
     public Date getLastMessageReceived() { return getDate(KEY_LAST_MESSAGE_RECEIVED); }
 
-    public void setLastMessageReceived(Date lastReceived) { put(KEY_LAST_MESSAGE_RECEIVED, lastReceived); }
+    public void setLastMessageReceived(Date lastReceived) { put(KEY_LAST_MESSAGE_RECEIVED,
+            lastReceived); }
 
-    public ParseUser getOtherUser() { return getParseUser(KEY_OTHER_USER); }
+    public User getOtherUser() { return new User(getParseUser(KEY_OTHER_USER)); }
 
     public void setOtherUser(User otherUser) { put(KEY_OTHER_USER, otherUser.getUser()); }
 
-    public ParseUser getUser() { return getParseUser(KEY_USER); }
+    public User getUser() { return new User(getParseUser(KEY_USER)); }
 
     public void setUser(User user) { put(KEY_USER, user.getUser()); }
 
@@ -62,9 +63,10 @@ public class Thread extends ParseObject {
         List<Message> messages;
 
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.addDescendingOrder("created_at");
 
-        ParseUser user = getUser();
-        ParseUser otherUser = getOtherUser();
+        ParseUser user = getUser().getUser();
+        ParseUser otherUser = getOtherUser().getUser();
 
         query.whereEqualTo(Message.KEY_AUTHOR, user);
         query.whereEqualTo(Message.KEY_OTHER, otherUser);
@@ -72,6 +74,7 @@ public class Thread extends ParseObject {
         messages = query.find();
 
         query = ParseQuery.getQuery(Message.class);
+        query.addDescendingOrder("created_at");
 
         query.whereEqualTo(Message.KEY_AUTHOR, otherUser);
         query.whereEqualTo(Message.KEY_OTHER_ID, user);

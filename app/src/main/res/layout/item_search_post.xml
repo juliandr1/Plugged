@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/ivPhotoPreview"
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvSearchDescription"
@@ -24,7 +26,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="61dp"
         android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@+id/ivPhotoPreview" />
+        android:layout_toEndOf="@+id/ivPhotoPreview"
+        />
 
     <TextView
         android:id="@+id/tvShoeTitle"
@@ -37,5 +40,7 @@
         android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/ivPhotoPreview"
         android:textSize="20sp"
-        tools:text="YEEZY 350 BOOST BRED V2" />
+        tools:text="YEEZY 350 BOOST BRED V2"
+        />
+
 </RelativeLayout>

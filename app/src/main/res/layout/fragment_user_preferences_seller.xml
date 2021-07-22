@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.fragments.UserPreferencesSellerFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.UserPreferencesSellerFragment"
+    >
 
 
     <Switch
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="32dp"
         android:layout_marginTop="140dp"
-        android:text="@string/notifications" />
+        android:text="@string/notifications"
+        />
 
     <Switch
         android:id="@+id/swLocation"
@@ -23,7 +25,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="31dp"
         android:layout_marginTop="180dp"
-        android:text="@string/share_location" />
+        android:text="@string/share_location"
+        />
 
     <Button
         android:id="@+id/btnBackUserPrefSeller"
@@ -33,5 +36,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="13dp"
-        android:background="@drawable/back_arrow" />
+        android:background="@drawable/back_arrow"
+        />
+
 </RelativeLayout>

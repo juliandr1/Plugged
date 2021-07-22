@@ -24,14 +24,17 @@ public class UserPreferencesSellerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_preferences_seller, container, false);
+        return inflater.inflate(R.layout.fragment_user_preferences_seller, container,
+                false);
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentUserPreferencesSellerBinding binding = FragmentUserPreferencesSellerBinding.bind(view);
+        FragmentUserPreferencesSellerBinding binding = FragmentUserPreferencesSellerBinding.
+                bind(view);
 
         binding.btnBackUserPrefSeller.setOnClickListener(v -> {
                 Log.i(TAG, "clicked");

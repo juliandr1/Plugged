@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.ActivityLoginBinding;
 import com.parse.ParseUser;
 
@@ -30,35 +32,32 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         context = this;
-        // Attempt to login, using the login button
+
         binding.btnLogin.setOnClickListener(v -> {
             String username = binding.etUsername.getText().toString();
             String password = binding.etPassword.getText().toString();
             loginUser(username, password);
         });
 
-        // Go to the register activity in order to create an account
         binding.btnsignup.setOnClickListener(v -> {
             Intent intent = new Intent(context, SignupActivity.class);
             startActivity(intent);
         });
     }
 
-    // Login by checking if the user exists in the database. If yes go to their timeline, if not
-    // show a toast saying they could not login.
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login: " + username);
         ParseUser.logInInBackground(username, password, (user, e) -> {
             if (e != null) {
                 Log.e(TAG, "Issue with login", e);
-                Toast.makeText(context, "Username and password combination is incorrect or does not exist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.error_login), Toast.LENGTH_SHORT).show();
                 return;
             }
             goMainActivity();
 
         });
     }
-    // Go to the timeline.
+
     private void goMainActivity() {
         Intent intent = new Intent(this, TimelineActivity.class);
         startActivity(intent);

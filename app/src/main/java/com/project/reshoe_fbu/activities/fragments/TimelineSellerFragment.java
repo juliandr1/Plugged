@@ -58,7 +58,9 @@ public class TimelineSellerFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         FragmentTimelineSellerBinding binding = FragmentTimelineSellerBinding.bind(view);
@@ -67,17 +69,19 @@ public class TimelineSellerFragment extends Fragment {
 
         RecyclerView rvSellerPosts = binding.rvSellerPosts;
 
-        // Setup the adapter and create a new list of posts
         posts = new ArrayList<>();
-        adapter = new PostsAdapter(getActivity(), posts, user, getActivity().getSupportFragmentManager());
-        // Recycler view setup: layout manager and the adapter
+        adapter = new PostsAdapter(getActivity(), posts, user, getActivity().
+                getSupportFragmentManager());
+
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rvSellerPosts.setLayoutManager(layoutManager);
         rvSellerPosts.setAdapter(adapter);
 
-        // Load profile picture
         try {
-            Glide.with(view).load(user.getProfilePicURL()).transform(new RoundedCorners(300)).into(binding.ivSellerProfilePic);
+            Glide.with(view).
+                    load(user.getProfilePicURL()).
+                    transform(new RoundedCorners(300)).
+                    into(binding.ivSellerProfilePic);
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
@@ -87,7 +91,6 @@ public class TimelineSellerFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        // Check to see if the user has added a description
         String description = user.getDescription();
         if (description != null) {
             binding.tvSellerDescription.setText(description);
@@ -97,7 +100,8 @@ public class TimelineSellerFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
+            MenuInflater inflater) {
         inflater.inflate(R.menu.menu_seller, menu);
     }
 
@@ -113,7 +117,9 @@ public class TimelineSellerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    // Get all the posts in the database, including the ones for the current user.
+      /*
+         Get all the current seller's posts
+      */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo("user", user.getUser());

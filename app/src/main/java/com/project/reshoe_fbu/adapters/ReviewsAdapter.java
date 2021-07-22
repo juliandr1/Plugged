@@ -33,39 +33,34 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     public static String TAG = "ReviewsAdapter";
 
-    private final Context context;
+    private final Context mContext;
     private final List<Review> reviews;
     private final FragmentManager fragmentManager;
 
-    // Pass in the context, list of posts, and user
     public ReviewsAdapter(Context context, List<Review> reviews, FragmentManager fragmentManager) {
-        this.context = context;
+        this.mContext = context;
         this.reviews = reviews;
         this.fragmentManager = fragmentManager;
     }
 
-    // For each row, inflate the layout
     @Override
     public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent,
+                false);
         return new ReviewsAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ReviewsAdapter.ViewHolder holder, int position) {
-        // Get the data at position
         Review review = reviews.get(position);
-        // Bind the tweet with view holder
         holder.bind(review);
     }
 
-    // Return amount of posts
     @Override
     public int getItemCount() {
         return reviews.size();
     }
 
-    // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView ivReviewerProfile;
@@ -80,7 +75,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             tvReview = itemView.findViewById(R.id.tvReview);
             ratingBar = itemView.findViewById(R.id.ratingBar);
 
-            // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
         }
 
@@ -91,7 +85,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
             ParseFile image = review.getAuthor().getParseFile("profilePic");
 
-            Glide.with(context).load(image.getUrl()).into(ivReviewerProfile);
+            Glide.with(mContext).load(image.getUrl()).into(ivReviewerProfile);
         }
 
         @Override
@@ -100,7 +94,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         }
     }
 
-    // Clean all elements of the recycler
     public void clear() {
         reviews.clear();
         notifyDataSetChanged();

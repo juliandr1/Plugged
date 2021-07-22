@@ -34,14 +34,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     public static String TAG = "PostsAdapter";
 
-    private final Context context;
+    private final Context mContext;
     private final List<Post> posts;
     private final User user;
     private final FragmentManager fragmentManager;
 
-    // Pass in the context, list of posts, and user
     public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager fragmentManager) {
-        this.context = context;
+        this.mContext = context;
         this.posts = posts;
         this.user = user;
         this.fragmentManager = fragmentManager;
@@ -52,38 +51,32 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (user.getIsSeller()) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent,
+                    false);
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_post_buyer, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_post_buyer, parent,
+                    false);
         }
 
         return new ViewHolder(view);
     }
 
-    // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get the data at position
         Post post = posts.get(position);
-        // Bind the tweet with view holder
+
         try {
             holder.bind(post);
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         }
     }
 
-    // Return amount of posts
     @Override
     public int getItemCount() {
         return posts.size();
     }
 
-    // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView ivImage;
@@ -132,7 +125,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         }
 
-        public void bind(Post post) throws JSONException, MalformedURLException, URISyntaxException {
+        public void bind(Post post) throws JSONException {
             tvDescription.setText(post.getShoeName());
             tvCondition.setText(post.getCondition() + "/10");
             double price = post.getPrice();
@@ -141,7 +134,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             currencyString = currencyString.replaceAll("\\.00", "");
             tvPrice.setText(currencyString);
 
-            Glide.with(context).load(post.getImageUrls().get(0)).into(ivImage);
+            Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivImage);
 
             if (!user.getIsSeller()) {
                 try {
@@ -169,21 +162,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 bundle.putParcelable("post", post);
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.flContainer, detailShoeFragment).addToBackStack("back").commit();
+                fragmentManager.
+                        beginTransaction().
+                        replace(R.id.flContainer, detailShoeFragment).
+                        addToBackStack("back").
+                        commit();
             }
         }
 
-        // Check how the number of likes affects the text describing likes
         public void checkLikes(int numLikes) {
             if (numLikes == 0) {
                 tvLikes.setText("");
             } else {
-                tvLikes.setText("" + numLikes);
+                tvLikes.setText(numLikes);
             }
         }
     }
 
-    // Clean all elements of the recycler
     public void clear() {
         posts.clear();
         notifyDataSetChanged();

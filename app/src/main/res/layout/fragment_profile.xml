@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.fragments.ProfileFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.ProfileFragment"
+    >
 
     <ImageView
         android:id="@+id/ivProfile"
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        />
 
     <LinearLayout
         style="@style/Divider.Horizontal"
@@ -24,7 +26,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/tvAccountInfo"
@@ -36,7 +39,8 @@
             android:gravity="center"
             android:text="@string/account_info"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
 
         <TextView
             android:id="@+id/tvUserPreferences"
@@ -47,7 +51,8 @@
             android:gravity="center"
             android:text="@string/user_preferences"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
 
         <TextView
             android:id="@+id/tvLogOut"
@@ -59,7 +64,9 @@
             android:gravity="center"
             android:text="@string/logout"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            />
 
     </LinearLayout>
+
 </RelativeLayout>

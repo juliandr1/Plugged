@@ -44,12 +44,12 @@ public class SearchPostFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         FragmentSearchPostBinding binding = FragmentSearchPostBinding.bind(view);
 
         Context context = getActivity();
 
-        // Init
         searches = new ArrayList<>();
         adapter = new PostSearchAdapter(context, searches, getActivity().getSupportFragmentManager());
         RecyclerView rvSearches = binding.rvSearches;
@@ -60,13 +60,13 @@ public class SearchPostFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
+            MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Instantiate the search view
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setQueryHint("Search for shoes...");
         // When somebody clicks on the searchview, query posts with those shoe names
@@ -87,7 +87,9 @@ public class SearchPostFragment extends Fragment {
         return true;
     }
 
-    // Query for posts that contain the desired shoe.
+    /*
+        Query for posts that contain the desired shoe.
+     */
     private void querySearch(String str) {
         if (!str.isEmpty()) {
             ParseQuery<Post> query = ParseQuery.getQuery(Post.class);

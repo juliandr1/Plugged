@@ -4,7 +4,8 @@
     android:id="@+id/btnChangeUser"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.fragments.AccountInfoFragment">
+    tools:context="com.project.reshoe_fbu.activities.fragments.AccountInfoFragment"
+    >
 
 
     <TextView
@@ -16,7 +17,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="95dp"
         android:layout_marginTop="90dp"
-        android:background="@drawable/border" />
+        android:background="@drawable/border"
+        />
 
     <TextView
         android:id="@+id/tvLastNameInfo"
@@ -27,7 +29,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="95dp"
         android:layout_marginTop="25dp"
-        android:background="@drawable/border"/>
+        android:background="@drawable/border"
+        />
 
     <TextView
         android:id="@+id/tvEmailInfo"
@@ -38,7 +41,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="95dp"
         android:layout_marginTop="25dp"
-        android:background="@drawable/border"/>
+        android:background="@drawable/border"
+        />
 
     <TextView
         android:id="@+id/tvUsernameInfo"
@@ -49,7 +53,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="95dp"
         android:layout_marginTop="25dp"
-        android:background="@drawable/border"/>
+        android:background="@drawable/border"
+        />
 
     <TextView
         android:id="@+id/textView6"
@@ -59,7 +64,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="60dp"
-        android:text="@string/first_nameAlt" />
+        android:text="@string/first_nameAlt"
+        />
 
     <TextView
         android:id="@+id/textView7"
@@ -69,7 +75,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="45dp"
-        android:text="@string/last_nameAlt" />
+        android:text="@string/last_nameAlt"
+        />
 
     <TextView
         android:id="@+id/textView8"
@@ -79,7 +86,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="45dp"
-        android:text="@string/emailAlt" />
+        android:text="@string/emailAlt"
+        />
 
     <TextView
         android:id="@+id/textView9"
@@ -89,7 +97,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="45dp"
-        android:text="@string/username" />
+        android:text="@string/username"
+        />
 
     <Button
         android:id="@+id/btnChangeUsername"
@@ -99,7 +108,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="59dp"
-        android:text="@string/change_username" />
+        android:text="@string/change_username"
+        />
 
     <Button
         android:id="@+id/btnChangePassword"
@@ -108,7 +118,8 @@
         android:layout_below="@+id/btnChangeUsername"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/change_password" />
+        android:text="@string/change_password"
+        />
 
     <Button
         android:id="@+id/btnBackInfo"
@@ -119,5 +130,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/back_arrow" />
+        android:background="@drawable/back_arrow"
+        />
+
 </RelativeLayout>

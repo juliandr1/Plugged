@@ -46,20 +46,19 @@ public class ThreadFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
+            Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentMessagePreviewBinding binding = FragmentMessagePreviewBinding.bind(view);
 
         currentUser = new User(ParseUser.getCurrentUser());
 
-        // Find the Recycler View
         RecyclerView rvThreads = binding.rvMessagePreviews;
 
-        // Create a list of all the message previews and set up adapter
         threads = new ArrayList<>();
         adapter = new ThreadAdapter(getActivity(), threads, getParentFragmentManager());
-        // Recycler view setup: layout manager and the adapter
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvThreads.setLayoutManager(layoutManager);
         rvThreads.setAdapter(adapter);
@@ -71,6 +70,10 @@ public class ThreadFragment extends Fragment {
         }
     }
 
+    /*
+        If the user is a seller then check for threads where they have been messaged, if not
+        then get all of their known threads.
+     */
     public void queryThreads() throws ParseException {
 
         if (currentUser.getIsSeller()) {
@@ -85,7 +88,6 @@ public class ThreadFragment extends Fragment {
         }
 
         threads.addAll(currentUser.getUserThreads());
-        Log.i(TAG, threads.size() + "");
         adapter.notifyDataSetChanged();
     }
 }

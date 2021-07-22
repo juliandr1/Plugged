@@ -24,7 +24,6 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Binding
         ActivitySignupBinding binding = ActivitySignupBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -33,39 +32,30 @@ public class SignupActivity extends AppCompatActivity {
 
         context = this;
 
-        // Fill in all of the data and attempt to create a new user
-        binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.btnSignUp.setOnClickListener(view1 -> {
 
-                // Set the various data points
-                user.setUsername(binding.etUsernameCreate.getText().toString());
-                user.setPassword(binding.etPasswordCreate.getText().toString());
-                user.setEmail(binding.etEmail.getText().toString());
-                user.setFirstName(binding.etFirstName.getText().toString());
-                user.setLastName(binding.etLastName.getText().toString());
+            user.setUsername(binding.etUsernameCreate.getText().toString());
+            user.setPassword(binding.etPasswordCreate.getText().toString());
+            user.setEmail(binding.etEmail.getText().toString());
+            user.setFirstName(binding.etFirstName.getText().toString());
+            user.setLastName(binding.etLastName.getText().toString());
 
-                if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbBuyer.getId()) {
-                    user.setIsSeller(false);
-                } else if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbSeller.getId()){
-                    user.setIsSeller(true);
-                }
-
-                user.getUser().signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            goMainActivity();
-                        } else {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+            if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbBuyer.getId()) {
+                user.setIsSeller(false);
+            } else if (binding.rgGroup.getCheckedRadioButtonId() == binding.rbSeller.getId()){
+                user.setIsSeller(true);
             }
+
+            user.getUser().signUpInBackground(e -> {
+                if (e == null) {
+                    goMainActivity();
+                } else {
+                    e.printStackTrace();
+                }
+            });
         });
     }
 
-    // Go to the main timeline
     private void goMainActivity() {
         Intent intent = new Intent(this, TimelineActivity.class);
         startActivity(intent);

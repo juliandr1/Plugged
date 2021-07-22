@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
 
     <ImageView
@@ -17,7 +18,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="43dp"
         android:layout_marginEnd="41dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <EditText
         android:id="@+id/etUsernameCreate"
@@ -114,7 +116,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="#0EB620"
-        android:text="@string/sign_up" />
+        android:text="@string/sign_up"
+        />
 
     <RadioGroup
         android:id="@+id/rgGroup"
@@ -123,7 +126,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <RadioButton
             android:id="@+id/rbBuyer"
@@ -131,7 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/buyer" />
+            android:text="@string/buyer"
+            />
 
         <RadioButton
             android:id="@+id/rbSeller"
@@ -139,7 +144,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/seller" />
+            android:text="@string/seller"
+            />
+
     </RadioGroup>
 
     <TextView
@@ -149,6 +156,7 @@
         android:layout_below="@+id/etLastName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="@string/select_account_type" />
+        android:text="@string/select_account_type"
+        />
 
 </RelativeLayout>

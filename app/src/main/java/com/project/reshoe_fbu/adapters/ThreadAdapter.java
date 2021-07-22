@@ -29,42 +29,36 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
 
     public static String TAG = "MessagesAdapter";
 
-    private final Context context;
+    private final Context mContext;
     private final List<Thread> threads;
     private FragmentManager fragmentManager;
     private ParseUser otherUser;
     private boolean isAuthor;
 
-    // Pass in the context, list of message previews, the user, and the fragment manager
     public ThreadAdapter(Context context, List<Thread> threads, FragmentManager fragmentManager) {
-        this.context = context;
+        this.mContext = context;
         this.threads = threads;
         this.fragmentManager = fragmentManager;
     }
 
-    // For each row, inflate the layout
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_thread, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_thread, parent,
+                false);
         return new ViewHolder(view);
     }
 
-    // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get the data at position
         Thread thread = threads.get(position);
-        // Bind the tweet with view holder
         holder.bind(thread);
     }
 
-    // Return amount of previews
     @Override
     public int getItemCount() {
         return threads.size();
     }
 
-    // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Not sure if binding is allowed in adapter. Potentially change
@@ -82,9 +76,8 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        // Bind data
         public void bind(Thread thread) {
-            otherUser = thread.getOtherUser();
+            otherUser = thread.getOtherUser().getUser();
 
             Message message = thread.getLastMessage();
 
@@ -98,16 +91,23 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
                 String username;
                 ParseFile profilePic;
                 if (otherUser.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                    username = thread.getUser().fetchIfNeeded().getUsername();
-                    profilePic = thread.getUser().fetchIfNeeded().getParseFile("profilePic");
+                    username = thread.getUser().getUser().fetchIfNeeded().getUsername();
+                    // Get Parse File is needed as fetchIfNeeded() is needed and is only
+                    // resolved for parse users.
+                    profilePic = thread.getUser().getUser().fetchIfNeeded().
+                            getParseFile("profilePic");
                     isAuthor = true;
                 } else {
-                    username = thread.getOtherUser().fetchIfNeeded().getUsername();
-                    profilePic = thread.getOtherUser().fetchIfNeeded().getParseFile("profilePic");
+                    username = thread.getOtherUser().getUser().fetchIfNeeded().getUsername();
+                    profilePic = thread.getOtherUser().getUser().fetchIfNeeded().
+                            getParseFile("profilePic");
                     isAuthor = false;
                 };
                 tvOtherUsername.setText("@" + username);
-                Glide.with(context).load(profilePic.getUrl()).circleCrop().into(ivMessageProfilePic);
+                Glide.with(mContext).
+                        load(profilePic.getUrl()).
+                        circleCrop().
+                        into(ivMessageProfilePic);
             } catch (ParseException e) {
                 Log.e(TAG, "Something has gone terribly wrong with Parse", e);
             }
@@ -124,7 +124,11 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
             }
             Fragment messagesFragment = new MessagesFragment();
             messagesFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.flContainer, messagesFragment).addToBackStack("back").commit();
+            fragmentManager.
+                    beginTransaction().
+                    replace(R.id.flContainer, messagesFragment).
+                    addToBackStack("back").
+                    commit();
         }
     }
 }

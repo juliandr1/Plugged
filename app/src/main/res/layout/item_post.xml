@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/ivImage"
@@ -12,7 +13,8 @@
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvShoeName"
@@ -23,7 +25,8 @@
         android:layout_marginTop="4dp"
         android:textAlignment="center"
         android:textSize="12sp"
-        tools:text="yeezy 350 boost ICy Blue" />
+        tools:text="yeezy 350 boost ICy Blue"
+        />
 
     <TextView
         android:id="@+id/tvPrice"
@@ -34,7 +37,8 @@
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/tvPriceTitle"
         android:textSize="12sp"
-        tools:text="$90" />
+        tools:text="$90"
+        />
 
     <TextView
         android:id="@+id/tvCondition"
@@ -45,7 +49,8 @@
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/tvConditionTitle"
         android:textSize="12sp"
-        tools:text="9/10" />
+        tools:text="9/10"
+        />
 
     <Button
         android:id="@+id/btnLike"
@@ -55,7 +60,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
         android:layout_toEndOf="@+id/ivImage"
-        android:background="@drawable/heart_outline" />
+        android:background="@drawable/heart_outline"
+        />
 
     <TextView
         android:id="@+id/tvLikes"
@@ -65,7 +71,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="33dp"
-        tools:text="12" />
+        tools:text="12"
+        />
 
     <TextView
         android:id="@+id/tvPriceTitle"
@@ -76,7 +83,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="7dp"
         android:text="@string/price"
-        android:textSize="8sp" />
+        android:textSize="8sp"
+        />
 
     <TextView
         android:id="@+id/tvConditionTitle"
@@ -87,6 +95,7 @@
         android:layout_marginTop="6dp"
         android:layout_toEndOf="@+id/tvPrice"
         android:text="@string/condition"
-        android:textSize="8sp" />
+        android:textSize="8sp"
+        />
 
 </RelativeLayout>

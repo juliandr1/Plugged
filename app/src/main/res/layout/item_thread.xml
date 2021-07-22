@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:id="@+id/ivMessageProfilePic"
@@ -13,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvOtherUsername"
@@ -23,7 +25,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/ivMessageProfilePic"
-        tools:text='"@Username"' />
+        tools:text='"@Username"'
+        />
 
     <TextView
         android:id="@+id/tvMessagePreview"
@@ -33,5 +36,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="47dp"
         android:layout_toEndOf="@+id/ivMessageProfilePic"
-        tools:text='"Last message"' />
+        tools:text='"Last message"'
+        />
+
 </RelativeLayout>

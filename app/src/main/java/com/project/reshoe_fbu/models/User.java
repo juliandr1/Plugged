@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 public class User  {
@@ -86,7 +87,8 @@ public class User  {
 
     public void setIsSeller(Boolean isSeller) { user.put(KEY_IS_SELLER, isSeller); }
 
-    public String getProfilePicURL() throws ParseException { return user.fetchIfNeeded().getParseFile(KEY_PROFILE_PIC).getUrl(); }
+    public String getProfilePicURL() throws ParseException { return user.fetchIfNeeded().
+            getParseFile(KEY_PROFILE_PIC).getUrl(); }
 
     public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
 
@@ -127,7 +129,7 @@ public class User  {
 
         // Brute force. Will implement a hashtable in future to find threads faster.
         for (int i = 0; i < threads.size(); i++) {
-            if (threads.get(i).getOtherUser().getObjectId().equals(objectId)) {
+            if (threads.get(i).getOtherUser().getObjectID().equals(objectId)) {
                 return threads.get(i);
             }
         }
@@ -137,18 +139,16 @@ public class User  {
 
     public void addThread(Thread thread) {
         user.add(KEY_THREADS, thread);
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    e.printStackTrace();
-                }
-                Log.i(TAG, "thread added");
+        user.saveInBackground(e -> {
+            if (e != null) {
+                e.printStackTrace();
             }
+            Log.i(TAG, "thread added");
         });
     }
 
-    public void removeThread(Thread thread) { user.removeAll(KEY_THREADS, Arrays.asList(thread));}
+    public void removeThread(Thread thread) { user.removeAll(KEY_THREADS,
+            Collections.singletonList(thread));}
 
     public void like(ParseUser otherUser) {
         user.add(KEY_LIKED_SELLERS, otherUser.getObjectId());
@@ -156,7 +156,7 @@ public class User  {
     }
 
     public void unlike(ParseUser otherUser) {
-        user.removeAll(KEY_LIKED_SELLERS, Arrays.asList(otherUser.getObjectId()));
+        user.removeAll(KEY_LIKED_SELLERS, Collections.singletonList(otherUser.getObjectId()));
         user.saveInBackground();
     }
 
@@ -177,7 +177,7 @@ public class User  {
     public static List<String> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<String> likedUsers = new ArrayList<>();
 
-        for(int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             likedUsers.add(fromJson(jsonArray.get(i)));
         }
 

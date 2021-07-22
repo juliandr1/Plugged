@@ -27,7 +27,6 @@ public class TimelineActivity extends AppCompatActivity {
 
         User currentUser = new User(ParseUser.getCurrentUser());
 
-        // Fragment manager and three main fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final Fragment fragmentThread = new ThreadFragment();
         final Fragment fragmentProfile = new ProfileFragment();
@@ -39,7 +38,6 @@ public class TimelineActivity extends AppCompatActivity {
             fragmentTimeline = new TimelineBuyerFragment();
         }
 
-        // Setup the bottom navigation view for the activity and outline the flow
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;

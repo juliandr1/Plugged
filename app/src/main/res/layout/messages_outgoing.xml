@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:paddingVertical="10dp"
     android:paddingLeft="60dp"
-    android:paddingRight="15dp">
+    android:paddingRight="15dp"
+    >
 
     <TextView
         android:id="@+id/tvBody"
@@ -16,9 +18,10 @@
         android:background="@drawable/message_outgoing"
         android:elevation="2dp"
         android:padding="8dp"
-        android:text="Your outgoing message here"
         android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        tools:text='"Outgoing message here:'
+        />
 
     <ImageView
         android:id="@+id/ivProfileMe"
@@ -26,6 +29,7 @@
         android:layout_height="64dp"
         android:layout_alignParentRight="true"
         android:contentDescription="Current user profile picture"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        />
 
 </RelativeLayout>
