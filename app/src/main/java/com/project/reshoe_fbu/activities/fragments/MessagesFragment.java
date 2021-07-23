@@ -85,7 +85,8 @@ public class MessagesFragment extends Fragment {
             e.printStackTrace();
         }
 
-        String websocketUrl = getString(R.string.back4app_server_uri);
+        String websocketUrl = "wss://reshoe.b4a.io/";
+                //getString(R.string.back4app_server_uri);
 
         ParseLiveQueryClient parseLiveQueryClient = null;
         try {
@@ -95,7 +96,7 @@ public class MessagesFragment extends Fragment {
         }
 
         ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
-        parseQuery = parseQuery.whereEqualTo(Message.KEY_OTHER_ID, otherUser.getObjectID());
+        parseQuery = parseQuery.whereEqualTo(Message.KEY_OTHER_ID, currentUser.getObjectID());
 
         SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
 
@@ -103,6 +104,7 @@ public class MessagesFragment extends Fragment {
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
             Log.i(TAG, "ADDED!");
             messages.add(0, object);
+
             // RecyclerView updates need to be run on the UI thread
             getActivity().runOnUiThread(() -> {
                 adapter.notifyDataSetChanged();
@@ -122,6 +124,7 @@ public class MessagesFragment extends Fragment {
 
             newMessage.saveInBackground(e -> {
                 if (e == null) {
+                    messages.add(0, newMessage);
                     if (firstMessage) {
                         Log.i(TAG, "New Thread ");
                         Thread thread = new Thread();
@@ -153,7 +156,6 @@ public class MessagesFragment extends Fragment {
                             parseException.printStackTrace();
                         }
                     }
-                    messages.add(0, newMessage);
                     adapter.notifyDataSetChanged();
 
                 } else {
