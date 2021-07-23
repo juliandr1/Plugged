@@ -1,5 +1,6 @@
 package com.project.reshoe_fbu.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.parse.ParseQuery;
+import com.project.reshoe_fbu.activities.CartActivity;
+import com.project.reshoe_fbu.activities.TimelineActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
 import com.project.reshoe_fbu.models.Post;
@@ -65,7 +68,7 @@ public class TimelineBuyerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager());
+                getSupportFragmentManager(), false);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);
@@ -112,6 +115,9 @@ public class TimelineBuyerFragment extends Fragment {
                     replace(R.id.flContainer, searchPost).
                     addToBackStack("back").
                     commit();
+        } else if (item.getItemId() == R.id.cart) {
+            Intent intent = new Intent(getActivity(), CartActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -59,7 +59,7 @@ public class DetailedSellerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager());
+                getSupportFragmentManager(), true);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 
@@ -118,7 +118,7 @@ public class DetailedSellerFragment extends Fragment {
                     commit();
         });
 
-        binding.btnBackDetail.setOnClickListener(v -> getActivity().
+        binding.btnBackDetailSeller.setOnClickListener(v -> getActivity().
                 getSupportFragmentManager().
                 popBackStack());
 

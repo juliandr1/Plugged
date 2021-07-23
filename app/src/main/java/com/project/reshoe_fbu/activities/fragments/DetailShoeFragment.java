@@ -1,11 +1,11 @@
 package com.project.reshoe_fbu.activities.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +15,10 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
 import com.parse.ParseException;
-import com.project.reshoe_fbu.activities.CheckoutActivity;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -58,6 +59,19 @@ public class DetailShoeFragment extends Fragment {
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
 
+        double size = post.getSize();
+
+        // Check to see if its a whole size or .5 & ternary
+        if (size == Math.floor(size)) {
+            String str = String.valueOf((int)(size));
+            str = checkSizing(str);
+            binding.tvSize.setText(str);
+        } else {
+            String str = String.valueOf(size);
+            str = checkSizing(str);
+            binding.tvSize.setText(str);
+        }
+
         double price = post.getPrice();
         String currencyString = NumberFormat.getCurrencyInstance().format(price);
         // Handle the weird exception of formatting whole dollar amounts with no decimal
@@ -73,14 +87,19 @@ public class DetailShoeFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        binding.btnBackDetail.setOnClickListener(v -> getActivity().
+        binding.btnBackDetailShoe.setOnClickListener(v -> getActivity().
                 getSupportFragmentManager().
                 popBackStack());
 
         binding.btnCheckout.setOnClickListener(v -> {
-            Intent i = new Intent(getActivity(), CheckoutActivity.class);
-            startActivity(i);
-            getActivity().overridePendingTransition(0, 0);
+            User currentUser = new User(ParseUser.getCurrentUser());
+            try {
+                currentUser.addToCart(post, getActivity());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
         });
 
         binding.ibSellerProfile.setOnClickListener(v -> {
@@ -96,11 +115,20 @@ public class DetailShoeFragment extends Fragment {
         });
 
         try {
-            pagerAdapter = new PagerAdapter(getActivity(), post.getImageUrls(), false);
+            pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
+                    post.getImageUrls(), false);
         } catch (JSONException e) {
                 e.printStackTrace();
         }
 
         binding.viewPager.setAdapter(pagerAdapter);
+    }
+
+    private String checkSizing(String str) {
+        if (post.getIsWomenSizing()) {
+            return str.concat(getString(R.string.women));
+        } else {
+            return str.concat(getString(R.string.men));
+        }
     }
 }

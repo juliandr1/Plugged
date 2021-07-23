@@ -40,8 +40,8 @@ public class User  {
     public static final String KEY_RATING = "rating";
     public static final String KEY_NUM_REVIEWS = "numReviews";
     public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_OBJECT_ID = "objectId";
     public static final String KEY_THREADS = "threads";
+    public static final String KEY_CART = "cart";
 
     private ParseUser user;
 
@@ -120,6 +120,8 @@ public class User  {
 
         userThreads.addAll(query.find());
 
+        // test this
+
         Log.i(TAG,"# of threads: " + userThreads.size());
 
         return userThreads;
@@ -147,6 +149,59 @@ public class User  {
             }
             Log.i(TAG, "thread added");
         });
+    }
+
+    public void addToCart(Post post, Context context) throws JSONException, ParseException {
+        List<String> cart = getCartIds();
+        Log.i(TAG, cart.get(0) + " " + post);
+        if (cart.contains(post.getObjectId())) {
+            // Add string resource
+            Toast.makeText(context, post.getShoeName() + " are already in the cart",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            user.add(KEY_CART, post.getObjectId());
+            // String resource needs to be added.
+            Toast.makeText(context, post.getShoeName() + " added to cart",
+                    Toast.LENGTH_SHORT).show();
+
+            user.saveInBackground(e -> {
+                if (e != null) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
+    public void removeFromCart(String postId) {
+        user.removeAll(KEY_CART, Arrays.asList(postId));
+        user.saveInBackground(e -> {
+            if (e != null) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "removed from cart");
+        });
+    }
+
+    public List<Post> getCart() throws JSONException, ParseException {
+        List<String> postIds = getCartIds();
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        query.addDescendingOrder("createdAt");
+        query.whereContainedIn("objectId", postIds);
+
+        return query.find();
+    }
+
+    public List<String> getCartIds() throws JSONException{
+        JSONArray jsonArray = user.getJSONArray(KEY_CART);
+        List<String> postIds = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            postIds.add(jsonArray.get(i).toString());
+        }
+
+        return postIds;
     }
 
     public void removeThread(Thread thread) { user.removeAll(KEY_THREADS,

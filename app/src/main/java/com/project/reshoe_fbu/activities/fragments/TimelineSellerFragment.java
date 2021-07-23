@@ -70,8 +70,8 @@ public class TimelineSellerFragment extends Fragment {
         RecyclerView rvSellerPosts = binding.rvSellerPosts;
 
         posts = new ArrayList<>();
-        adapter = new PostsAdapter(getActivity(), posts, user, getActivity().
-                getSupportFragmentManager());
+        adapter = new PostsAdapter(getActivity().getBaseContext(), posts, user, getActivity().
+                getSupportFragmentManager(), false);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rvSellerPosts.setLayoutManager(layoutManager);

@@ -38,19 +38,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private final List<Post> posts;
     private final User user;
     private final FragmentManager fragmentManager;
+    private final boolean isDetailedSeller;
 
-    public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager fragmentManager) {
+    public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager
+            fragmentManager, boolean isDetailedSeller) {
         this.mContext = context;
         this.posts = posts;
         this.user = user;
         this.fragmentManager = fragmentManager;
+        this.isDetailedSeller = isDetailedSeller;
     }
 
     // For each row, inflate the layout
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if (user.getIsSeller()) {
+        if (user.getIsSeller() || isDetailedSeller) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent,
                     false);
         } else {
@@ -96,7 +99,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
 
-            if (!user.getIsSeller()) {
+            if (!user.getIsSeller() && !isDetailedSeller) {
                 // Like or unlike posts and update the color of the heart.
                 btnLike.setOnClickListener(v -> {
                     try {
@@ -120,8 +123,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         e.printStackTrace();
                     }
                 });
-            } else {
-                btnLike.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -136,7 +137,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivImage);
 
-            if (!user.getIsSeller()) {
+            if (!user.getIsSeller() && !isDetailedSeller) {
                 try {
                     if (post.didLike(user)) {
                         btnLike.setBackgroundResource(R.drawable.heart_filled);
@@ -148,8 +149,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             }
 
-            int numLikes = post.getNumLikes();
-            checkLikes(numLikes);
+            if (!user.getIsSeller() && !isDetailedSeller) {
+                int numLikes = post.getNumLikes();
+                checkLikes(numLikes);
+            }
         }
 
         @Override

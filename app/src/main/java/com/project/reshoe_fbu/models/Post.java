@@ -32,6 +32,8 @@ public class Post extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_CONDITION = "condition";
     public static final String KEY_PRICE = "price";
+    public static final String KEY_SIZE = "size";
+    public static final String KEY_IS_WOMEN_SIZING = "isWomenSizing";
     public static final String KEY_USERS_LIKED = "usersLiked";
     public static final String KEY_NUM_LIKED = "numLiked";
     public static final String KEY_SHOE_NAME = "shoeName";
@@ -75,13 +77,21 @@ public class Post extends ParseObject {
         put(KEY_SHOE_NAME_SEARCH, name.toLowerCase());
     }
 
-    public double getPrice() {
-        return getNumber(KEY_PRICE).doubleValue();
+    public int getPrice() { return getNumber(KEY_PRICE).intValue(); }
+
+    public void setPrice(int price) { put(KEY_PRICE, price); }
+
+    public double getSize() {
+        return getNumber(KEY_SIZE).doubleValue();
     }
 
-    public void setPrice(double price) {
-        put(KEY_PRICE, Double.parseDouble(new DecimalFormat(".00").format(price)));
+    public void setSize(double size) { put(KEY_SIZE, size); }
+
+    public boolean getIsWomenSizing() {
+        return getBoolean(KEY_IS_WOMEN_SIZING);
     }
+
+    public void setIsWomenSizing(boolean sizing) { put(KEY_IS_WOMEN_SIZING, sizing); }
 
     public int getNumLikes() {
         return getNumber(KEY_NUM_LIKED).intValue();

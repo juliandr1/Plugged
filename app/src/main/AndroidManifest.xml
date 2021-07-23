@@ -25,6 +25,10 @@
         android:theme="@style/Theme.Reshoe_FBU"
         android:requestLegacyExternalStorage="true">
 
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.codepath.fileprovider.RESHOE_FBU"
@@ -45,7 +49,7 @@
         <activity android:name="com.project.reshoe_fbu.activities.SignupActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.TimelineActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <activity android:name="com.project.reshoe_fbu.activities.CheckoutActivity" />
+        <activity android:name="com.project.reshoe_fbu.activities.CartActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.CreateReviewActivity" />
         <activity android:name="com.project.reshoe_fbu.activities.PostActivity" />
     </application>

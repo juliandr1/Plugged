@@ -39,13 +39,19 @@
     <string name="notifications">Notifications</string>
     <string name="share_location">Share Location</string>
     <string name="title_activity_create_review">CreateReviewActivity</string>
-    <string name="enter_description_here">Enter Description Here</string>
+    <string name="enter_description_here">Enter Description Here:</string>
     <string name="price">Price:</string>
     <string name="condition">Condition:</string>
     <string name="enter_listing_price">Enter Listing Price:</string>
-    <string name="enter_condition_1_10">Enter Condition (1-10)</string>
+    <string name="enter_condition_1_10">Enter Condition:</string>
     <string name="enter_shoe_name">Enter Shoe Name:</string>
+    <string name="enter_size">Size:</string>
     <string name="error_saving">Error while saving</string>
     <string name="error_login">Username and password combination is incorrect or does not exist
     </string>
+    <string name="men">M</string>
+    <string name="women">W</string>
+    <string name="size">Size:</string>
+    <string name="total_price">Total Price:</string>
+    <string name="money">$</string>
 </resources>
