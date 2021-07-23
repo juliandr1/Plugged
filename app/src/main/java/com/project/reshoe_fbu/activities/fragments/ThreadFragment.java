@@ -75,18 +75,6 @@ public class ThreadFragment extends Fragment {
         then get all of their known threads.
      */
     public void queryThreads() throws ParseException {
-
-        if (currentUser.getIsSeller()) {
-            ParseQuery<Thread> query = ParseQuery.getQuery(Thread.class);
-            query.whereEqualTo(Thread.KEY_OTHER_USER, currentUser.getUser());
-            List<Thread> newThreads = query.find();
-            if (newThreads != null) {
-                for (int i = 0; i < newThreads.size(); i++) {
-                    currentUser.addThread(newThreads.get(i));
-                }
-            }
-        }
-
         threads.addAll(currentUser.getUserThreads());
         adapter.notifyDataSetChanged();
     }

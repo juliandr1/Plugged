@@ -139,7 +139,7 @@ public class DetailedSellerFragment extends Fragment {
      */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.whereEqualTo("user", seller);
+        query.whereEqualTo("user", seller.getUser());
         query.setLimit(20);
         // Order the posts by date
         query.addDescendingOrder("createdAt");

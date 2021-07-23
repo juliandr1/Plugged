@@ -25,14 +25,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     private static final int MESSAGE_OUTGOING = 123;
     private static final int MESSAGE_INCOMING = 321;
 
-    private final Context context;
-    private final List<Message> messages;
-    private final User user;
+    private final Context mContext;
+    private final List<Message> mMessages;
+    private final User mUser;
 
     public MessagesAdapter(Context context, List<Message> messages, User user) {
-        this.context = context;
-        this.messages = messages;
-        this.user = user;
+        this.mContext = context;
+        this.mMessages = messages;
+        this.mUser = user;
     }
 
     @Override
@@ -43,6 +43,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         Log.i(TAG, "" + viewType);
 
         if (viewType == MESSAGE_INCOMING) {
+
             View contactView = inflater.inflate(R.layout.message_incoming, parent,
                     false);
             return new IncomingMessageViewHolder(contactView);
@@ -58,8 +59,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         // Get the data at position
-        Message message = messages.get(position);
-        Log.i(TAG, message.getBody() + " onBind");
+        Message message = mMessages.get(position);
         // Bind the tweet with view holder
         try {
             holder.bindMessage(message);
@@ -70,7 +70,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return mMessages.size();
     }
 
     @Override
@@ -83,8 +83,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     }
 
     private boolean isMe(int position) {
-        Message message = messages.get(position);
-        return message.getAuthorId() != null && message.getAuthorId().equals(user.getObjectID());
+        Message message = mMessages.get(position);
+        return message.getAuthorId() != null && message.getAuthorId().equals(mUser.getObjectID());
     }
 
     public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -108,7 +108,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         @Override
         public void bindMessage(Message message) throws ParseException {
-            Glide.with(context)
+            Glide.with(mContext)
                     .load(message.getAuthor().getProfilePicURL())
                     .circleCrop()
                     .into(imageOther);
@@ -130,7 +130,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         @Override
         public void bindMessage(Message message) throws ParseException {
-            Glide.with(context)
+            Glide.with(mContext)
                     .load(message.getAuthor().getProfilePicURL())
                     .circleCrop()
                     .into(imageMe);
@@ -138,7 +138,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
 
         public void clear() {
-            messages.clear();
+            mMessages.clear();
             notifyDataSetChanged();
         }
     }

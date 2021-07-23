@@ -22,30 +22,41 @@ public class Thread extends ParseObject {
 
     private static final String TAG = "Thread";
 
-    public static final String KEY_LAST_SENT = "last_timestamp_sent";
-    public static final String KEY_LAST_READ = "last_timestamp_read";
-    public static final String KEY_LAST_MESSAGE_RECEIVED = "last_message_received";
-    public static final String KEY_LAST_MESSAGE = "lastMessage";
+    public static final String KEY_LAST_MESSAGE_USER = "last_message_user";
+    public static final String KEY_LAST_MESSAGE_OTHER_USER = "last_message_otherUser";
+    public static final String KEY_LAST_MESSAGE_SENT_USER = "last_message_sent_user";
+    public static final String KEY_LAST_MESSAGE_SENT_OTHER_USER = "last_message_sent_otherUser";
     public static final String KEY_USER = "user";
     public static final String KEY_OTHER_USER = "otherUser";
     public static final String KEY_MESSAGES = "messages";
 
-    public Date getLastSentTimestamp() { return getDate(KEY_LAST_SENT); }
+    public Date getLastMessageSentUser() { return getDate(KEY_LAST_MESSAGE_SENT_USER); }
 
-    public void setLastSentTimestamp(Date lastSent) {
-        put(KEY_LAST_SENT, lastSent);
+    public void setLastMessageSentUser(Date lastSent) throws ParseException {
+        put(KEY_LAST_MESSAGE_SENT_USER, lastSent);
+        save();
     }
 
-    public Date getLastReadTimestamp() { return getDate(KEY_LAST_READ); }
+    public Date getLastMessageSentOtherUser() { return getDate(KEY_LAST_MESSAGE_SENT_OTHER_USER); }
 
-    public void setLastReadTimestamp(Date lastRead) {
-        put(KEY_LAST_READ, lastRead);
+    public void setLastMessageSentOtherUser(Date lastRead) throws ParseException {
+        put(KEY_LAST_MESSAGE_SENT_OTHER_USER, lastRead);
+        save();
     }
 
-    public Date getLastMessageReceived() { return getDate(KEY_LAST_MESSAGE_RECEIVED); }
+    public String getLastMessageUser() { return getString(KEY_LAST_MESSAGE_USER); }
 
-    public void setLastMessageReceived(Date lastReceived) { put(KEY_LAST_MESSAGE_RECEIVED,
-            lastReceived); }
+    public void setLastMessageUser(Message lastMessage) throws ParseException {
+        put(KEY_LAST_MESSAGE_USER, lastMessage.getBody());
+        save();
+    }
+
+    public String getLastMessageOtherUser() { return getString(KEY_LAST_MESSAGE_OTHER_USER); }
+
+    public void setLastMessageOtherUser(Message lastMessage) throws ParseException {
+        put(KEY_LAST_MESSAGE_OTHER_USER, lastMessage.getBody());
+        save();
+    }
 
     public User getOtherUser() { return new User(getParseUser(KEY_OTHER_USER)); }
 
@@ -55,36 +66,24 @@ public class Thread extends ParseObject {
 
     public void setUser(User user) { put(KEY_USER, user.getUser()); }
 
-    public Message getLastMessage() { return (Message) getParseObject(KEY_LAST_MESSAGE); }
-
-    public void setLastMessage(Message message) { put(KEY_OTHER_USER, message); }
-
-    public List<Message> getThreadMessages() throws ParseException {
-        List<Message> messages;
-
+    public List<Message> getMessages() throws JSONException, ParseException {
+        JSONArray jsonArray = getJSONArray(KEY_MESSAGES);
+        List<String> messageId = new ArrayList<>();
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        query.addDescendingOrder("created_at");
 
-        ParseUser user = getUser().getUser();
-        ParseUser otherUser = getOtherUser().getUser();
 
-        query.whereEqualTo(Message.KEY_AUTHOR, user);
-        query.whereEqualTo(Message.KEY_OTHER, otherUser);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            messageId.add(jsonArray.get(i).toString());
+        }
 
-        messages = query.find();
+        query.addDescendingOrder("createdAt");
+        query.whereContainedIn("objectId", messageId);
 
-        query = ParseQuery.getQuery(Message.class);
-        query.addDescendingOrder("created_at");
-
-        query.whereEqualTo(Message.KEY_AUTHOR, otherUser);
-        query.whereEqualTo(Message.KEY_OTHER_ID, user);
-
-        messages.addAll(query.find());
-
-        Log.i(TAG, messages.size() + "");
-
-        return messages;
+        return query.find();
     }
 
-    public void addMessage(Message newMessage) { add(KEY_MESSAGES, newMessage); }
+    public void addMessage(Message message) throws ParseException {
+        add(KEY_MESSAGES, message.getObjectId());
+        save();
+    }
 }

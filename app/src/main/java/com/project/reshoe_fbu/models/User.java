@@ -120,6 +120,8 @@ public class User  {
 
         userThreads.addAll(query.find());
 
+        Log.i(TAG,"# of threads: " + userThreads.size());
+
         return userThreads;
     }
 
@@ -178,13 +180,9 @@ public class User  {
         List<String> likedUsers = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            likedUsers.add(fromJson(jsonArray.get(i)));
+            likedUsers.add(jsonArray.get(i).toString());
         }
 
         return likedUsers;
-    }
-
-    public static String fromJson(Object object) {
-        return object.toString();
     }
 }

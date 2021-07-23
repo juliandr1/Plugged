@@ -23,6 +23,8 @@ import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.Thread;
 import com.project.reshoe_fbu.models.User;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder> {
@@ -32,6 +34,8 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     private final Context mContext;
     private final List<Thread> threads;
     private FragmentManager fragmentManager;
+    // This variable will be passed to the messages fragment and will determine who is the true
+    // other user, as in the thread object the "otherUser" could be the current user.
     private ParseUser otherUser;
     private boolean isAuthor;
 
@@ -51,7 +55,11 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Thread thread = threads.get(position);
-        holder.bind(thread);
+        try {
+            holder.bind(thread);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -76,31 +84,26 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Thread thread) {
-            otherUser = thread.getOtherUser().getUser();
-
-            Message message = thread.getLastMessage();
-
-            if (message == null) {
-                tvMessagePreview.setText("");
-            } else {
-                tvMessagePreview.setText(message.getBody());
-            }
+        public void bind(Thread thread) throws JSONException {
+            // Used for checking if isAuthor and binding information on the thread adapter
+            ParseUser otherUserTemp = thread.getOtherUser().getUser();
 
             try {
                 String username;
                 ParseFile profilePic;
-                if (otherUser.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
+                if (otherUserTemp.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                     username = thread.getUser().getUser().fetchIfNeeded().getUsername();
                     // Get Parse File is needed as fetchIfNeeded() is needed and is only
                     // resolved for parse users.
                     profilePic = thread.getUser().getUser().fetchIfNeeded().
                             getParseFile("profilePic");
+                    otherUser = thread.getUser().getUser();
                     isAuthor = true;
                 } else {
                     username = thread.getOtherUser().getUser().fetchIfNeeded().getUsername();
                     profilePic = thread.getOtherUser().getUser().fetchIfNeeded().
                             getParseFile("profilePic");
+                    otherUser = thread.getOtherUser().getUser();
                     isAuthor = false;
                 };
                 tvOtherUsername.setText("@" + username);
@@ -110,6 +113,21 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
                         into(ivMessageProfilePic);
             } catch (ParseException e) {
                 Log.e(TAG, "Something has gone terribly wrong with Parse", e);
+            }
+
+            String body;
+
+            // Ternary usage here
+            if (isAuthor) {
+                body = thread.getLastMessageOtherUser();
+            } else {
+                body = thread.getLastMessageUser();
+            }
+
+            if (body == null) {
+                tvMessagePreview.setText("");
+            } else {
+                tvMessagePreview.setText(body);
             }
         }
 

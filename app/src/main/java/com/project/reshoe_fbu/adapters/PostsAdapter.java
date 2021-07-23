@@ -174,7 +174,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             if (numLikes == 0) {
                 tvLikes.setText("");
             } else {
-                tvLikes.setText(numLikes);
+                tvLikes.setText("" + numLikes);
             }
         }
     }

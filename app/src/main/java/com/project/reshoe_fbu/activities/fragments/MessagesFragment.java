@@ -17,6 +17,7 @@ import com.example.reshoe_fbu.databinding.FragmentMessagesBinding;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
 import com.project.reshoe_fbu.adapters.MessagesAdapter;
@@ -25,6 +26,7 @@ import com.project.reshoe_fbu.models.Thread;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,14 +49,8 @@ public class MessagesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         otherUser = new User(getArguments().getParcelable("otherUser"));
         currentUser = new User(ParseUser.getCurrentUser());
+        // isAuthor checks if the current user is the "otherUser" who will now become an author.
         isAuthor = getArguments().getBoolean("isAuthor");
-
-        // In its current state, my implementation involves keeping a threads "user" and "otherUser"
-        // based on the initial creation of the thread. Thus, depending on who is looking at
-        // the thread, the true "otherUser" is different.
-        if (isAuthor) {
-            otherUser = new User(getArguments().getParcelable("user"));
-        }
     }
 
     @Override
@@ -85,7 +81,7 @@ public class MessagesFragment extends Fragment {
 
         try {
             refreshMessages();
-        } catch (ParseException e) {
+        } catch (ParseException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -129,16 +125,30 @@ public class MessagesFragment extends Fragment {
                     if (firstMessage) {
                         Log.i(TAG, "New Thread ");
                         Thread thread = new Thread();
-                        thread.setLastSentTimestamp(new Date());
                         thread.setUser(currentUser);
                         thread.setOtherUser(otherUser);
-                        thread.addMessage(newMessage);
+                        try {
+                            thread.addMessage(newMessage);
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
+                        }
+                        try {
+                            setMessageData(thread, newMessage);
+                        } catch (ParseException parseException) {
+                            parseException.printStackTrace();
+                        }
                         currentUser.addThread(thread);
                         firstMessage = false;
                     } else {
                         try {
-                            Thread thread = currentUser.getThreadWith(otherUser);
+                            Thread thread;
+                            if (isAuthor) {
+                                thread = otherUser.getThreadWith(currentUser);
+                            } else {
+                                thread = currentUser.getThreadWith(otherUser);
+                            }
                             thread.addMessage(newMessage);
+                            setMessageData(thread, newMessage);
                         } catch (ParseException parseException) {
                             parseException.printStackTrace();
                         }
@@ -151,15 +161,21 @@ public class MessagesFragment extends Fragment {
                 }
             });
             binding.etMessage.setText(null);
+        // Temp
+        try {
+            refreshMessages();
+        } catch (ParseException | JSONException parseException) {
+            parseException.printStackTrace();
+        }
     }
 
-    public void refreshMessages() throws ParseException {
+    public void refreshMessages() throws ParseException, JSONException {
         if (!firstMessage) {
             messages.clear();
             if (isAuthor) {
-                messages.addAll(otherUser.getThreadWith(currentUser).getThreadMessages());
+                messages.addAll(otherUser.getThreadWith(currentUser).getMessages());
             } else {
-                messages = currentUser.getThreadWith(otherUser).getThreadMessages();
+                messages.addAll(currentUser.getThreadWith(otherUser).getMessages());
             }
             Log.i(TAG, "# of messages: " + messages.size());
             adapter.notifyDataSetChanged();
@@ -180,13 +196,31 @@ public class MessagesFragment extends Fragment {
             return true;
         }
 
-        String otherID = otherUser.getObjectID();
+        // Use ternary operator
+        String id;
+
+        if (isAuthor) {
+            id = currentUser.getObjectID();
+        } else {
+            id = otherUser.getObjectID();
+        }
 
         for (int i = 0; i < threads.size(); i++) {
-            if (threads.get(i).getOtherUser().getObjectID().equals(otherID)) {
+            if (threads.get(i).getOtherUser().getObjectID().equals(id)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private void setMessageData(Thread thread, Message newMessage) throws ParseException {
+        Log.i(TAG, "send");
+        if (isAuthor) {
+            thread.setLastMessageSentOtherUser(new Date());
+            thread.setLastMessageUser(newMessage);
+        } else {
+            thread.setLastMessageSentUser(new Date());
+            thread.setLastMessageOtherUser(newMessage);
+        }
     }
 }
