@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Constants {
+
     public static final int PAYMENTS_ENVIRONMENT = WalletConstants.ENVIRONMENT_TEST;
 
     public static final List<String> SUPPORTED_NETWORKS = Arrays.asList(

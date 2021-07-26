@@ -1,7 +1,6 @@
 package com.project.reshoe_fbu.helper;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,18 +14,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 public class PaymentsUtil {
-
     public static final BigDecimal CENTS_IN_A_UNIT = new BigDecimal(100d);
 
     private static JSONObject getBaseRequest() throws JSONException {
-        return new JSONObject().put("apiVersion", 2).
-                put("apiVersionMinor", 0);
+        return new JSONObject().put("apiVersion", 2).put("apiVersionMinor", 0);
     }
 
-    // Fix
+    public static PaymentsClient createPaymentsClient(Activity activity) {
+        Wallet.WalletOptions walletOptions =
+                new Wallet.WalletOptions.Builder().setEnvironment(Constants.PAYMENTS_ENVIRONMENT).build();
+        return Wallet.getPaymentsClient(activity, walletOptions);
+    }
+
     private static JSONObject getGatewayTokenizationSpecification() throws JSONException {
         return new JSONObject() {{
             put("type", "PAYMENT_GATEWAY");
@@ -37,18 +40,30 @@ public class PaymentsUtil {
         }};
     }
 
+    private static JSONObject getDirectTokenizationSpecification()
+            throws JSONException, RuntimeException {
+        if (Constants.DIRECT_TOKENIZATION_PARAMETERS.isEmpty()
+                || Constants.DIRECT_TOKENIZATION_PUBLIC_KEY.isEmpty()
+                || Constants.DIRECT_TOKENIZATION_PUBLIC_KEY == null
+                || Constants.DIRECT_TOKENIZATION_PUBLIC_KEY == "REPLACE_ME") {
+            throw new RuntimeException(
+                    "Please edit the Constants.java file to add protocol version & public key.");
+        }
+        JSONObject tokenizationSpecification = new JSONObject();
+
+        tokenizationSpecification.put("type", "DIRECT");
+        JSONObject parameters = new JSONObject(Constants.DIRECT_TOKENIZATION_PARAMETERS);
+        tokenizationSpecification.put("parameters", parameters);
+
+        return tokenizationSpecification;
+    }
+
     private static JSONArray getAllowedCardNetworks() {
-        return new JSONArray()
-                .put("AMEX")
-                .put("DISCOVER")
-                .put("MASTERCARD")
-                .put("VISA");
+        return new JSONArray(Constants.SUPPORTED_NETWORKS);
     }
 
     private static JSONArray getAllowedCardAuthMethods() {
-        return new JSONArray()
-                .put("PAN_ONLY")
-                .put("CRYPTOGRAM_3DS");
+        return new JSONArray(Constants.SUPPORTED_METHODS);
     }
 
     private static JSONObject getBaseCardPaymentMethod() throws JSONException {
@@ -76,12 +91,6 @@ public class PaymentsUtil {
         cardPaymentMethod.put("tokenizationSpecification", getGatewayTokenizationSpecification());
 
         return cardPaymentMethod;
-    }
-
-    public static PaymentsClient createPaymentsClient(Activity activity) {
-        Wallet.WalletOptions walletOptions =
-                new Wallet.WalletOptions.Builder().setEnvironment(Constants.PAYMENTS_ENVIRONMENT).build();
-        return Wallet.getPaymentsClient(activity, walletOptions);
     }
 
     public static Optional<JSONObject> getIsReadyToPayRequest() {
@@ -141,5 +150,15 @@ public class PaymentsUtil {
         }
     }
 
-
+    /**
+     * Converts cents to a string format accepted by {@link PaymentsUtil#getPaymentDataRequest}.
+     *
+     * @param cents value of the price in cents.
+     */
+    public static String centsToString(long cents) {
+        return new BigDecimal(cents)
+                .divide(CENTS_IN_A_UNIT, RoundingMode.HALF_EVEN)
+                .setScale(2, RoundingMode.HALF_EVEN)
+                .toString();
+    }
 }

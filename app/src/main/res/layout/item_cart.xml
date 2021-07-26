@@ -34,7 +34,8 @@
         android:layout_below="@+id/tvShoeTitleCart"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivPhotoPreviewCart" />
+        android:layout_toEndOf="@+id/ivPhotoPreviewCart"
+        />
 
     <TextView
         android:id="@+id/tvShoeTitleCart"
