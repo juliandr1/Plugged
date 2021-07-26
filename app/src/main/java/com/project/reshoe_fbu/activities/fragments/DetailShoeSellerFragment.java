@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
@@ -27,9 +27,9 @@ import org.json.JSONException;
 import java.text.NumberFormat;
 import java.util.Objects;
 
-public class DetailShoeFragment extends Fragment {
+public class DetailShoeSellerFragment extends Fragment{
 
-    private static final String TAG = "DetailShoeFragment";
+    private static final String TAG = "DetailShoeSellerFragment";
     private Post post;
     private PagerAdapter pagerAdapter;
 
@@ -38,7 +38,7 @@ public class DetailShoeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
-        return inflater.inflate(R.layout.fragment_detail_shoe, container, false);
+        return inflater.inflate(R.layout.fragment_detail_shoe_seller, container, false);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DetailShoeFragment extends Fragment {
             Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentDetailShoeBinding binding = FragmentDetailShoeBinding.bind(view);
+        FragmentDetailShoeSellerBinding binding = FragmentDetailShoeSellerBinding.bind(view);
 
         try {
             String username = post.getUser().getUsername();
@@ -92,32 +92,31 @@ public class DetailShoeFragment extends Fragment {
                 popBackStack());
 
 
-        if (!post.getIsSold()) {
-            binding.btnCheckout.setOnClickListener(v -> {
-                User currentUser = new User(ParseUser.getCurrentUser());
-                try {
-                    currentUser.addToCart(post, getActivity());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
-                }
-            });
-        } else {
-            binding.btnCheckout.setVisibility(View.INVISIBLE);
+        if (post.getIsSold()) {
             binding.tvSold.setVisibility(View.VISIBLE);
         }
 
+        binding.btnDelete.setOnClickListener(v -> {
+            binding.btnDelete.setClickable(false);
+            post.deleteInBackground(e -> {
+                binding.btnDelete.setClickable(true);
+                Log.i(TAG, "deleted post");
+                getActivity()
+                        .getSupportFragmentManager()
+                        .popBackStack();
+            });
+        });
+
         binding.ibSellerProfile.setOnClickListener(v -> {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("seller", post.getUser().getUser());
-        Fragment detailedSellerFragment = new DetailedSellerFragment();
-        detailedSellerFragment.setArguments(bundle);
-        getActivity().
-                getSupportFragmentManager().
-                beginTransaction().
-                replace(R.id.flContainer, detailedSellerFragment).
-                commit();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("seller", post.getUser().getUser());
+            Fragment detailedSellerFragment = new DetailedSellerFragment();
+            detailedSellerFragment.setArguments(bundle);
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, detailedSellerFragment).
+                    commit();
         });
 
         try {

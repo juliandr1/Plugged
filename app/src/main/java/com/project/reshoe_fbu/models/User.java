@@ -182,6 +182,17 @@ public class User  {
         });
     }
 
+    public void clearCart() throws JSONException {
+        List<String> cartIds = getCartIds();
+        user.removeAll(KEY_CART, cartIds);
+    }
+
+    public void setItemsSold(List<Post> itemsSold) {
+        for (int i = 0; i < itemsSold.size(); i++) {
+            itemsSold.get(i).setIsSold();
+        }
+    }
+
     public List<Post> getCart() throws JSONException, ParseException {
         List<String> postIds = getCartIds();
 
@@ -203,9 +214,6 @@ public class User  {
 
         return postIds;
     }
-
-    public void removeThread(Thread thread) { user.removeAll(KEY_THREADS,
-            Collections.singletonList(thread));}
 
     public void like(ParseUser otherUser) {
         user.add(KEY_LIKED_SELLERS, otherUser.getObjectId());

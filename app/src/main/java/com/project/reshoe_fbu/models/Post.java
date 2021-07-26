@@ -38,12 +38,12 @@ public class Post extends ParseObject {
     public static final String KEY_NUM_LIKED = "numLiked";
     public static final String KEY_SHOE_NAME = "shoeName";
     public static final String KEY_SHOE_NAME_SEARCH = "shoeNameSearch";
+    public static final String KEY_IS_SOLD = "isSold";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
     }
 
-    // Will be used in the future
     public void setDescription(String description) {
         put(KEY_DESCRIPTION, description);
     }
@@ -58,6 +58,12 @@ public class Post extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public boolean getIsSold() { return getBoolean(KEY_IS_SOLD); }
+
+    public void setIsSold() {
+        put(KEY_IS_SOLD, true);
     }
 
     public int getCondition() {

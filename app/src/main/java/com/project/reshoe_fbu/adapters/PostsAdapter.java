@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
+import com.project.reshoe_fbu.activities.fragments.DetailShoeSellerFragment;
 import com.project.reshoe_fbu.models.Post;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -163,7 +164,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Post post = posts.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("post", post);
-                Fragment detailShoeFragment = new DetailShoeFragment();
+
+                Fragment detailShoeFragment;
+
+                if (user.getIsSeller()) {
+                    detailShoeFragment = new DetailShoeSellerFragment();
+                } else {
+                    detailShoeFragment = new DetailShoeFragment();
+                }
                 detailShoeFragment.setArguments(bundle);
                 fragmentManager.
                         beginTransaction().

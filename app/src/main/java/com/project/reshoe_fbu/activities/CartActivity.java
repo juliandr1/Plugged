@@ -50,8 +50,6 @@ public class CartActivity extends AppCompatActivity {
     // Arbitrarily-picked constant integer you define to track a request for payment data activity.
     private static final int LOAD_PAYMENT_DATA_REQUEST_CODE = 991;
 
-    private static final long SHIPPING_COST_CENTS = 90 * PaymentsUtil.CENTS_IN_A_UNIT.longValue();
-
     // A client for interacting with the Google Pay API.
     private PaymentsClient paymentsClient;
 
@@ -76,25 +74,16 @@ public class CartActivity extends AppCompatActivity {
         paymentsClient = PaymentsUtil.createPaymentsClient(this);
         possiblyShowGooglePayButton();
 
-        binding.btnBackCart.setOnClickListener(v -> {
-            finish();
-        });
+        binding.btnBackCart.setOnClickListener(v -> finish());
 
         try {
             queryCartItems();
-        } catch (JSONException e) {
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
-        } catch (ParseException parseException) {
-            parseException.printStackTrace();
         }
 
         googlePayButton = findViewById(R.id.googleCheckout);
-        googlePayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestPayment(view);
-            }
-        });
+        googlePayButton.setOnClickListener(v -> requestPayment(view));
     }
 
     private void queryCartItems() throws JSONException, ParseException {
@@ -126,6 +115,16 @@ public class CartActivity extends AppCompatActivity {
                     case Activity.RESULT_OK:
                         PaymentData paymentData = PaymentData.getFromIntent(data);
                         handlePaymentSuccess(paymentData);
+                        User currentUser = new User(ParseUser.getCurrentUser());
+
+                        try {
+                            currentUser.clearCart();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        currentUser.setItemsSold(cartItems);
+                        cartItems.clear();
+
                         break;
 
                     case Activity.RESULT_CANCELED:
@@ -155,14 +154,11 @@ public class CartActivity extends AppCompatActivity {
         IsReadyToPayRequest request = IsReadyToPayRequest.fromJson(isReadyToPayJson.get().toString());
         Task<Boolean> task = paymentsClient.isReadyToPay(request);
         task.addOnCompleteListener(this,
-                new OnCompleteListener<Boolean>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
-                        if (task.isSuccessful()) {
-                            setGooglePayAvailable(task.getResult());
-                        } else {
-                            Log.w("isReadyToPay failed", task.getException());
-                        }
+                task1 -> {
+                    if (task1.isSuccessful()) {
+                        setGooglePayAvailable(task1.getResult());
+                    } else {
+                        Log.w("isReadyToPay failed", task1.getException());
                     }
                 });
     }
