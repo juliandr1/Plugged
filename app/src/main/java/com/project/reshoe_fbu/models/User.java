@@ -92,13 +92,17 @@ public class User  {
 
     public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
 
-    public double getRating() { return user.getNumber(KEY_RATING).doubleValue(); }
+    public static double getRating(User seller) throws ParseException {
+        List<Review> reviews = getReviews(seller);
 
-    public void setRating(double rating) { user.put(KEY_RATING, rating); }
+        double rating = 0;
 
-    public int getNumReviews() { return user.getNumber(KEY_NUM_REVIEWS).intValue(); }
+        for (int i = 0; i < reviews.size(); i++) {
+            rating += reviews.get(i).getRating();
+        }
 
-    public void setNumReviews(int numReviews) { user.put(KEY_NUM_REVIEWS, numReviews); }
+        return rating / reviews.size();
+    }
 
     public String getObjectID() { return user.getObjectId(); }
 
@@ -213,6 +217,14 @@ public class User  {
         }
 
         return postIds;
+    }
+
+    public static List<Review> getReviews(User seller) throws ParseException {
+        ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
+
+        query.whereEqualTo(Review.KEY_REVIEWEE, seller.getUser());
+
+        return query.find();
     }
 
     public void like(ParseUser otherUser) {

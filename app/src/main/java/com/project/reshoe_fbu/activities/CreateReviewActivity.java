@@ -3,6 +3,7 @@ package com.project.reshoe_fbu.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
@@ -17,26 +18,34 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.project.reshoe_fbu.models.Review;
+import com.project.reshoe_fbu.models.User;
 
 public class CreateReviewActivity extends AppCompatActivity {
 
     public static final String TAG = "CreateReviewActivity";
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState,
-                         @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        ActivityCreateReviewBinding binding = ActivityCreateReviewBinding.
-                inflate(getLayoutInflater());
+        ActivityCreateReviewBinding binding = ActivityCreateReviewBinding
+                .inflate(getLayoutInflater());
+
+        Log.i(TAG, "Here");
+
+        View view = binding.getRoot();
+        setContentView(view);
+
+        User seller = new User(getIntent().getParcelableExtra("seller"));
 
         Context mContext = this;
 
         binding.btnPostReview.setOnClickListener(v -> {
             Review review = new Review();
             review.setBody(binding.etReview.getText().toString());
-            review.setAuthor(ParseUser.getCurrentUser());
-            review.setRating((int) binding.userRatingBar.getRating());
+            review.setAuthor(new User(ParseUser.getCurrentUser()));
+            review.setRating(binding.userRatingBar.getRating());
+            review.setReviewee(seller);
 
             review.saveInBackground(e -> {
                 if (e != null) {

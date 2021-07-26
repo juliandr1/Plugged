@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,16 @@ public class DetailedSellerFragment extends Fragment {
             parseException.printStackTrace();
         }
 
+        try {
+            if (currentUser.didLike(seller.getUser())) {
+                binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_filled);
+            } else {
+                binding.btnLikeSeller.setBackgroundResource(R.drawable.heart_outline);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         // If the user click the like button then check if we must like or unlike
         // the user.
         binding.btnLikeSeller.setOnClickListener(v -> {
@@ -123,13 +134,28 @@ public class DetailedSellerFragment extends Fragment {
                 popBackStack());
 
         binding.btnReview.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("seller", seller.getUser());
+
             Fragment reviewFragment = new ReviewFragment();
+            reviewFragment.setArguments(bundle);
             getActivity().
                     getSupportFragmentManager().
                     beginTransaction().
                     replace(R.id.flContainer, reviewFragment).
                     commit();
         });
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        double rating = 0;
+        try {
+            rating = User.getRating(seller);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
+        if (!(rating == 0.0)) {
+            binding.tvRating.setText(df.format(rating));
+        }
 
         queryPosts();
     }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +19,13 @@ import android.view.ViewGroup;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentReviewBinding;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.CreateReviewActivity;
 import com.project.reshoe_fbu.adapters.ReviewsAdapter;
 import com.project.reshoe_fbu.models.Review;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,12 +34,17 @@ import java.util.List;
 
 public class ReviewFragment extends Fragment {
 
+    public static String TAG = "ReviewFragment";
+
     private ReviewsAdapter adapter;
     private List<Review> reviews;
+    private User seller;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        seller = new User(getArguments().getParcelable("seller"));
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_review, container, false);
     }
 
@@ -58,6 +68,12 @@ public class ReviewFragment extends Fragment {
         binding.btnBackReview.setOnClickListener(v -> getActivity().
                 getSupportFragmentManager().
                 popBackStack());
+
+        try {
+            queryReviews();
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
     }
 
     @Override
@@ -71,9 +87,15 @@ public class ReviewFragment extends Fragment {
 
         if (item.getItemId() == R.id.post_review) {
             Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
+            intent.putExtra("seller", seller.getUser());
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void queryReviews() throws ParseException {
+        reviews.addAll(User.getReviews(seller));
+        adapter.notifyDataSetChanged();
     }
 }

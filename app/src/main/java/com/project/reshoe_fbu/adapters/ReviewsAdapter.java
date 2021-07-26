@@ -17,7 +17,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
@@ -45,7 +47,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     @Override
     public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_post, parent,
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_review, parent,
                 false);
         return new ReviewsAdapter.ViewHolder(view);
     }
@@ -53,7 +55,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull @NotNull ReviewsAdapter.ViewHolder holder, int position) {
         Review review = reviews.get(position);
-        holder.bind(review);
+        try {
+            holder.bind(review);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
     }
 
     @Override
@@ -78,14 +84,16 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Review review) {
-            tvReviewerUser.setText(review.getAuthor().getUsername());
+        public void bind(Review review) throws ParseException {
+            tvReviewerUser.setText("@" + review.getAuthor().getUsername());
             tvReview.setText(review.getBody());
-            ratingBar.setRating(review.getRating());
+            ratingBar.setRating((float) review.getRating());
 
-            ParseFile image = review.getAuthor().getParseFile("profilePic");
-
-            Glide.with(mContext).load(image.getUrl()).into(ivReviewerProfile);
+            Glide.with(mContext)
+                    .load(review.getAuthor()
+                    .getProfilePicURL())
+                    .circleCrop()
+                    .into(ivReviewerProfile);
         }
 
         @Override
