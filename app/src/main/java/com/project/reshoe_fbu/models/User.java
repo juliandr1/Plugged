@@ -42,6 +42,7 @@ public class User  {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_THREADS = "threads";
     public static final String KEY_CART = "cart";
+    public static final String KEY_LIKED_POSTS = "likedPosts";
 
     private ParseUser user;
 
@@ -222,9 +223,41 @@ public class User  {
     public static List<Review> getReviews(User seller) throws ParseException {
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
 
+        query.addDescendingOrder("createdAt");
         query.whereEqualTo(Review.KEY_REVIEWEE, seller.getUser());
 
         return query.find();
+    }
+
+    public List<Post> getLikedPosts() throws JSONException, ParseException {
+        JSONArray jsonArray = user.getJSONArray(KEY_LIKED_POSTS);
+
+        List<String> postIds = new ArrayList<>();
+
+        if (jsonArray == null) {
+            return new ArrayList<Post>();
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            postIds.add(jsonArray.get(i).toString());
+        }
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        query.addDescendingOrder("createdAt");
+        query.whereContainedIn("objectId", postIds);;
+
+        return query.find();
+    }
+
+    public void addLike(String postId) {
+        user.add(KEY_LIKED_POSTS, postId);
+        user.saveInBackground();
+    }
+
+    public void removeLike(String postId) {
+        user.removeAll(KEY_LIKED_POSTS, Collections.singletonList(postId));
+        user.saveInBackground();
     }
 
     public void like(ParseUser otherUser) {

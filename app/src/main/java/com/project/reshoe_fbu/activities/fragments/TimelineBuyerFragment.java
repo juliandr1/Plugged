@@ -68,7 +68,7 @@ public class TimelineBuyerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager(), false);
+                getSupportFragmentManager(), false, true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);
@@ -118,6 +118,14 @@ public class TimelineBuyerFragment extends Fragment {
         } else if (item.getItemId() == R.id.cart) {
             Intent intent = new Intent(getActivity(), CartActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.liked) {
+            Fragment likedPost = new LikedPostsFragment();
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, likedPost).
+                    addToBackStack("back").
+                    commit();
         }
 
         return super.onOptionsItemSelected(item);

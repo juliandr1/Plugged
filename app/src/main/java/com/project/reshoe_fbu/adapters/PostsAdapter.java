@@ -39,15 +39,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private final List<Post> posts;
     private final User user;
     private final FragmentManager fragmentManager;
-    private final boolean isDetailedSeller;
+    private final boolean isDetailedSeller, showLike;
 
     public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager
-            fragmentManager, boolean isDetailedSeller) {
+            fragmentManager, boolean isDetailedSeller, boolean showLike) {
         this.mContext = context;
         this.posts = posts;
         this.user = user;
         this.fragmentManager = fragmentManager;
         this.isDetailedSeller = isDetailedSeller;
+        this.showLike = showLike;
     }
 
     // For each row, inflate the layout
@@ -100,31 +101,39 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
 
-            if (!user.getIsSeller() && !isDetailedSeller) {
-                // Like or unlike posts and update the color of the heart.
-                btnLike.setOnClickListener(v -> {
-                    try {
-                        Post post = posts.get(getAdapterPosition());
-                        // If the user has liked the post before then unlike it.
-                        if (post.didLike(user)) {
-                            Log.i(TAG, "Unlike");
-                            btnLike.setBackgroundResource(R.drawable.heart_outline);
-                            post.unlike();
-                            int numLikes = post.getNumLikes();
-                            checkLikes(numLikes);
-                        } else {
-                            Log.i(TAG, "Like");
-                            btnLike.setBackgroundResource(R.drawable.heart_filled);
-                            post.like();
-                            int numLikes = post.getNumLikes();
-                            Log.i("TAG", "" + numLikes);
-                            checkLikes(numLikes);
+            if(showLike) {
+                if (!user.getIsSeller() && !isDetailedSeller) {
+                    // Like or unlike posts and update the color of the heart.
+                    btnLike.setOnClickListener(v -> {
+                        try {
+                            Post post = posts.get(getAdapterPosition());
+                            // If the user has liked the post before then unlike it.
+                            if (post.didLike(user)) {
+                                Log.i(TAG, "Unlike");
+                                btnLike.setBackgroundResource(R.drawable.heart_outline);
+                                post.unlike();
+                                user.removeLike(post.getObjectId());
+                                int numLikes = post.getNumLikes();
+                                checkLikes(numLikes);
+                            } else {
+                                Log.i(TAG, "Like");
+                                btnLike.setBackgroundResource(R.drawable.heart_filled);
+                                post.like();
+                                user.addLike(post.getObjectId());
+                                int numLikes = post.getNumLikes();
+                                Log.i("TAG", "" + numLikes);
+                                checkLikes(numLikes);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                });
+                    });
+                } else {
+                    tvLikes.setVisibility(View.INVISIBLE);
+                    btnLike.setVisibility(View.INVISIBLE);
+                }
             }
+
         }
 
         public void bind(Post post) throws JSONException {
@@ -138,21 +147,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivImage);
 
-            if (!user.getIsSeller() && !isDetailedSeller) {
-                try {
-                    if (post.didLike(user)) {
-                        btnLike.setBackgroundResource(R.drawable.heart_filled);
-                    } else {
-                        btnLike.setBackgroundResource(R.drawable.heart_outline);
+            if (showLike) {
+                if (!user.getIsSeller() && !isDetailedSeller) {
+                    try {
+                        if (post.didLike(user)) {
+                            btnLike.setBackgroundResource(R.drawable.heart_filled);
+                        } else {
+                            btnLike.setBackgroundResource(R.drawable.heart_outline);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            if (!user.getIsSeller() && !isDetailedSeller) {
-                int numLikes = post.getNumLikes();
-                checkLikes(numLikes);
+                if (!user.getIsSeller() && !isDetailedSeller) {
+                    int numLikes = post.getNumLikes();
+                    checkLikes(numLikes);
+                }
             }
         }
 

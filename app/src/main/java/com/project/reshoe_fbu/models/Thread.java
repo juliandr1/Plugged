@@ -71,7 +71,6 @@ public class Thread extends ParseObject {
         List<String> messageId = new ArrayList<>();
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
 
-
         for (int i = 0; i < jsonArray.length(); i++) {
             messageId.add(jsonArray.get(i).toString());
         }

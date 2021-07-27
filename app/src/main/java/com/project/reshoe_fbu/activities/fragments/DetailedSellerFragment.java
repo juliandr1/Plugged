@@ -60,7 +60,7 @@ public class DetailedSellerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager(), true);
+                getSupportFragmentManager(), true, false);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 
@@ -143,6 +143,7 @@ public class DetailedSellerFragment extends Fragment {
                     getSupportFragmentManager().
                     beginTransaction().
                     replace(R.id.flContainer, reviewFragment).
+                    addToBackStack("back").
                     commit();
         });
 

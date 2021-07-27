@@ -117,6 +117,7 @@ public class DetailShoeFragment extends Fragment {
                 getSupportFragmentManager().
                 beginTransaction().
                 replace(R.id.flContainer, detailedSellerFragment).
+                addToBackStack("back").
                 commit();
         });
 
