@@ -2,7 +2,9 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
@@ -18,6 +22,7 @@ import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
+import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.User;
 
@@ -32,12 +37,15 @@ public class DetailShoeFragment extends Fragment {
     private static final String TAG = "DetailShoeFragment";
     private Post post;
     private PagerAdapter pagerAdapter;
+    private int prevFragmentCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
+        prevFragmentCode = getArguments().getInt("code");
+
         return inflater.inflate(R.layout.fragment_detail_shoe, container, false);
     }
 
@@ -87,10 +95,28 @@ public class DetailShoeFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        binding.btnBackDetailShoe.setOnClickListener(v -> getActivity().
-                getSupportFragmentManager().
-                popBackStack());
+        binding.btnBackDetailShoe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+
+                Fragment prevFragment;
+
+                if (prevFragmentCode == PostsAdapter.BUYER_CODE) {
+                    prevFragment = new TimelineBuyerFragment();
+                } else if(prevFragmentCode == PostsAdapter.SELLER_CODE) {
+                    prevFragment = new TimelineSellerFragment();
+                } else {
+                    prevFragment = new SearchPostFragment();
+                }
+
+                ft.replace(R.id.flContainer, prevFragment).commit();
+
+            }
+        });
 
         if (!post.getIsSold()) {
             binding.btnCheckout.setOnClickListener(v -> {
@@ -109,16 +135,16 @@ public class DetailShoeFragment extends Fragment {
         }
 
         binding.ibSellerProfile.setOnClickListener(v -> {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("seller", post.getUser().getUser());
-        Fragment detailedSellerFragment = new DetailedSellerFragment();
-        detailedSellerFragment.setArguments(bundle);
-        getActivity().
-                getSupportFragmentManager().
-                beginTransaction().
-                replace(R.id.flContainer, detailedSellerFragment).
-                addToBackStack("back").
-                commit();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("seller", post.getUser().getUser());
+            Fragment detailedSellerFragment = new DetailedSellerFragment();
+            detailedSellerFragment.setArguments(bundle);
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, detailedSellerFragment).
+                    addToBackStack("back").
+                    commit();
         });
 
         try {

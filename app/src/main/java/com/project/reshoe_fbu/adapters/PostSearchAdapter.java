@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,7 @@ import java.util.List;
 public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.ViewHolder>  {
 
     public static String TAG = "PostSearchAdapter";
+    public static int SEARCH_CODE = 771;
 
     private final Context mContext;
     private final List<Post> searchPosts;
@@ -99,13 +101,15 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
                 Post post = searchPosts.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("post", post);
+                bundle.putInt("code", SEARCH_CODE);
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);
-                fragmentManager.
-                        beginTransaction().
-                        replace(R.id.flContainer, detailShoeFragment).
-                        addToBackStack("back").
-                        commit();
+
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+                ft.replace(R.id.flContainer, detailShoeFragment, "post")
+                        .addToBackStack(null)
+                        .commit();
             }
         }
     }

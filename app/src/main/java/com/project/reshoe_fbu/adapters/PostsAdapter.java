@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,9 @@ import java.util.List;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     public static String TAG = "PostsAdapter";
+
+    public static final int BUYER_CODE = 991;
+    public static final int SELLER_CODE = 881;
 
     private final Context mContext;
     private final List<Post> posts;
@@ -180,15 +184,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
                 if (user.getIsSeller()) {
                     detailShoeFragment = new DetailShoeSellerFragment();
+                    bundle.putInt("code", SELLER_CODE);
                 } else {
                     detailShoeFragment = new DetailShoeFragment();
+                    bundle.putInt("code", BUYER_CODE);
                 }
                 detailShoeFragment.setArguments(bundle);
-                fragmentManager.
-                        beginTransaction().
-                        replace(R.id.flContainer, detailShoeFragment).
-                        addToBackStack("back").
-                        commit();
+
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+                ft.replace(R.id.flContainer, detailShoeFragment, "post")
+                        .addToBackStack(null)
+                        .commit();
             }
         }
 

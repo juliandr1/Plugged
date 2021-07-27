@@ -2,10 +2,14 @@ package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -77,6 +81,29 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                     load(images.get(position)).
                     override(370, 370).
                     into(imageView);
+
+            GestureDetector gestureDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    Log.i(TAG, "doubleTap");
+                    return super.onDoubleTap(e);
+                }
+
+                @Override
+                public boolean onDoubleTapEvent(MotionEvent e) {
+                    Log.i(TAG, "DoubleTap");
+                    return false;
+                }
+            });
+
+            imageView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return gestureDetector.onTouchEvent(event);
+                }
+            });
+
+
         }
         Objects.requireNonNull(container).addView(itemView);
 
