@@ -149,12 +149,27 @@ public class DetailShoeFragment extends Fragment {
 
         try {
             pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
-                    post.getImageUrls(), false);
+                    post.getImageUrls(), false, post);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        binding.viewPager.requestDisallowInterceptTouchEvent(true);
         binding.viewPager.setAdapter(pagerAdapter);
+        binding.viewPager.setOnTouchListener(new View.OnTouchListener() {
+            GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    Log.i(TAG, "doubleTap");
+                    return super.onDoubleTap(e);
+                }
+
+            });
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
     }
 
     private String checkSizing(String str) {

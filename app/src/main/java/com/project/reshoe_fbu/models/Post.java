@@ -111,11 +111,15 @@ public class Post extends ParseObject {
         return getJSONArray(KEY_USERS_LIKED);
     }
 
-    public void like() {
-        add(KEY_USERS_LIKED, ParseUser.getCurrentUser().getObjectId());
-        setLikes(getNumLikes() + 1);
-        Log.i(TAG, ParseUser.getCurrentUser().getObjectId());
-        saveInBackground();
+    public void like() throws JSONException {
+        User currentUser = new User(ParseUser.getCurrentUser());
+
+        if (!didLike(currentUser)) {
+            add(KEY_USERS_LIKED, ParseUser.getCurrentUser().getObjectId());
+            setLikes(getNumLikes() + 1);
+            Log.i(TAG, ParseUser.getCurrentUser().getObjectId());
+            saveInBackground();
+        }
     }
 
     public void unlike() {

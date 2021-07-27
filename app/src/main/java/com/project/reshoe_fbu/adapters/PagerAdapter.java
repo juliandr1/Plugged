@@ -2,20 +2,22 @@ package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
+import com.project.reshoe_fbu.helper.OnDoubleTapListener;
+import com.project.reshoe_fbu.models.Post;
+
+import org.json.JSONException;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,13 +35,16 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
     // Used to distinguish in which scenario the adapter will be used.
     private final boolean isPosting;
 
+    private Post post;
+
     // Viewpager Constructor
-    public PagerAdapter(Context context, List<String> images, boolean isPosting) {
+    public PagerAdapter(Context context, List<String> images, boolean isPosting, Post post) {
         this.mContext = context;
         this.images = images;
         this.mLayoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.isPosting = isPosting;
+        this.post = post;
     }
 
     public PagerAdapter(Context context, List<Bitmap> bitmaps) {
@@ -82,28 +87,14 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                     override(370, 370).
                     into(imageView);
 
-            GestureDetector gestureDetector = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
+            itemView.setOnTouchListener(new OnDoubleTapListener(mContext) {
                 @Override
-                public boolean onDoubleTap(MotionEvent e) {
-                    Log.i(TAG, "doubleTap");
-                    return super.onDoubleTap(e);
-                }
-
-                @Override
-                public boolean onDoubleTapEvent(MotionEvent e) {
-                    Log.i(TAG, "DoubleTap");
-                    return false;
+                public void onDoubleTap(MotionEvent e) throws JSONException {
+                    post.like();
+                    Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
+                    super.onDoubleTap(e);
                 }
             });
-
-            imageView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            });
-
-
         }
         Objects.requireNonNull(container).addView(itemView);
 

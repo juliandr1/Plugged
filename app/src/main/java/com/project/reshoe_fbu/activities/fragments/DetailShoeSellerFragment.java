@@ -122,7 +122,7 @@ public class DetailShoeSellerFragment extends Fragment{
 
         try {
             pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
-                    post.getImageUrls(), false);
+                    post.getImageUrls(), false, post);
         } catch (JSONException e) {
             e.printStackTrace();
         }
