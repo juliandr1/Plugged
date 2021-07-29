@@ -118,7 +118,7 @@ public class CartActivity extends AppCompatActivity {
                         User currentUser = new User(ParseUser.getCurrentUser());
 
                         try {
-                            currentUser.clearCart();
+                            currentUser.clearCart(cartItems);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

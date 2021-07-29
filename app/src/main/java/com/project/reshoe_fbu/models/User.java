@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 public class User  {
@@ -37,12 +38,11 @@ public class User  {
     public static final String KEY_IS_SELLER = "isSeller";
     public static final String KEY_PROFILE_PIC = "profilePic";
     public static final String KEY_LIKED_SELLERS = "likedSellers";
-    public static final String KEY_RATING = "rating";
-    public static final String KEY_NUM_REVIEWS = "numReviews";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_THREADS = "threads";
     public static final String KEY_CART = "cart";
     public static final String KEY_LIKED_POSTS = "likedPosts";
+    public static final String KEY_USERS_BOUGHT_FROM = "users_bought_from";
 
     private ParseUser user;
 
@@ -125,9 +125,16 @@ public class User  {
 
         userThreads.addAll(query.find());
 
-        // test this
+        /* fix thread sorting
+        userThreads.sort(new Comparator<Thread>() {
+            @Override
+            public int compare(Thread o1, Thread o2) {
+                Date d1 = o1.get
+                if (o1.getLastMessageSentOtherUser())
+            }
+        });
 
-        Log.i(TAG,"# of threads: " + userThreads.size());
+         */
 
         return userThreads;
     }
@@ -187,9 +194,21 @@ public class User  {
         });
     }
 
-    public void clearCart() throws JSONException {
+    public void clearCart(List<Post> cartItems) throws JSONException {
         List<String> cartIds = getCartIds();
         user.removeAll(KEY_CART, cartIds);
+
+        List<String> usersBought = getUsersBought();
+
+        for (int i = 0; i < cartItems.size(); i++) {
+            String id = cartItems.get(i).getUser().getObjectID();
+            if (!usersBought.contains(i)) {
+                // For local usage
+                usersBought.add(id);
+                // For database
+                addBoughtUser(id);
+            }
+        }
     }
 
     public void setItemsSold(List<Post> itemsSold) {
@@ -248,6 +267,27 @@ public class User  {
         query.whereContainedIn("objectId", postIds);;
 
         return query.find();
+    }
+
+    public void addBoughtUser(String userId) {
+        user.add(KEY_USERS_BOUGHT_FROM, userId);
+        user.saveInBackground();
+    }
+
+    public List<String> getUsersBought() throws JSONException {
+        JSONArray jsonArray = user.getJSONArray(KEY_USERS_BOUGHT_FROM);
+
+        if (jsonArray == null) {
+            return null;
+        }
+
+        List<String> usersBoughtId = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            usersBoughtId.add(jsonArray.get(i).toString());
+        }
+
+        return usersBoughtId;
     }
 
     public void addLike(String postId) {

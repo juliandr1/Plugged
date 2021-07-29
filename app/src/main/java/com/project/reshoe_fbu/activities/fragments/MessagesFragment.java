@@ -216,7 +216,7 @@ public class MessagesFragment extends Fragment {
     }
 
     private void setMessageData(Thread thread, Message newMessage) throws ParseException {
-        Log.i(TAG, "send");
+
         if (isAuthor) {
             thread.setLastMessageSentOtherUser(new Date());
             thread.setLastMessageUser(newMessage);

@@ -108,7 +108,10 @@ public class TimelineBuyerFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
 
         if (item.getItemId() == R.id.searchBuyer) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("filter", false);
             Fragment searchPost = new SearchPostFragment();
+            searchPost.setArguments(bundle);
             getActivity().
                     getSupportFragmentManager().
                     beginTransaction().

@@ -10,5 +10,10 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView"
         />
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/filter"
+        android:title="filter"
+        app:showAsAction="always" />
 
 </menu>

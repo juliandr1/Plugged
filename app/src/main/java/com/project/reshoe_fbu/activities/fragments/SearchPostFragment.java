@@ -36,11 +36,49 @@ public class SearchPostFragment extends Fragment {
 
     private PostSearchAdapter adapter;
     private List<Post> searches;
+    private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+    private int size, condition, isWomenSizingCode, isHighToLowCode;
+
+    private boolean filterApplied;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        filterApplied = getArguments().getBoolean("filter");
+
+        if (filterApplied) {
+            size = getArguments().getInt("size");
+            if (size != FilterFragment.NOT_CHANGED_CODE) {
+                query.whereEqualTo(Post.KEY_SIZE, size);
+            }
+
+            condition = getArguments().getInt("condition");
+            if (condition != FilterFragment.NOT_CHANGED_CODE) {
+                query.whereEqualTo(Post.KEY_CONDITION, condition);
+            }
+
+            isWomenSizingCode = getArguments().getInt("isWomenSizing");
+            Log.i(TAG, isWomenSizingCode + "");
+            if (isWomenSizingCode == FilterFragment.CHANGED_IS_WOMEN_SIZING_M) {
+                Log.i(TAG, "Filter mens sizing");
+                query.whereEqualTo(Post.KEY_IS_WOMEN_SIZING, false);
+            } else if (isWomenSizingCode == FilterFragment.CHANGED_IS_WOMEN_SIZING_W) {
+                query.whereEqualTo(Post.KEY_IS_WOMEN_SIZING, true);
+            }
+
+            isHighToLowCode = getArguments().getInt("isHighToLow");
+            if (isHighToLowCode == FilterFragment.CHANGED_IS_HIGH_TO_LOW) {
+                query.orderByDescending(Post.KEY_PRICE);
+            } else if (isHighToLowCode == FilterFragment.CHANGED_IS_LOW_TO_HIGH) {
+                query.orderByAscending(Post.KEY_PRICE);
+            }
+
+        } else {
+            filterApplied = false;
+        }
     }
 
     @Override
@@ -67,23 +105,33 @@ public class SearchPostFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setQueryHint("Search for shoes...");
-        // When somebody clicks on the searchview, query posts with those shoe names
-        // as the user changes the input text.
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        if (item.getItemId() == R.id.search) {
+            SearchView searchView = (SearchView) item.getActionView();
+            searchView.setQueryHint("Search for shoes...");
+            // When somebody clicks on the searchview, query posts with those shoe names
+            // as the user changes the input text.
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-            @Override
-            public boolean onQueryTextSubmit(String query) { return false; }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Here is where we are going to implement the filter logic
-                querySearch(newText);
-
-                return true;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // Here is where we are going to implement the filter logic
+                    querySearch(newText);
+                    return true;
+                }
+            });
+        } else if (item.getItemId() == R.id.filter) {
+            Fragment filterFragment = new FilterFragment();
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, filterFragment).
+                    commit();
+        }
         return true;
     }
 
@@ -92,12 +140,8 @@ public class SearchPostFragment extends Fragment {
      */
     private void querySearch(String str) {
         if (!str.isEmpty()) {
-            ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-
             query.whereContains("shoeNameSearch", str.toLowerCase());
             query.setLimit(20);
-            // Order the posts by date
-            query.addDescendingOrder("createdAt");
             // Get the posts
             query.findInBackground((newPosts, e) -> {
                 if (e != null) {

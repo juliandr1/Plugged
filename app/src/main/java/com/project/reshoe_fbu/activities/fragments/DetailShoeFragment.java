@@ -110,7 +110,10 @@ public class DetailShoeFragment extends Fragment {
                 } else if(prevFragmentCode == PostsAdapter.SELLER_CODE) {
                     prevFragment = new TimelineSellerFragment();
                 } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("filter", false);
                     prevFragment = new SearchPostFragment();
+                    prevFragment.setArguments(bundle);
                 }
 
                 ft.replace(R.id.flContainer, prevFragment).commit();

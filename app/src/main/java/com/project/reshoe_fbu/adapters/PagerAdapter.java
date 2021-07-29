@@ -14,8 +14,10 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.helper.OnDoubleTapListener;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.User;
 
 import org.json.JSONException;
 
@@ -90,6 +92,13 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
             itemView.setOnTouchListener(new OnDoubleTapListener(mContext) {
                 @Override
                 public void onDoubleTap(MotionEvent e) throws JSONException {
+                    User currentUser = new User(ParseUser.getCurrentUser());
+                    if (!post.didLike(currentUser)) {
+                        currentUser.addLike(post.getObjectId());
+                    } else {
+                        // Add string resource
+                        Toast.makeText(mContext, "Already liked!", Toast.LENGTH_SHORT).show();
+                    }
                     post.like();
                     Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
                     super.onDoubleTap(e);

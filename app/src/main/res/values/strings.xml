@@ -55,4 +55,6 @@
     <string name="total_price">Total Price:</string>
     <string name="money">$</string>
     <string name="title_activity_review">ReviewActivity</string>
+    <string name="filters">Filters</string>
+    <string name="m_w">M/W:</string>
 </resources>

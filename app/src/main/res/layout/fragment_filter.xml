@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="171dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/filters"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvFilterSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFilter"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/size"
+        />
+
+    <TextView
+        android:id="@+id/tvFilterCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFilterSize"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/condition"
+        />
+
+    <TextView
+        android:id="@+id/tvFilterMW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFilterCondition"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/m_w"
+        />
+
+    <TextView
+        android:id="@+id/tvFilterPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFilterMW"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/price"
+        />
+
+    <EditText
+        android:id="@+id/etFilterSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFilter"
+        android:layout_alignStart="@+id/tvFilterSize"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        />
+
+    <EditText
+        android:id="@+id/etFilterCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFilterSize"
+        android:layout_alignStart="@+id/tvFilterCondition"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="number"
+        />
+
+    <RadioGroup
+        android:id="@+id/rgGroupFilterSize"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/etFilterCondition"
+        android:layout_alignStart="@+id/tvFilterMW"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbMenFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/men" />
+
+        <RadioButton
+            android:id="@+id/rbWomenFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/women" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rgGroupFilterPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/rgGroupFilterSize"
+        android:layout_alignStart="@+id/tvFilterPrice"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/rbHighToLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="High to Low"
+            />
+
+        <RadioButton
+            android:id="@+id/rbLowToHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Low to High"
+            />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnApply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rgGroupFilterPrice"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="APPLY" />
+
+    <Button
+        android:id="@+id/btnBackFilter"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/back_arrow"
+        />
+
+</RelativeLayout>

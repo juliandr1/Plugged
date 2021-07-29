@@ -38,7 +38,8 @@ public class DetailShoeSellerFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
-        return inflater.inflate(R.layout.fragment_detail_shoe_seller, container, false);
+        return inflater.inflate(R.layout.fragment_detail_shoe_seller, container,
+                false);
     }
 
     @Override
