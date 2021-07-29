@@ -38,7 +38,8 @@ public class SearchPostFragment extends Fragment {
     private List<Post> searches;
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
-    private int size, condition, isWomenSizingCode, isHighToLowCode;
+    private int condition, isWomenSizingCode, isHighToLowCode;
+    private double size;
 
     private boolean filterApplied;
 
@@ -50,8 +51,8 @@ public class SearchPostFragment extends Fragment {
         filterApplied = getArguments().getBoolean("filter");
 
         if (filterApplied) {
-            size = getArguments().getInt("size");
-            if (size != FilterFragment.NOT_CHANGED_CODE) {
+            size = getArguments().getDouble("size");
+            if (((int) size) != FilterFragment.NOT_CHANGED_CODE) {
                 query.whereEqualTo(Post.KEY_SIZE, size);
             }
 
@@ -156,10 +157,20 @@ public class SearchPostFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_post, container, false);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        if (filterApplied) {
+
+        }
     }
 }

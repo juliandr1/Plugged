@@ -8,15 +8,12 @@
         android:id="@+id/tvFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="171dp"
         android:layout_marginTop="30dp"
         android:text="@string/filters"
         android:textSize="24sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvFilterSize"
@@ -62,38 +59,14 @@
         android:text="@string/price"
         />
 
-    <EditText
-        android:id="@+id/etFilterSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvFilter"
-        android:layout_alignStart="@+id/tvFilterSize"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="45dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        />
-
-    <EditText
-        android:id="@+id/etFilterCondition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etFilterSize"
-        android:layout_alignStart="@+id/tvFilterCondition"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:inputType="number"
-        />
-
     <RadioGroup
         android:id="@+id/rgGroupFilterSize"
         android:layout_width="120dp"
         android:layout_height="35dp"
-        android:layout_below="@+id/etFilterCondition"
+        android:layout_below="@+id/tvFilterCondition"
         android:layout_alignStart="@+id/tvFilterMW"
         android:layout_marginStart="110dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="68dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -164,5 +137,29 @@
         android:layout_marginTop="13dp"
         android:background="@drawable/back_arrow"
         />
+
+
+    <LinearLayout
+        android:layout_width="399dp"
+        android:layout_height="121dp"
+        android:layout_below="@+id/tvFilter"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="58dp"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/static_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="55dp" />
+
+        <Spinner
+            android:id="@+id/static_spinner2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </RelativeLayout>

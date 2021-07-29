@@ -1,9 +1,13 @@
 package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,12 +32,12 @@ public class FilterFragment extends Fragment {
     public static int CHANGED_IS_HIGH_TO_LOW = 444;
     public static int CHANGED_IS_LOW_TO_HIGH = 555;
 
+    private int positionCondition = NOT_CHANGED_CODE;
+    private double positionSize = NOT_CHANGED_CODE;
+
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         FragmentFilterBinding binding = FragmentFilterBinding.bind(view);
-
-        ParseQuery<Post> query = new ParseQuery<Post>(Post.class);
-
 
         binding.btnBackFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +56,68 @@ public class FilterFragment extends Fragment {
             }
         });
 
+        Spinner staticSpinner = binding.staticSpinner;
+        Spinner staticSpinner2 = binding.staticSpinner2;
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter2 = ArrayAdapter
+                .createFromResource(getActivity(), R.array.condition_array,
+                        android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter2
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        staticSpinner2.setAdapter(staticAdapter2);
+
+        staticSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = staticSpinner2.getItemAtPosition(position).toString();
+                if (str.isEmpty()) {
+                    positionCondition = NOT_CHANGED_CODE;
+                } else {
+                    positionCondition = Integer.parseInt(str);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Create an ArrayAdapter using the string array and a default spinner
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+                .createFromResource(getActivity(), R.array.size_array,
+                        android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        staticSpinner.setAdapter(staticAdapter);
+
+        staticSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str = staticSpinner.getItemAtPosition(position).toString();
+                if (str.isEmpty()) {
+                    positionSize = NOT_CHANGED_CODE;
+                } else {
+                    positionSize = Double.parseDouble(str);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         binding.btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,22 +125,20 @@ public class FilterFragment extends Fragment {
                 Bundle bundle = new Bundle();
 
                 boolean changed = false;
-                String sizeStr = binding.etFilterSize.getEditableText().toString();
-                String conditionStr = binding.etFilterCondition.getEditableText().toString();
 
                 // Ternary operators ? enter here
-                if (!sizeStr.isEmpty()) {
-                    bundle.putInt("size", Integer.parseInt(sizeStr));
+                if (((int) positionSize) != NOT_CHANGED_CODE) {
+                    bundle.putDouble("size", positionSize);
                     changed = true;
                 } else {
-                    bundle.putInt("size", NOT_CHANGED_CODE);
+                    bundle.putDouble("size", positionCondition);
                 }
 
-                if (!conditionStr.isEmpty()) {
-                    bundle.putInt("condition", Integer.parseInt(conditionStr));
+                if (positionCondition != NOT_CHANGED_CODE) {
+                    bundle.putInt("condition", positionCondition);
                     changed = true;
                 } else {
-                    bundle.putInt("condition", NOT_CHANGED_CODE);
+                    bundle.putInt("condition", positionCondition);
                 }
 
                 if (binding.rgGroupFilterSize.getCheckedRadioButtonId() ==
