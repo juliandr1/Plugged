@@ -10,8 +10,9 @@ import java.util.List;
 
 public class PostSort implements Comparable<PostSort> {
 
-    public static int COEFFICIENT_LIKED = 10;
+    public static int COEFFICIENT_LIKED_POST = 10;
     public static int COEFFICIENT_BOUGHT_FROM_USER = 5;
+    public static int COEFFICIENT_LIKED_USER = 3;
 
     private Post post;
     private int score;
@@ -30,15 +31,15 @@ public class PostSort implements Comparable<PostSort> {
         List<String> usersBought = currentUser.getUsersBought();
 
         if (likedPosts.contains(post)) {
-            score += 10;
-        }
-
-        if (likedUsers.contains(post.getUser().getObjectID())) {
-            score += 3;
+            score += COEFFICIENT_LIKED_POST;
         }
 
         if (usersBought.contains(post.getUser().getObjectID())) {
-            score += 5;
+            score += COEFFICIENT_BOUGHT_FROM_USER;
+        }
+
+        if (likedUsers.contains(post.getUser().getObjectID())) {
+            score += COEFFICIENT_LIKED_USER;
         }
     }
 
@@ -57,10 +58,5 @@ public class PostSort implements Comparable<PostSort> {
         }
     }
 
-    public static Comparator<PostSort> comparator = new Comparator<PostSort>() {
-        @Override
-        public int compare(PostSort o1, PostSort o2) {
-            return o1.compareTo(o2);
-        }
-    };
+    public static Comparator<PostSort> comparator = (o1, o2) -> o1.compareTo(o2);
 }

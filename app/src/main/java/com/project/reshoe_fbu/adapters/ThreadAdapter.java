@@ -29,14 +29,11 @@ import java.util.List;
 
 public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder> {
 
-    public static String TAG = "MessagesAdapter";
+    public static String TAG = "ThreadAdapter";
 
     private final Context mContext;
     private final List<Thread> threads;
     private FragmentManager fragmentManager;
-    // This variable will be passed to the messages fragment and will determine who is the true
-    // other user, as in the thread object the "otherUser" could be the current user.
-    private ParseUser otherUser;
     private boolean isAuthor;
 
     public ThreadAdapter(Context context, List<Thread> threads, FragmentManager fragmentManager) {
@@ -57,7 +54,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         Thread thread = threads.get(position);
         try {
             holder.bind(thread);
-        } catch (JSONException e) {
+        } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +81,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Thread thread) throws JSONException {
+        public void bind(Thread thread) throws JSONException, ParseException {
             // Used for checking if isAuthor and binding information on the thread adapter
             ParseUser otherUserTemp = thread.getOtherUser().getUser();
 
@@ -97,13 +94,13 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
                     // resolved for parse users.
                     profilePic = thread.getUser().getUser().fetchIfNeeded().
                             getParseFile("profilePic");
-                    otherUser = thread.getUser().getUser();
+                    thread.otherUser = thread.getUser().getUser();
                     isAuthor = true;
                 } else {
                     username = thread.getOtherUser().getUser().fetchIfNeeded().getUsername();
                     profilePic = thread.getOtherUser().getUser().fetchIfNeeded().
                             getParseFile("profilePic");
-                    otherUser = thread.getOtherUser().getUser();
+                    thread.otherUser = thread.getOtherUser().getUser();
                     isAuthor = false;
                 };
                 tvOtherUsername.setText("@" + username);
@@ -135,6 +132,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             Bundle bundle = new Bundle();
+            ParseUser otherUser = threads.get(getAdapterPosition()).otherUser;
             bundle.putParcelable("otherUser", otherUser);
             bundle.putBoolean("isAuthor", isAuthor);
             if (isAuthor) {

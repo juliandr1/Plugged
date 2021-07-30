@@ -125,16 +125,9 @@ public class User  {
 
         userThreads.addAll(query.find());
 
-        /* fix thread sorting
-        userThreads.sort(new Comparator<Thread>() {
-            @Override
-            public int compare(Thread o1, Thread o2) {
-                Date d1 = o1.get
-                if (o1.getLastMessageSentOtherUser())
-            }
-        });
+        userThreads.sort(Thread.comparator);
 
-         */
+        Log.i(TAG, userThreads.get(1).getObjectId());
 
         return userThreads;
     }

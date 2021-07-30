@@ -14,13 +14,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 @ParseClassName("Thread")
-public class Thread extends ParseObject {
+public class Thread extends ParseObject implements Comparable<Thread> {
 
     private static final String TAG = "Thread";
+
+    // This variable will be passed to the messages fragment and will determine who is the true
+    // other user, as in the thread object the "otherUser" could be the current user.
+    public ParseUser otherUser;
 
     public static final String KEY_LAST_MESSAGE_USER = "last_message_user";
     public static final String KEY_LAST_MESSAGE_OTHER_USER = "last_message_otherUser";
@@ -85,4 +90,16 @@ public class Thread extends ParseObject {
         add(KEY_MESSAGES, message.getObjectId());
         save();
     }
+
+    @Override
+    public int compareTo(Thread o) {
+        if (this.getLastMessageSentOtherUser().after(o.getLastMessageSentOtherUser())) {
+            return -1;
+        } else if (this.getLastMessageSentOtherUser().before(o.getLastMessageSentOtherUser())) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    public static Comparator<Thread> comparator = (o1, o2) -> o1.compareTo(o2);
 }
