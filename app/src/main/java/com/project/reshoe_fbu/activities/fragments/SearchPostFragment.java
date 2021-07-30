@@ -21,13 +21,17 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentSearchPostBinding;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.project.reshoe_fbu.adapters.PostSearchAdapter;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.PostSort;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchPostFragment extends Fragment {
@@ -35,7 +39,8 @@ public class SearchPostFragment extends Fragment {
     public static final String TAG = "SearchPostActivity";
 
     private PostSearchAdapter adapter;
-    private List<Post> searches;
+    private List<PostSort> searches;
+    private List<Post> queryItems;
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
     private int condition, isWomenSizingCode, isHighToLowCode;
@@ -122,6 +127,11 @@ public class SearchPostFragment extends Fragment {
                 public boolean onQueryTextChange(String newText) {
                     // Here is where we are going to implement the filter logic
                     querySearch(newText);
+                    try {
+                        sortItems();
+                    } catch (JSONException | ParseException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 }
             });
@@ -150,13 +160,20 @@ public class SearchPostFragment extends Fragment {
                     return;
                 }
                 searches.clear();
-                adapter.notifyDataSetChanged();
-                searches.addAll(newPosts);
-                adapter.notifyDataSetChanged();
+                queryItems.addAll(newPosts);
             });
         }
     }
 
+    private void sortItems() throws JSONException, ParseException {
+        for (int i = 0; i < queryItems.size(); i++) {
+            searches.add(new PostSort(queryItems.get(i)));
+            adapter.notifyDataSetChanged();
+        }
+
+        searches.sort(PostSort.comparator);
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

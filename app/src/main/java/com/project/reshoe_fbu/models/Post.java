@@ -1,25 +1,16 @@
 package com.project.reshoe_fbu.models;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +55,7 @@ public class Post extends ParseObject {
 
     public void setIsSold() {
         put(KEY_IS_SOLD, true);
+        saveInBackground(e -> Log.i(TAG, "Set as sold"));
     }
 
     public int getCondition() {

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.PostSort;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,10 +37,10 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
     public static int SEARCH_CODE = 771;
 
     private final Context mContext;
-    private final List<Post> searchPosts;
+    private final List<PostSort> searchPosts;
     private final FragmentManager fragmentManager;
 
-    public PostSearchAdapter(Context context, List<Post> searchPosts, FragmentManager fm) {
+    public PostSearchAdapter(Context context, List<PostSort> searchPosts, FragmentManager fm) {
         this.mContext = context;
         this.searchPosts = searchPosts;
         this.fragmentManager = fm;
@@ -56,10 +57,10 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull @NotNull PostSearchAdapter.ViewHolder holder,
                                  int position) {
-        Post post = searchPosts.get(position);
+        PostSort postSort = searchPosts.get(position);
 
         try {
-            holder.bind(post);
+            holder.bind(postSort);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -86,11 +87,15 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Post post) throws JSONException {
-            tvShoeTitle.setText(post.getShoeName());
-            tvSearchDescription.setText(post.getDescription());
+        public void bind(PostSort postSort) throws JSONException {
+            tvShoeTitle.setText(postSort.getPost().getShoeName());
+            tvSearchDescription.setText(postSort.getPost().getDescription());
 
-            Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivPhotoPreview);
+            Glide.with(mContext).load(postSort.
+                    getPost().
+                    getImageUrls().
+                    get(0)).
+                    into(ivPhotoPreview);
         }
 
         @Override
@@ -98,9 +103,9 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             Log.e(TAG, "Clicked");
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                Post post = searchPosts.get(position);
+                PostSort postSort = searchPosts.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("post", post);
+                bundle.putParcelable("post", postSort.getPost());
                 bundle.putInt("code", SEARCH_CODE);
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);

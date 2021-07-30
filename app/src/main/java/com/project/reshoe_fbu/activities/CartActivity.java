@@ -111,27 +111,32 @@ public class CartActivity extends AppCompatActivity {
             // value passed in AutoResolveHelper
             case LOAD_PAYMENT_DATA_REQUEST_CODE:
                 switch (resultCode) {
-
                     case Activity.RESULT_OK:
+                        Log.i(TAG, "Result Ok");
                         PaymentData paymentData = PaymentData.getFromIntent(data);
                         handlePaymentSuccess(paymentData);
                         User currentUser = new User(ParseUser.getCurrentUser());
+
+                        currentUser.setItemsSold(cartItems);
+
+                        Log.i(TAG, cartItems.get(0).getIsSold() + "");
 
                         try {
                             currentUser.clearCart(cartItems);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        currentUser.setItemsSold(cartItems);
-                        cartItems.clear();
 
+                        finish();
                         break;
 
                     case Activity.RESULT_CANCELED:
+                        Log.i(TAG, "cancelled");
                         // The user cancelled the payment attempt
                         break;
 
                     case AutoResolveHelper.RESULT_ERROR:
+                        Log.i(TAG, "error");
                         Status status = AutoResolveHelper.getStatusFromIntent(data);
                         handleError(status.getStatusCode());
                         break;

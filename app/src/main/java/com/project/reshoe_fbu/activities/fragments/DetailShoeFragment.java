@@ -121,6 +121,7 @@ public class DetailShoeFragment extends Fragment {
             }
         });
 
+        Log.i(TAG, post.getIsSold() + "");
         if (!post.getIsSold()) {
             binding.btnCheckout.setOnClickListener(v -> {
                 User currentUser = new User(ParseUser.getCurrentUser());

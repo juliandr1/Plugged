@@ -165,7 +165,6 @@ public class User  {
 
     public void addToCart(Post post, Context context) throws JSONException, ParseException {
         List<String> cart = getCartIds();
-        Log.i(TAG, cart.get(0) + " " + post);
         if (cart.contains(post.getObjectId())) {
             // Add string resource
             Toast.makeText(context, post.getShoeName() + " are already in the cart",
@@ -200,9 +199,14 @@ public class User  {
 
         List<String> usersBought = getUsersBought();
 
+        if (usersBought == null) {
+            usersBought = new ArrayList<>();
+        }
+
         for (int i = 0; i < cartItems.size(); i++) {
             String id = cartItems.get(i).getUser().getObjectID();
             if (!usersBought.contains(i)) {
+                Log.i(TAG, "add bought user");
                 // For local usage
                 usersBought.add(id);
                 // For database
@@ -267,6 +271,22 @@ public class User  {
         query.whereContainedIn("objectId", postIds);;
 
         return query.find();
+    }
+
+    public List<String> getLikedSellers() throws JSONException {
+        JSONArray jsonArray = user.getJSONArray(KEY_LIKED_SELLERS);
+
+        List<String> userIds = new ArrayList<>();
+
+        if (jsonArray == null) {
+            return new ArrayList<String>();
+        }
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            userIds.add(jsonArray.get(i).toString());
+        }
+
+        return userIds;
     }
 
     public void addBoughtUser(String userId) {
