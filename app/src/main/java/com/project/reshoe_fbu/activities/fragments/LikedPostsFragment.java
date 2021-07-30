@@ -30,6 +30,7 @@ public class LikedPostsFragment extends Fragment {
 
     private List<Post> likedPosts;
     private User currentUser;
+    private FragmentLikedPostsBinding binding;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class LikedPostsFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentLikedPostsBinding binding = FragmentLikedPostsBinding.bind(view);
+        binding = FragmentLikedPostsBinding.bind(view);
 
         currentUser = new User(ParseUser.getCurrentUser());
 
@@ -78,5 +79,9 @@ public class LikedPostsFragment extends Fragment {
 
     private void queryLikedPosts() throws JSONException, ParseException {
         likedPosts.addAll(currentUser.getLikedPosts());
+
+        if (likedPosts.size() == 0) {
+            binding.tvNoLikes.setVisibility(View.VISIBLE);
+        }
     }
 }

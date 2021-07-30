@@ -91,7 +91,12 @@ public class CartActivity extends AppCompatActivity {
         cartItems.addAll(currentUser.getCart());
         adapter.notifyDataSetChanged();
         totalPrice = getCartTotal();
-        binding.tvTotalCart.setText(getString(R.string.money) + totalPrice);
+
+        if (cartItems.size() != 0) {
+            binding.tvTotalCart.setText(getString(R.string.money) + totalPrice);
+        } else {
+            binding.tvEmptyCart.setVisibility(View.VISIBLE);
+        }
     }
 
     private int getCartTotal() {

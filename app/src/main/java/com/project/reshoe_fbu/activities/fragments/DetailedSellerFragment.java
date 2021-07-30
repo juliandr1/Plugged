@@ -154,8 +154,10 @@ public class DetailedSellerFragment extends Fragment {
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
-        if (!(rating == 0.0)) {
+        if (rating > 0.0) {
             binding.tvRating.setText(df.format(rating));
+        } else {
+            binding.tvRating.setText("");
         }
 
         queryPosts();

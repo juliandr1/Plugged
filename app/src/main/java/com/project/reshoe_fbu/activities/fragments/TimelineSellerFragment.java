@@ -80,7 +80,7 @@ public class TimelineSellerFragment extends Fragment {
         try {
             Glide.with(view).
                     load(user.getProfilePicURL()).
-                    transform(new RoundedCorners(300)).
+                    circleCrop().
                     into(binding.ivSellerProfilePic);
         } catch (ParseException parseException) {
             parseException.printStackTrace();

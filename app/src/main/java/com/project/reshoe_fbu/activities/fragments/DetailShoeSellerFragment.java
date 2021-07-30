@@ -108,19 +108,6 @@ public class DetailShoeSellerFragment extends Fragment{
             });
         });
 
-        binding.ibSellerProfile.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("seller", post.getUser().getUser());
-            Fragment detailedSellerFragment = new DetailedSellerFragment();
-            detailedSellerFragment.setArguments(bundle);
-            getActivity().
-                    getSupportFragmentManager().
-                    beginTransaction().
-                    replace(R.id.flContainer, detailedSellerFragment).
-                    addToBackStack("back").
-                    commit();
-        });
-
         try {
             pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
                     post.getImageUrls(), false, post);

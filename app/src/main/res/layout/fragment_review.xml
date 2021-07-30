@@ -27,4 +27,14 @@
         android:background="@drawable/back_arrow"
         />
 
+    <TextView
+        android:id="@+id/tvNoReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_reviews_yet_for_this_seller"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>

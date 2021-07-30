@@ -39,6 +39,7 @@ public class ReviewFragment extends Fragment {
     private ReviewsAdapter adapter;
     private List<Review> reviews;
     private User seller;
+    private FragmentReviewBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +54,7 @@ public class ReviewFragment extends Fragment {
             Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentReviewBinding binding = FragmentReviewBinding.bind(view);
+        binding = FragmentReviewBinding.bind(view);
 
         // Find the Recycler View
         RecyclerView rvReviews = binding.rvReviews;
@@ -97,5 +98,9 @@ public class ReviewFragment extends Fragment {
     public void queryReviews() throws ParseException {
         reviews.addAll(User.getReviews(seller));
         adapter.notifyDataSetChanged();
+
+        if (reviews.size() == 0) {
+            binding.tvNoReviews.setVisibility(View.VISIBLE);
+        }
     }
 }

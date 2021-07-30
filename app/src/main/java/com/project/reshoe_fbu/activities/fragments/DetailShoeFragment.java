@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
@@ -107,7 +108,7 @@ public class DetailShoeFragment extends Fragment {
 
                 if (prevFragmentCode == PostsAdapter.BUYER_CODE) {
                     prevFragment = new TimelineBuyerFragment();
-                } else if(prevFragmentCode == PostsAdapter.SELLER_CODE) {
+                } else if (prevFragmentCode == PostsAdapter.SELLER_CODE) {
                     prevFragment = new TimelineSellerFragment();
                 } else {
                     Bundle bundle = new Bundle();
@@ -169,6 +170,7 @@ public class DetailShoeFragment extends Fragment {
                 }
 
             });
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return false;

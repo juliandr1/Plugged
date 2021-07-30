@@ -57,6 +57,10 @@
     <string name="title_activity_review">ReviewActivity</string>
     <string name="filters">Filters</string>
     <string name="m_w">M/W:</string>
+    <string name="no_items_match_your_search">No items match your search</string>
+    <string name="no_posts_liked_yet">No posts liked yet</string>
+    <string name="empty_cart">Empty Cart</string>
+    <string name="no_reviews_yet_for_this_seller">No reviews yet for this seller</string>
 
     <string-array name="condition_array">
         <item></item>

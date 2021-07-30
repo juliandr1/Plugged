@@ -42,6 +42,8 @@ public class SearchPostFragment extends Fragment {
     private List<Post> queryItems;
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
+    private FragmentSearchPostBinding binding;
+
     private User currentUser;
 
     private int condition, isWomenSizingCode, isHighToLowCode;
@@ -109,7 +111,7 @@ public class SearchPostFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.
             Nullable Bundle savedInstanceState) {
-        FragmentSearchPostBinding binding = FragmentSearchPostBinding.bind(view);
+        binding = FragmentSearchPostBinding.bind(view);
 
         Context context = getActivity();
 
@@ -187,6 +189,10 @@ public class SearchPostFragment extends Fragment {
                     jsonException.printStackTrace();
                 }
             });
+
+            if (queryItems.size() == 0) {
+                binding.tvNoSearchResults.setVisibility(View.VISIBLE);
+            }
         }
     }
 
