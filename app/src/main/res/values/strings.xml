@@ -103,5 +103,7 @@
         <item>15</item>
         <item>15.5</item>
     </string-array>
+    <string name="title_activity_edit_description">EditDescription</string>
+    <string name="apply">APPLY</string>
 
 </resources>

@@ -7,6 +7,13 @@ import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -15,23 +22,14 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
+import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.project.reshoe_fbu.activities.LoginActivity;
-import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
 import com.parse.ParseUser;
-import com.project.reshoe_fbu.activities.PostActivity;
+import com.project.reshoe_fbu.activities.EditDescription;
+import com.project.reshoe_fbu.activities.LoginActivity;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -80,19 +78,16 @@ public class ProfileFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        binding.btnChangeProfilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(
-                        getActivity(), WRITE_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    onPickPhoto(view);
-                } else {
-                    // You can directly ask for the permission.
-                    // The registered ActivityResultCallback gets the result of this request.
-                    requestPermissionLauncher.launch(
-                            WRITE_EXTERNAL_STORAGE);
-                }
+        binding.btnChangeProfilePic.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(
+                    getActivity(), WRITE_EXTERNAL_STORAGE) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                onPickPhoto();
+            } else {
+                // You can directly ask for the permission.
+                // The registered ActivityResultCallback gets the result of this request.
+                requestPermissionLauncher.launch(
+                        WRITE_EXTERNAL_STORAGE);
             }
         });
 
@@ -123,6 +118,19 @@ public class ProfileFragment extends Fragment {
                     commit();
         });
 
+        if (currentUser.getIsSeller()) {
+            binding.btnChangeDescription.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), EditDescription.class);
+                    startActivity(intent);
+                }
+            });
+
+        } else {
+            binding.btnChangeDescription.setVisibility(View.INVISIBLE);
+        }
+
         binding.tvLogOut.setOnClickListener(v -> {
             ParseUser.logOut();
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -131,7 +139,7 @@ public class ProfileFragment extends Fragment {
     }
 
     // Trigger gallery selection for a photo
-    public void onPickPhoto(View view) {
+    public void onPickPhoto() {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

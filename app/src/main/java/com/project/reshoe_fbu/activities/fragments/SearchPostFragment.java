@@ -152,7 +152,6 @@ public class SearchPostFragment extends Fragment {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    // Here is where we are going to implement the filter logic
                     querySearch(newText);
                     try {
                         sortItems();
@@ -262,7 +261,7 @@ public class SearchPostFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
 
         if (filterApplied) {
-
+            // Set search button clicked?
         }
     }
 }

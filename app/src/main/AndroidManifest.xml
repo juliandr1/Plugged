@@ -25,6 +25,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Reshoe_FBU">
+        <activity
+            android:name="com.project.reshoe_fbu.activities.EditDescription"
+            android:label="@string/title_activity_edit_description"
+            android:theme="@style/Theme.Reshoe_FBU.NoActionBar"></activity>
 
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
