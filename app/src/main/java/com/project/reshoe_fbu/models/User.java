@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
+import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -91,7 +93,19 @@ public class User  {
     public String getProfilePicURL() throws ParseException { return user.fetchIfNeeded().
             getParseFile(KEY_PROFILE_PIC).getUrl(); }
 
-    public void setProfilePic(ParseFile file) { user.put(KEY_PROFILE_PIC, file); }
+    public void setProfilePic(ParseFile file, FragmentProfileBinding binding, Context context) {
+        user.put(KEY_PROFILE_PIC, file);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Log.i(TAG, "Changed profile pic");
+                Glide.with(context).
+                        load(file.getUrl()).
+                        circleCrop().
+                        into(binding.ivProfile);
+            }
+        });
+    }
 
     public static double getRating(User seller) throws ParseException {
         List<Review> reviews = getReviews(seller);
@@ -126,8 +140,6 @@ public class User  {
         userThreads.addAll(query.find());
 
         userThreads.sort(Thread.comparator);
-
-        Log.i(TAG, userThreads.get(1).getObjectId());
 
         return userThreads;
     }
