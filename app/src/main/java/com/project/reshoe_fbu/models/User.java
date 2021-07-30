@@ -246,24 +246,29 @@ public class User  {
     }
 
     public List<Post> getLikedPosts() throws JSONException, ParseException {
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        query.addDescendingOrder("createdAt");
+        query.whereContainedIn("objectId", getLikedPostsIds());
+
+        return query.find();
+    }
+
+    public List<String> getLikedPostsIds() throws JSONException {
         JSONArray jsonArray = user.getJSONArray(KEY_LIKED_POSTS);
 
         List<String> postIds = new ArrayList<>();
 
         if (jsonArray == null) {
-            return new ArrayList<Post>();
+            return new ArrayList<>();
         }
 
         for (int i = 0; i < jsonArray.length(); i++) {
             postIds.add(jsonArray.get(i).toString());
         }
 
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-
-        query.addDescendingOrder("createdAt");
-        query.whereContainedIn("objectId", postIds);;
-
-        return query.find();
+        return postIds;
     }
 
     public List<String> getLikedSellers() throws JSONException {

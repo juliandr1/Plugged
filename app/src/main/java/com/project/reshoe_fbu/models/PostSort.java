@@ -14,6 +14,9 @@ public class PostSort implements Comparable<PostSort> {
     public static int COEFFICIENT_BOUGHT_FROM_USER = 5;
     public static int COEFFICIENT_LIKED_USER = 3;
 
+    public static List<Post> likedPosts;
+    public static List<String> likedUsers, usersBought;
+
     private Post post;
     private int score;
 
@@ -26,11 +29,11 @@ public class PostSort implements Comparable<PostSort> {
         score = 0;
         User currentUser = new User(ParseUser.getCurrentUser());
 
-        List<Post> likedPosts = currentUser.getLikedPosts();
+        List<String> likedPosts = currentUser.getLikedPostsIds();
         List<String> likedUsers = currentUser.getLikedSellers();
         List<String> usersBought = currentUser.getUsersBought();
 
-        if (likedPosts.contains(post)) {
+        if (likedPosts.contains(post.getObjectId())) {
             score += COEFFICIENT_LIKED_POST;
         }
 
@@ -47,12 +50,16 @@ public class PostSort implements Comparable<PostSort> {
         return post;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public int compareTo(PostSort o) {
         if (this.score > o.score) {
-            return 1;
-        } else if (this.score < o.score) {
             return -1;
+        } else if (this.score < o.score) {
+            return 1;
         } else {
             return 0;
         }

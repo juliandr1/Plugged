@@ -2,13 +2,6 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,21 +10,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentSearchPostBinding;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PostSearchAdapter;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.PostSort;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SearchPostFragment extends Fragment {
@@ -43,6 +42,8 @@ public class SearchPostFragment extends Fragment {
     private List<Post> queryItems;
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
+    private User currentUser;
+
     private int condition, isWomenSizingCode, isHighToLowCode;
     private double size;
 
@@ -52,6 +53,24 @@ public class SearchPostFragment extends Fragment {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        currentUser = new User(ParseUser.getCurrentUser());
+
+        try {
+            PostSort.likedPosts = currentUser.getLikedPosts();
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            PostSort.likedUsers = currentUser.getLikedSellers();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            PostSort.usersBought = currentUser.getUsersBought();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         filterApplied = getArguments().getBoolean("filter");
 
@@ -95,6 +114,7 @@ public class SearchPostFragment extends Fragment {
         Context context = getActivity();
 
         searches = new ArrayList<>();
+        queryItems = new ArrayList<>();
         adapter = new PostSearchAdapter(context, searches, getActivity().getSupportFragmentManager());
         RecyclerView rvSearches = binding.rvSearches;
         rvSearches.setAdapter(adapter);
@@ -159,20 +179,30 @@ public class SearchPostFragment extends Fragment {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                searches.clear();
+                queryItems.clear();
                 queryItems.addAll(newPosts);
+                try {
+                    sortItems();
+                } catch (JSONException | ParseException jsonException) {
+                    jsonException.printStackTrace();
+                }
             });
         }
     }
 
     private void sortItems() throws JSONException, ParseException {
-        for (int i = 0; i < queryItems.size(); i++) {
-            searches.add(new PostSort(queryItems.get(i)));
+        if (queryItems.size() != 0) {
+            searches.clear();
+
+            for (int i = 0; i < queryItems.size(); i++) {
+                searches.add(new PostSort(queryItems.get(i)));
+                Log.i(TAG, searches.get(i).getScore() + " " + searches.get(i).getPost().getShoeName());
+                adapter.notifyDataSetChanged();
+            }
+
+            searches.sort(PostSort.comparator);
             adapter.notifyDataSetChanged();
         }
-
-        searches.sort(PostSort.comparator);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
