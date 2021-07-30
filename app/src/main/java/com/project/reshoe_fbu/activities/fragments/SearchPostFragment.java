@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchPostFragment extends Fragment {
@@ -49,7 +50,7 @@ public class SearchPostFragment extends Fragment {
     private int condition, isWomenSizingCode, isHighToLowCode;
     private double size;
 
-    private boolean filterApplied;
+    private boolean filterApplied, sortPrice;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class SearchPostFragment extends Fragment {
             }
 
             isWomenSizingCode = getArguments().getInt("isWomenSizing");
-            Log.i(TAG, isWomenSizingCode + "");
+
             if (isWomenSizingCode == FilterFragment.CHANGED_IS_WOMEN_SIZING_M) {
                 Log.i(TAG, "Filter mens sizing");
                 query.whereEqualTo(Post.KEY_IS_WOMEN_SIZING, false);
@@ -99,8 +100,12 @@ public class SearchPostFragment extends Fragment {
             isHighToLowCode = getArguments().getInt("isHighToLow");
             if (isHighToLowCode == FilterFragment.CHANGED_IS_HIGH_TO_LOW) {
                 query.orderByDescending(Post.KEY_PRICE);
+                sortPrice = true;
             } else if (isHighToLowCode == FilterFragment.CHANGED_IS_LOW_TO_HIGH) {
                 query.orderByAscending(Post.KEY_PRICE);
+                sortPrice = true;
+            } else {
+                sortPrice = false;
             }
 
         } else {
@@ -183,16 +188,17 @@ public class SearchPostFragment extends Fragment {
                 }
                 queryItems.clear();
                 queryItems.addAll(newPosts);
+
+                if (queryItems.size() == 0) {
+                    binding.tvNoSearchResults.setVisibility(View.VISIBLE);
+                }
+
                 try {
                     sortItems();
                 } catch (JSONException | ParseException jsonException) {
                     jsonException.printStackTrace();
                 }
             });
-
-            if (queryItems.size() == 0) {
-                binding.tvNoSearchResults.setVisibility(View.VISIBLE);
-            }
         }
     }
 
@@ -200,14 +206,47 @@ public class SearchPostFragment extends Fragment {
         if (queryItems.size() != 0) {
             searches.clear();
 
-            for (int i = 0; i < queryItems.size(); i++) {
-                searches.add(new PostSort(queryItems.get(i)));
-                Log.i(TAG, searches.get(i).getScore() + " " + searches.get(i).getPost().getShoeName());
+            if (sortPrice) {
+                Collections.sort(queryItems);
+                if (isHighToLowCode == FilterFragment.CHANGED_IS_LOW_TO_HIGH) {
+                    Collections.reverse(queryItems);
+                }
+                int price = 0, start = 0;
+                boolean started = false;
+
+                for (int i = 0; i < queryItems.size(); i++) {
+                    Post post = queryItems.get(i);
+                    searches.add(new PostSort(post));
+                    adapter.notifyDataSetChanged();
+
+                    if (i == 0) {
+                        price = post.getPrice();
+                    } else {
+                        if (price == post.getPrice() && i != queryItems.size() - 1) {
+                            start = i - 1;
+                            started = true;
+                        } else if (started) {
+                            if (queryItems.size() - 1 == i) {
+                                Collections.sort(searches.subList(start, i + 1));
+                            } else {
+                                Log.i(TAG, start + " " + i);
+                                Collections.sort(searches.subList(start, i));
+                            }
+                            started = false;
+                        } else {
+                            price = post.getPrice();
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < queryItems.size(); i++) {
+                    searches.add(new PostSort(queryItems.get(i)));
+                    adapter.notifyDataSetChanged();
+                }
+
+                Collections.sort(searches);
                 adapter.notifyDataSetChanged();
             }
-
-            searches.sort(PostSort.comparator);
-            adapter.notifyDataSetChanged();
         }
     }
 

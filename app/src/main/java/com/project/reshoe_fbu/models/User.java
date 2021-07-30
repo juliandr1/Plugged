@@ -139,7 +139,7 @@ public class User  {
 
         userThreads.addAll(query.find());
 
-        userThreads.sort(Thread.comparator);
+        Collections.sort(userThreads);
 
         return userThreads;
     }

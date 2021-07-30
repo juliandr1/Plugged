@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @ParseClassName("Post")
-public class Post extends ParseObject {
+public class Post extends ParseObject implements Comparable<Post> {
     public static final String TAG = "Post";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGES = "images";
@@ -165,6 +165,17 @@ public class Post extends ParseObject {
             images.add(fromJsonIMG(jsonArray.getJSONObject(i)));
         }
         return images;
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        if (this.getPrice() < o.getPrice()) {
+            return 1;
+        } else if (this.getPrice() > o.getPrice()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
 

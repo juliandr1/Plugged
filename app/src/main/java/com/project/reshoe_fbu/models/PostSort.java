@@ -64,6 +64,4 @@ public class PostSort implements Comparable<PostSort> {
             return 0;
         }
     }
-
-    public static Comparator<PostSort> comparator = (o1, o2) -> o1.compareTo(o2);
 }

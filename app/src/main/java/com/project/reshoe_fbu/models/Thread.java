@@ -101,5 +101,4 @@ public class Thread extends ParseObject implements Comparable<Thread> {
             return 0;
         }
     }
-    public static Comparator<Thread> comparator = (o1, o2) -> o1.compareTo(o2);
 }
