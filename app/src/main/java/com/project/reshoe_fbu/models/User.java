@@ -72,6 +72,7 @@ public class User  {
 
     public void setDescription(String description) {
         user.put(KEY_DESCRIPTION, description);
+        user.saveInBackground();
     }
 
     public String getFirstName() {
