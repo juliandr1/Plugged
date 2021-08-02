@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
@@ -18,6 +20,7 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
+import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.User;
 
@@ -77,7 +80,7 @@ public class DetailShoeSellerFragment extends Fragment{
         String currencyString = NumberFormat.getCurrencyInstance().format(price);
         // Handle the weird exception of formatting whole dollar amounts with no decimal
         currencyString = currencyString.replaceAll("\\.00", "");
-        binding.tvPriceDetailed.setText(currencyString);
+        binding.tvDetailedPrice.setText(currencyString);
 
         try {
             Glide.with(view).
@@ -88,10 +91,15 @@ public class DetailShoeSellerFragment extends Fragment{
             parseException.printStackTrace();
         }
 
-        binding.btnBackDetailShoe.setOnClickListener(v -> getActivity().
-                getSupportFragmentManager().
-                popBackStack());
+        binding.btnBackDetailShoe.setOnClickListener(v -> {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
+            Fragment prevFragment = new TimelineSellerFragment();
+
+            ft.replace(R.id.flContainer, prevFragment).commit();
+        });
 
         if (post.getIsSold()) {
             binding.tvSold.setVisibility(View.VISIBLE);

@@ -17,7 +17,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.google.android.material.shape.RoundedCornerTreatment;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeSellerFragment;
 import com.project.reshoe_fbu.models.Post;
@@ -149,7 +152,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             currencyString = currencyString.replaceAll("\\.00", "");
             tvPrice.setText(currencyString);
 
-            Glide.with(mContext).load(post.getImageUrls().get(0)).into(ivImage);
+            Glide.with(mContext).load(post.getImageUrls().get(0)).transform(new RoundedCorners(30)).into(ivImage);
 
             if (showLike) {
                 if (!user.getIsSeller() && !isDetailedSeller) {

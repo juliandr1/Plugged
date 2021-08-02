@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.helper.OnDoubleTapListener;
@@ -85,9 +86,7 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
             imageView.setImageBitmap(bitmaps.get(position));
         } else {
             Glide.with(mContext).
-                    load(images.get(position)).
-                    override(370, 370).
-                    into(imageView);
+                    load(images.get(position)).centerInside().into(imageView);
 
             itemView.setOnTouchListener(new OnDoubleTapListener(mContext) {
                 @Override

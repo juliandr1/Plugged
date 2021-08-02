@@ -85,7 +85,7 @@ public class DetailShoeFragment extends Fragment {
         String currencyString = NumberFormat.getCurrencyInstance().format(price);
         // Handle the weird exception of formatting whole dollar amounts with no decimal
         currencyString = currencyString.replaceAll("\\.00", "");
-        binding.tvPriceDetailed.setText(currencyString);
+        binding.tvDetailedPrice.setText(currencyString);
 
         try {
             Glide.with(view).
