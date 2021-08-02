@@ -96,11 +96,22 @@ public class ReviewFragment extends Fragment {
     }
 
     public void queryReviews() throws ParseException {
+        reviews.clear();
         reviews.addAll(User.getReviews(seller));
         adapter.notifyDataSetChanged();
 
         if (reviews.size() == 0) {
             binding.tvNoReviews.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            queryReviews();
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
         }
     }
 }
