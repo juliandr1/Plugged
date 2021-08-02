@@ -5,10 +5,9 @@
 
     <item
         android:id="@+id/liked"
-        android:icon="@drawable/thumbup"
+        android:icon="@drawable/heart_filled"
         android:title="liked"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/cart"

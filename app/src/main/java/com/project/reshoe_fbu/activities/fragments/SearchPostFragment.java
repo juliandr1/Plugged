@@ -43,6 +43,8 @@ public class SearchPostFragment extends Fragment {
     private List<Post> queryItems;
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
+    private String searchStr;
+
     private FragmentSearchPostBinding binding;
 
     private User currentUser;
@@ -78,6 +80,7 @@ public class SearchPostFragment extends Fragment {
         filterApplied = getArguments().getBoolean("filter");
 
         if (filterApplied) {
+            searchStr = getArguments().getString("str");
             size = getArguments().getDouble("size");
             if (((int) size) != FilterFragment.NOT_CHANGED_CODE) {
                 query.whereEqualTo(Post.KEY_SIZE, size);
@@ -107,6 +110,8 @@ public class SearchPostFragment extends Fragment {
             } else {
                 sortPrice = false;
             }
+
+            querySearch(searchStr);
 
         } else {
             filterApplied = false;
@@ -163,6 +168,9 @@ public class SearchPostFragment extends Fragment {
             });
         } else if (item.getItemId() == R.id.filter) {
             Fragment filterFragment = new FilterFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("str", searchStr);
+            filterFragment.setArguments(bundle);
             getActivity().
                     getSupportFragmentManager().
                     beginTransaction().
@@ -177,6 +185,7 @@ public class SearchPostFragment extends Fragment {
      */
     private void querySearch(String str) {
         if (!str.isEmpty()) {
+            searchStr = str;
             query.whereContains("shoeNameSearch", str.toLowerCase());
             query.setLimit(20);
             // Get the posts
@@ -254,14 +263,5 @@ public class SearchPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_post, container, false);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(@NonNull @NotNull Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        if (filterApplied) {
-            // Set search button clicked?
-        }
     }
 }

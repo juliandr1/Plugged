@@ -35,25 +35,26 @@ public class FilterFragment extends Fragment {
     private int positionCondition = NOT_CHANGED_CODE;
     private double positionSize = NOT_CHANGED_CODE;
 
+    private String str;
+
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         FragmentFilterBinding binding = FragmentFilterBinding.bind(view);
 
-        binding.btnBackFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("filter", false);
+        str = getArguments().getString("str");
 
-                Fragment prevFragment = new SearchPostFragment();
-                prevFragment.setArguments(bundle);
+        binding.btnBackFilter.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("filter", false);
 
-                getActivity().
-                        getSupportFragmentManager().
-                        beginTransaction().
-                        replace(R.id.flContainer, prevFragment).
-                        commit();
-            }
+            Fragment prevFragment = new SearchPostFragment();
+            prevFragment.setArguments(bundle);
+
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, prevFragment).
+                    commit();
         });
 
         Spinner staticSpinner = binding.staticSpinner;
@@ -162,6 +163,7 @@ public class FilterFragment extends Fragment {
                 }
 
                 bundle.putBoolean("filter", changed);
+                bundle.putString("str", str);
                 prevFragment.setArguments(bundle);
 
                 getActivity().
