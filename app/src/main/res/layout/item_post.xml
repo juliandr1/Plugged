@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="2.5dp"
+    android:layout_marginEnd="2.5dp"
+    android:layout_marginBottom="5dp"
     android:background="@drawable/background">
 
     <ImageView
@@ -16,8 +19,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
-        tools:srcCompat="@tools:sample/avatars"
-        />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvShoeName"

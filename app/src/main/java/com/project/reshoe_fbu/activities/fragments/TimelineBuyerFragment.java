@@ -39,7 +39,7 @@ public class TimelineBuyerFragment extends Fragment {
     private PostsAdapter adapter;
     private List<Post> posts;
 
-    public TimelineBuyerFragment() { }
+    public TimelineBuyerFragment() {}
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -74,6 +74,22 @@ public class TimelineBuyerFragment extends Fragment {
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
 
+        binding.fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("filter", false);
+                Fragment searchPost = new SearchPostFragment();
+                searchPost.setArguments(bundle);
+                getActivity().
+                        getSupportFragmentManager().
+                        beginTransaction().
+                        replace(R.id.flContainer, searchPost).
+                        addToBackStack("back").
+                        commit();
+            }
+        });
+
         queryPosts();
     }
 
@@ -106,19 +122,7 @@ public class TimelineBuyerFragment extends Fragment {
     // If the seller clicks, then go to the post activity.
     @Override
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-
-        if (item.getItemId() == R.id.searchBuyer) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("filter", false);
-            Fragment searchPost = new SearchPostFragment();
-            searchPost.setArguments(bundle);
-            getActivity().
-                    getSupportFragmentManager().
-                    beginTransaction().
-                    replace(R.id.flContainer, searchPost).
-                    addToBackStack("back").
-                    commit();
-        } else if (item.getItemId() == R.id.cart) {
+        if (item.getItemId() == R.id.cart) {
             Intent intent = new Intent(getActivity(), CartActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.liked) {

@@ -96,25 +96,12 @@ public class TimelineSellerFragment extends Fragment {
             binding.tvSellerDescription.setText(description);
         }
 
-        queryPosts();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
-            MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_seller, menu);
-    }
-
-    // If the seller clicks, then go to the post activity.
-    @Override
-    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-
-        if (item.getItemId() == R.id.post) {
+        binding.fabNewPost.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PostActivity.class);
             startActivity(intent);
-        }
+        });
 
-        return super.onOptionsItemSelected(item);
+        queryPosts();
     }
 
       /*

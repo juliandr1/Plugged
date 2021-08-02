@@ -2,6 +2,7 @@ package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -92,6 +93,7 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                 @Override
                 public void onDoubleTap(MotionEvent e) throws JSONException {
                     User currentUser = new User(ParseUser.getCurrentUser());
+                    Log.i(TAG, "clicked");
                     if (!post.didLike(currentUser)) {
                         currentUser.addLike(post.getObjectId());
                     } else {

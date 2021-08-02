@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/message"
-        android:title=""
+        android:title="Messages"
         android:icon="@drawable/message_selector"
         />
 
     <item
         android:id="@+id/timeline"
-        android:title=""
+        android:title="Home"
         android:icon="@drawable/home_selector"
         />
 
     <item
         android:id="@+id/profile"
-        android:title=""
+        android:title="Profile"
         android:icon="@drawable/profile_selector"
         />
 

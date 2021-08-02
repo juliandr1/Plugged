@@ -58,7 +58,7 @@ public class LikedPostsFragment extends Fragment {
 
         likedPosts = new ArrayList<>();
         PostsAdapter adapter = new PostsAdapter(getActivity(), likedPosts, currentUser,
-                getActivity().getSupportFragmentManager(), false, false);
+                getActivity().getSupportFragmentManager(), true, false);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 
