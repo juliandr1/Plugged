@@ -3,6 +3,7 @@ package com.project.reshoe_fbu.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.helper.OnDoubleTapListener;
 import com.project.reshoe_fbu.models.Post;
@@ -81,28 +83,41 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.item_shoe_img, container,
                 false);
 
-        ImageView imageView =  itemView.findViewById(R.id.imageViewMain);
+        PhotoView photoView =  itemView.findViewById(R.id.imageViewMain);
 
         if (isPosting) {
-            imageView.setImageBitmap(bitmaps.get(position));
+            photoView.setImageBitmap(bitmaps.get(position));
         } else {
             Glide.with(mContext).
-                    load(images.get(position)).centerInside().into(imageView);
-
-            itemView.setOnTouchListener(new OnDoubleTapListener(mContext) {
+                    load(images.get(position)).centerInside().into(photoView);
+            photoView.getAttacher().setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
                 @Override
-                public void onDoubleTap(MotionEvent e) throws JSONException {
+                public boolean onSingleTapConfirmed(MotionEvent e) {
+                    return false;
+                }
+
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
                     User currentUser = new User(ParseUser.getCurrentUser());
                     Log.i(TAG, "clicked");
-                    if (!post.didLike(currentUser)) {
-                        currentUser.addLike(post.getObjectId());
-                    } else {
-                        // Add string resource
-                        Toast.makeText(mContext, "Already liked!", Toast.LENGTH_SHORT).show();
+                    try {
+                        if (!post.didLike(currentUser)) {
+                            currentUser.addLike(post.getObjectId());
+                            post.like();
+                            Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Add string resource
+                            Toast.makeText(mContext, "Already liked!", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
                     }
-                    post.like();
-                    Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
-                    super.onDoubleTap(e);
+                    return true;
+                }
+
+                @Override
+                public boolean onDoubleTapEvent(MotionEvent e) {
+                    return false;
                 }
             });
         }
