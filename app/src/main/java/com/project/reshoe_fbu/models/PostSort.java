@@ -13,25 +13,22 @@ public class PostSort implements Comparable<PostSort> {
     public static int COEFFICIENT_LIKED_POST = 10;
     public static int COEFFICIENT_BOUGHT_FROM_USER = 5;
     public static int COEFFICIENT_LIKED_USER = 3;
-
-    public static List<Post> likedPosts;
-    public static List<String> likedUsers, usersBought;
+    private List<String> likedPosts, likedUsers, usersBought;
 
     private Post post;
     private int score;
 
-    public PostSort(Post post) throws JSONException, ParseException {
+    public PostSort(Post post, List<String> likedPosts, List<String> likedUsers,
+                    List<String> usersBought) throws JSONException, ParseException {
         this.post = post;
+        this.likedPosts = likedPosts;
+        this.likedUsers = likedUsers;
+        this.usersBought = usersBought;
         calculateScore();
     }
 
-    public void calculateScore() throws JSONException, ParseException {
+    public void calculateScore() {
         score = 0;
-        User currentUser = new User(ParseUser.getCurrentUser());
-
-        List<String> likedPosts = currentUser.getLikedPostsIds();
-        List<String> likedUsers = currentUser.getLikedSellers();
-        List<String> usersBought = currentUser.getUsersBought();
 
         if (likedPosts.contains(post.getObjectId())) {
             score += COEFFICIENT_LIKED_POST;

@@ -105,5 +105,6 @@
     </string-array>
     <string name="title_activity_edit_description">EditDescription</string>
     <string name="apply">APPLY</string>
+    <string name="sold">SOLD</string>
 
 </resources>

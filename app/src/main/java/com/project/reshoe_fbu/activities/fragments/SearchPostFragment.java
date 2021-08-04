@@ -52,6 +52,8 @@ public class SearchPostFragment extends Fragment {
     private int condition, isWomenSizingCode, isHighToLowCode;
     private double size;
 
+    private List<String> likedPosts, likedUsers, usersBought;
+
     private boolean filterApplied, sortPrice;
 
     @Override
@@ -62,17 +64,17 @@ public class SearchPostFragment extends Fragment {
         currentUser = new User(ParseUser.getCurrentUser());
 
         try {
-            PostSort.likedPosts = currentUser.getLikedPosts();
-        } catch (JSONException | ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            PostSort.likedUsers = currentUser.getLikedSellers();
+            likedPosts = currentUser.getLikedPostsIds();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
-            PostSort.usersBought = currentUser.getUsersBought();
+            likedUsers = currentUser.getLikedSellers();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            usersBought = currentUser.getUsersBought();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -224,7 +226,7 @@ public class SearchPostFragment extends Fragment {
 
                 for (int i = 0; i < queryItems.size(); i++) {
                     Post post = queryItems.get(i);
-                    searches.add(new PostSort(post));
+                    searches.add(new PostSort(post, likedPosts, likedUsers, usersBought));
                     adapter.notifyDataSetChanged();
 
                     if (i == 0) {
@@ -248,7 +250,8 @@ public class SearchPostFragment extends Fragment {
                 }
             } else {
                 for (int i = 0; i < queryItems.size(); i++) {
-                    searches.add(new PostSort(queryItems.get(i)));
+                    searches.add(new PostSort(queryItems.get(i), likedPosts, likedUsers,
+                            usersBought));
                     adapter.notifyDataSetChanged();
                 }
 

@@ -173,7 +173,7 @@ public class User  {
         List<String> cart = getCartIds();
         if (cart.contains(post.getObjectId())) {
             // Add string resource
-            Toast.makeText(context, post.getShoeName() + " are already in the cart",
+            Toast.makeText(context, post.getShoeName() + " is already in the cart",
                     Toast.LENGTH_SHORT).show();
         } else {
             user.add(KEY_CART, post.getObjectId());

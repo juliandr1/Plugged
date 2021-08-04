@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -19,10 +18,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.parse.ParseUser;
-import com.project.reshoe_fbu.helper.OnDoubleTapListener;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.User;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.util.List;
@@ -89,7 +88,7 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
             photoView.setImageBitmap(bitmaps.get(position));
         } else {
             Glide.with(mContext).
-                    load(images.get(position)).centerInside().into(photoView);
+                    load(images.get(position)).transform(new RoundedCorners(30)).into(photoView);
             photoView.getAttacher().setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -127,7 +126,7 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, @NotNull Object object) {
         container.removeView((RelativeLayout) object);
     }
 }

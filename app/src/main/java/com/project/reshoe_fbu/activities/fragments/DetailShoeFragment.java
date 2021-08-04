@@ -93,46 +93,41 @@ public class DetailShoeFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        binding.btnBackDetailShoe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnBackDetailShoe.setOnClickListener(v -> {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
 
-                Fragment prevFragment;
+            Fragment prevFragment;
 
-                if (prevFragmentCode == PostsAdapter.BUYER_CODE) {
-                    prevFragment = new TimelineBuyerFragment();
-                } else if (prevFragmentCode == PostsAdapter.SELLER_CODE) {
-                    prevFragment = new TimelineSellerFragment();
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("filter", false);
-                    prevFragment = new SearchPostFragment();
-                    prevFragment.setArguments(bundle);
-                }
-
-                ft.replace(R.id.flContainer, prevFragment).commit();
-
+            if (prevFragmentCode == PostsAdapter.BUYER_CODE) {
+                prevFragment = new TimelineBuyerFragment();
+            } else if (prevFragmentCode == PostsAdapter.SELLER_CODE) {
+                prevFragment = new TimelineSellerFragment();
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("filter", false);
+                prevFragment = new SearchPostFragment();
+                prevFragment.setArguments(bundle);
             }
+
+            ft.replace(R.id.flContainer, prevFragment).commit();
+
         });
 
         Log.i(TAG, post.getIsSold() + "");
         if (!post.getIsSold()) {
-            binding.btnCheckout.setOnClickListener(v -> {
+            binding.fabAddCart.setOnClickListener(v -> {
                 User currentUser = new User(ParseUser.getCurrentUser());
                 try {
                     currentUser.addToCart(post, getActivity());
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
                 }
             });
         } else {
-            binding.btnCheckout.setVisibility(View.INVISIBLE);
+            binding.fabAddCart.setVisibility(View.INVISIBLE);
             binding.tvSold.setVisibility(View.VISIBLE);
         }
 
@@ -158,21 +153,7 @@ public class DetailShoeFragment extends Fragment {
 
         binding.viewPager.requestDisallowInterceptTouchEvent(true);
         binding.viewPager.setAdapter(pagerAdapter);
-        binding.viewPager.setOnTouchListener(new View.OnTouchListener() {
-            GestureDetector gestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onDoubleTap(MotionEvent e) {
-                    Log.i(TAG, "doubleTap");
-                    return super.onDoubleTap(e);
-                }
 
-            });
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
     }
 
     private String checkSizing(String str) {

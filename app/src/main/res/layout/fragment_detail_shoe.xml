@@ -11,34 +11,49 @@
         android:id="@+id/tvDetailedPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="6dp"
-        android:layout_toEndOf="@+id/tvPriceDetailed"
+        android:layout_below="@+id/view_pager"
+        android:layout_alignEnd="@+id/view_pager"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="textEnd"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/primary"
         android:textSize="20sp"
-        tools:text="$190"
-        />
+        android:textStyle="bold"
+        android:typeface="monospace"
+        tools:text="$190" />
 
     <TextView
         android:id="@+id/tvDetailName"
-        android:layout_width="268dp"
+        android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_pager"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/ivSellerProfile"
         android:layout_marginTop="5dp"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
         tools:text="YEEZY 350 BOOST" />
 
     <TextView
         android:id="@+id/tvDetailCondition"
         android:layout_width="wrap_content"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tvDetailName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/tvConditionDetail"
-        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
         tools:text="9/10" />
 
     <ImageView
@@ -48,34 +63,24 @@
         android:layout_below="@+id/btnBackDetailShoe"
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        tools:srcCompat="@tools:sample/avatars"
-        />
-
-    <Button
-        android:id="@+id/btnCheckout"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/add_cart"
-        />
+        android:layout_marginTop="17dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvDetailedDescription"
-        android:layout_width="307dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/tvDetailedPrice"
-        android:layout_alignParentStart="true"
+        android:layout_width="276dp"
+        android:layout_height="147dp"
+        android:layout_above="@+id/fabAddCart"
+        android:layout_below="@+id/tvConditionDetail"
+        android:layout_alignStart="@+id/ivSellerProfile"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="38dp"
-        android:textAlignment="center"
-        />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="textStart"
+        android:typeface="monospace" />
 
     <Button
         android:id="@+id/btnBackDetailShoe"
@@ -92,22 +97,64 @@
         android:id="@+id/tvDetailSellerUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSold"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:layout_toEndOf="@+id/ivSellerProfile"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
+        android:typeface="monospace"
+        tools:text='"@David"' />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_below="@+id/ivSellerProfile"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        tools:text='"@David"'
-        />
+        android:layout_marginTop="5dp">
+
+    </androidx.viewpager.widget.ViewPager>
 
     <TextView
-        android:id="@+id/tvPriceDetailed"
+        android:id="@+id/tvSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailName"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="40dp"
+        android:layout_below="@+id/tvDetailedPrice"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/price" />
+        android:layout_toEndOf="@+id/tvSizeDetail"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="8.5M" />
+
+    <TextView
+        android:id="@+id/tvSold"
+        android:layout_width="123dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/sold"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/add_cart"
+        />
 
     <TextView
         android:id="@+id/tvConditionDetail"
@@ -116,57 +163,26 @@
         android:layout_below="@+id/tvDetailName"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvDetailedPrice"
-        android:text="@string/condition" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="325dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/tvDetailSellerUser"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="18dp">
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_toEndOf="@+id/tvSize"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/condition"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="14sp"
+        android:typeface="monospace" />
 
     <TextView
-        android:id="@+id/tvDetailedBSize"
+        android:id="@+id/tvSizeDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDetailName"
-        android:layout_marginStart="20dp"
+        android:layout_alignStart="@+id/ivSellerProfile"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvDetailCondition"
-        android:text="@string/size" />
-
-    <TextView
-        android:id="@+id/tvSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDetailName"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="6dp"
-        android:layout_toEndOf="@+id/tvDetailedBSize"
-        android:textSize="20sp"
-        tools:text="8.5M"
-        />
-
-    <TextView
-        android:id="@+id/tvSold"
-        android:layout_width="135dp"
-        android:layout_height="33dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
-        android:lineSpacingExtra="20sp"
-        android:text="SOLD"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/size"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="14sp"
+        android:typeface="monospace" />
 
 </RelativeLayout>
