@@ -14,15 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
-import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
-import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.project.reshoe_fbu.models.Post;
-import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -86,7 +81,7 @@ public class DetailShoeSellerFragment extends Fragment{
             Glide.with(view).
                     load(Objects.requireNonNull(post.getUser().getProfilePicURL())).
                     circleCrop().
-                    into(binding.ibSellerProfile);
+                    into(binding.ivSellerProfile);
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }

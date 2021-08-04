@@ -5,8 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +43,8 @@ public class ThreadFragment extends Fragment {
     private List<Thread> threads;
     private User currentUser;
 
+    private SwipeRefreshLayout refresh;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +74,19 @@ public class ThreadFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        refresh = getActivity().findViewById(R.id.swipeContainer);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    queryThreads();
+                } catch (ParseException parseException) {
+                    parseException.printStackTrace();
+                }
+                refresh.setRefreshing(false);
+            }
+        });
     }
 
     /*
@@ -77,6 +94,7 @@ public class ThreadFragment extends Fragment {
         then get all of their known threads.
      */
     public void queryThreads() throws ParseException {
+        threads.clear();
         threads.addAll(currentUser.getUserThreads());
         adapter.notifyDataSetChanged();
     }

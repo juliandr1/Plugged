@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeBinding;
-import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
@@ -91,7 +88,7 @@ public class DetailShoeFragment extends Fragment {
             Glide.with(view).
                     load(Objects.requireNonNull(post.getUser().getProfilePicURL())).
                     circleCrop().
-                    into(binding.ibSellerProfile);
+                    into(binding.ivSellerProfile);
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
@@ -139,7 +136,7 @@ public class DetailShoeFragment extends Fragment {
             binding.tvSold.setVisibility(View.VISIBLE);
         }
 
-        binding.ibSellerProfile.setOnClickListener(v -> {
+        binding.ivSellerProfile.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putParcelable("seller", post.getUser().getUser());
             Fragment detailedSellerFragment = new DetailedSellerFragment();
