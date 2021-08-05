@@ -113,7 +113,7 @@ public class MessagesFragment extends Fragment {
             });
         });
 
-        binding.ibSend.setOnClickListener(view1 -> sendMessage());
+        binding.ivSend.setOnClickListener(view1 -> sendMessage());
     }
 
     public void sendMessage() {

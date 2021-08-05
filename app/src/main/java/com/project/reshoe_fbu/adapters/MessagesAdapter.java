@@ -114,7 +114,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
                     .into(imageOther);
             Log.i(TAG, message.getBody());
             tvBodyIncoming.setText(message.getBody());
-            name.setText(message.getAuthor().getUsername());
+            name.setText("@" + message.getAuthor().getUsername());
         }
     }
 

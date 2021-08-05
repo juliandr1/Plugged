@@ -6,22 +6,22 @@
     android:clipToPadding="false"
     android:paddingVertical="10dp"
     android:paddingLeft="60dp"
-    android:paddingRight="15dp"
-    >
+    android:paddingRight="15dp">
 
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
         android:layout_toLeftOf="@+id/ivProfileMe"
         android:background="@drawable/message_outgoing_setup"
         android:elevation="2dp"
         android:padding="8dp"
         android:textColor="@android:color/white"
         android:textSize="18dp"
-        tools:text='"Outgoing message here:'
-        />
+        tools:text='"Outgoing message here:' />
 
     <ImageView
         android:id="@+id/ivProfileMe"
@@ -29,7 +29,6 @@
         android:layout_height="64dp"
         android:layout_alignParentRight="true"
         android:contentDescription="Current user profile picture"
-        android:src="@mipmap/ic_launcher"
-        />
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>
