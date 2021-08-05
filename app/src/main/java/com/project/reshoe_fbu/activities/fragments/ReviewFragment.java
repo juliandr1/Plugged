@@ -78,12 +78,6 @@ public class ReviewFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
-            MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_review, menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
 
         if (item.getItemId() == R.id.post_review) {

@@ -11,15 +11,11 @@
         android:id="@+id/ivLogo2"
         android:layout_width="346dp"
         android:layout_height="128dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="41dp"
-        tools:srcCompat="@tools:sample/avatars"
-        />
+        android:layout_marginTop="22dp"
+        app:srcCompat="@drawable/launcher_foreground"
+        tools:srcCompat="@drawable/launcher_foreground" />
 
     <EditText
         android:id="@+id/etUsernameCreate"
@@ -107,7 +103,7 @@
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/rgGroup"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -115,9 +111,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="#0EB620"
+        android:backgroundTint="@color/secondary"
         android:text="@string/sign_up"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:typeface="sans"
+        app:cornerRadius="30dp" />
 
     <RadioGroup
         android:id="@+id/rgGroup"
@@ -126,8 +124,7 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rbBuyer"
@@ -135,8 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif"
             android:text="@string/buyer"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:typeface="sans" />
 
         <RadioButton
             android:id="@+id/rbSeller"
@@ -144,8 +143,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif"
             android:text="@string/seller"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:typeface="sans" />
 
     </RadioGroup>
 

@@ -20,8 +20,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="22dp"
         android:layout_marginEnd="33dp"
-        tools:srcCompat="@tools:sample/avatars"
-        />
+        app:srcCompat="@drawable/launcher_foreground"
+        tools:srcCompat="@drawable/launcher_foreground" />
 
     <EditText
         android:id="@+id/etUsername"
@@ -48,18 +48,17 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/border"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword"
-        />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnsignup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/btnLogin"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -67,23 +66,31 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="#0EB620"
+        android:backgroundTint="@color/secondary"
+        android:backgroundTintMode="src_over"
         android:text="@string/sign_up"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
+        android:typeface="sans"
+        app:cornerRadius="30dp" />
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/etPassword"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="#518FEC"
+        android:backgroundTint="@color/primary"
+        android:fontFamily="sans-serif"
         android:text="@string/log_in"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
+        android:typeface="sans"
+        app:cornerRadius="30dp" />
 
 </RelativeLayout>

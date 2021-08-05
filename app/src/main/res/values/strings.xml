@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reshoe</string>
+    <string name="app_name">Plugged</string>
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_server_uri">wss://reshoe.back4app.io/</string>
     <string name="back4app_app_id">a4ze23YFfl9rOeXU3pYLqCdE2R6D3untEvfPGiGh</string>
