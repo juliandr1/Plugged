@@ -2,9 +2,12 @@ package com.project.reshoe_fbu.models;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
 import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
 import com.example.reshoe_fbu.databinding.FragmentProfileBinding;

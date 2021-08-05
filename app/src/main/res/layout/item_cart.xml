@@ -18,24 +18,26 @@
         />
 
     <TextView
-        android:id="@+id/tvPriceCart"
-        android:layout_width="90dp"
+        android:id="@+id/tvSizeCart"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/tvShoeTitleCart"
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvSizeCart"
-        />
+        android:layout_toEndOf="@+id/tvPriceCart"
+        android:fontFamily="sans-serif-medium"
+        android:typeface="sans" />
 
     <TextView
-        android:id="@+id/tvSizeCart"
+        android:id="@+id/tvPriceCart"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/tvShoeTitleCart"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/ivPhotoPreviewCart"
-        />
+        android:fontFamily="sans-serif-medium"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvShoeTitleCart"
@@ -47,9 +49,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:layout_toEndOf="@+id/ivPhotoPreviewCart"
-        android:textSize="20sp"
-        tools:text="YEEZY 350 BOOST BRED V2"
-        />
+        android:fontFamily="sans-serif"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        tools:text="YEEZY 350 BOOST BRED V2" />
 
     <Button
         android:id="@+id/btnRemove"

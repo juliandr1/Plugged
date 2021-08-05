@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="2.5dp"
     android:layout_marginEnd="2.5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    >
 
     <ImageView
         android:id="@+id/ivImage"
@@ -17,21 +17,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7.5dp"
         android:layout_marginEnd="5dp"
         android:scaleType="centerInside"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvShoeName"
-        android:layout_width="236dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif"
         android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="sans"
         tools:text="yeezy 350 boost ICy Blue" />
 
     <TextView
@@ -39,11 +45,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="20dp"
         android:layout_toEndOf="@+id/tvPriceTitle"
-        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/primary"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:typeface="sans"
         tools:text="$90" />
 
     <TextView
@@ -51,11 +62,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="20dp"
         android:layout_toEndOf="@+id/tvConditionTitle"
-        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/primary"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:typeface="sans"
         tools:text="9/10" />
 
     <TextView
@@ -64,22 +80,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="1dp"
+        android:fontFamily="sans-serif"
         android:text="@string/price"
-        android:textSize="8sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvConditionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="20dp"
         android:layout_toEndOf="@+id/tvPrice"
+        android:fontFamily="sans-serif"
         android:text="@string/condition"
-        android:textSize="8sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
 </RelativeLayout>

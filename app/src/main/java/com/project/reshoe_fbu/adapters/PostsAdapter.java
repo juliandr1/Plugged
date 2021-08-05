@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,21 +16,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
-import com.google.android.material.shape.RoundedCornerTreatment;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeSellerFragment;
 import com.project.reshoe_fbu.models.Post;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.models.User;
 
 import org.json.JSONException;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.util.List;
 
@@ -46,7 +40,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private final List<Post> posts;
     private final User user;
     private final FragmentManager fragmentManager;
-    private final boolean isDetailedSeller, showLike;
+    private final boolean isDetailedSeller;
 
     public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager
             fragmentManager, boolean isDetailedSeller, boolean showLike) {
@@ -55,7 +49,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         this.user = user;
         this.fragmentManager = fragmentManager;
         this.isDetailedSeller = isDetailedSeller;
-        this.showLike = showLike;
     }
 
     // For each row, inflate the layout
@@ -92,8 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView ivImage;
-        private final TextView tvDescription, tvCondition, tvPrice, tvLikes;
-        private final Button btnLike;
+        private final TextView tvDescription, tvCondition, tvPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,45 +94,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvShoeName);
             tvCondition = itemView.findViewById(R.id.tvCondition);
             tvPrice = itemView.findViewById(R.id.tvPrice);
-            tvLikes = itemView.findViewById(R.id.tvLikes);
-            btnLike = itemView.findViewById(R.id.btnLike);
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
-
-            if(showLike) {
-                if (!user.getIsSeller() && !isDetailedSeller) {
-                    // Like or unlike posts and update the color of the heart.
-                    btnLike.setOnClickListener(v -> {
-                        try {
-                            Post post = posts.get(getAdapterPosition());
-                            // If the user has liked the post before then unlike it.
-                            if (post.didLike(user)) {
-                                Log.i(TAG, "Unlike");
-                                btnLike.setBackgroundResource(R.drawable.heart_outline);
-                                post.unlike();
-                                user.removeLike(post.getObjectId());
-                                int numLikes = post.getNumLikes();
-                                checkLikes(numLikes);
-                            } else {
-                                Log.i(TAG, "Like");
-                                btnLike.setBackgroundResource(R.drawable.heart_filled);
-                                post.like();
-                                user.addLike(post.getObjectId());
-                                int numLikes = post.getNumLikes();
-                                Log.i("TAG", "" + numLikes);
-                                checkLikes(numLikes);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } else {
-                    tvLikes.setVisibility(View.INVISIBLE);
-                    btnLike.setVisibility(View.INVISIBLE);
-                }
-            }
-
         }
 
         public void bind(Post post) throws JSONException {
@@ -152,26 +108,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             currencyString = currencyString.replaceAll("\\.00", "");
             tvPrice.setText(currencyString);
 
-            Glide.with(mContext).load(post.getImageUrls().get(0)).transform(new RoundedCorners(30)).into(ivImage);
-
-            if (showLike) {
-                if (!user.getIsSeller() && !isDetailedSeller) {
-                    try {
-                        if (post.didLike(user)) {
-                            btnLike.setBackgroundResource(R.drawable.heart_filled);
-                        } else {
-                            btnLike.setBackgroundResource(R.drawable.heart_outline);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (!user.getIsSeller() && !isDetailedSeller) {
-                    int numLikes = post.getNumLikes();
-                    checkLikes(numLikes);
-                }
-            }
+            Glide.with(mContext).
+                    load(post.getImageUrls().get(0)).
+                    transform(new CenterCrop(), new RoundedCorners(10)).
+                    into(ivImage);
         }
 
         @Override
@@ -199,14 +139,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 ft.replace(R.id.flContainer, detailShoeFragment, "post")
                         .addToBackStack(null)
                         .commit();
-            }
-        }
-
-        public void checkLikes(int numLikes) {
-            if (numLikes == 0) {
-                tvLikes.setText("");
-            } else {
-                tvLikes.setText("" + numLikes);
             }
         }
     }

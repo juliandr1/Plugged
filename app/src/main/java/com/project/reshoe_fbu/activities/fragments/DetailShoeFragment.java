@@ -2,9 +2,7 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,12 +35,17 @@ public class DetailShoeFragment extends Fragment {
     private PagerAdapter pagerAdapter;
     private int prevFragmentCode;
 
+    private FragmentDetailShoeBinding binding;
+
+    private ViewGroup container;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
         prevFragmentCode = getArguments().getInt("code");
+        this.container = container;
 
         return inflater.inflate(R.layout.fragment_detail_shoe, container, false);
     }
@@ -52,7 +55,9 @@ public class DetailShoeFragment extends Fragment {
             Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentDetailShoeBinding binding = FragmentDetailShoeBinding.bind(view);
+        User user = new User(ParseUser.getCurrentUser());
+
+        binding = FragmentDetailShoeBinding.bind(view);
 
         try {
             String username = post.getUser().getUsername();
@@ -64,6 +69,8 @@ public class DetailShoeFragment extends Fragment {
         binding.tvDetailCondition.setText(post.getCondition() + "/10");
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
+
+        checkLikes(post.getNumLikes());
 
         double size = post.getSize();
 
@@ -116,7 +123,6 @@ public class DetailShoeFragment extends Fragment {
 
         });
 
-        Log.i(TAG, post.getIsSold() + "");
         if (!post.getIsSold()) {
             binding.fabAddCart.setOnClickListener(v -> {
                 User currentUser = new User(ParseUser.getCurrentUser());
@@ -145,9 +151,45 @@ public class DetailShoeFragment extends Fragment {
         });
 
         try {
-            pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
-                    post.getImageUrls(), false, post);
+            if (post.didLike(user)) {
+                binding.btnLike.setBackgroundResource(R.drawable.heart_filled);
+            } else {
+                binding.btnLike.setBackgroundResource(R.drawable.heart_outline);
+            }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        binding.btnLike.setOnClickListener(v -> {
+            try {
+                // If the user has liked the post before then unlike it.
+                if (post.didLike(user)) {
+                    Log.i(TAG, "Unlike");
+                    binding.btnLike.setBackgroundResource(R.drawable.heart_outline);
+                    post.unlike();
+                    user.removeLike(post.getObjectId());
+                    int numLikes = post.getNumLikes();
+                    checkLikes(numLikes);
+                } else {
+                    Log.i(TAG, "Like");
+                    binding.btnLike.setBackgroundResource(R.drawable.heart_filled);
+                    post.like();
+                    user.addLike(post.getObjectId());
+                    int numLikes = post.getNumLikes();
+                    Log.i("TAG", "" + numLikes);
+                    checkLikes(numLikes);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
+        try {
+            pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
+                    post.getImageUrls(), false, post, container);
+        } catch (
+                JSONException e) {
             e.printStackTrace();
         }
 
@@ -161,6 +203,14 @@ public class DetailShoeFragment extends Fragment {
             return str.concat(getString(R.string.women));
         } else {
             return str.concat(getString(R.string.men));
+        }
+    }
+
+    public void checkLikes(int numLikes) {
+        if (numLikes == 0) {
+            binding.tvLikes.setText("");
+        } else {
+            binding.tvLikes.setText("" + numLikes);
         }
     }
 }

@@ -22,7 +22,7 @@
         android:textColor="@color/primary"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:typeface="monospace"
+        android:typeface="sans"
         tools:text="$190" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:typeface="monospace"
+        android:typeface="sans"
         tools:text="YEEZY 350 BOOST" />
 
     <TextView
@@ -53,7 +53,7 @@
         android:textColor="@color/primary"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:typeface="monospace"
+        android:typeface="sans"
         tools:text="9/10" />
 
     <ImageView
@@ -78,9 +78,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="sans-serif"
         android:textAlignment="textStart"
-        android:typeface="monospace" />
+        android:typeface="sans" />
 
     <Button
         android:id="@+id/btnBackDetailShoe"
@@ -164,12 +164,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/tvSize"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="sans-serif"
         android:text="@string/condition"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="14sp"
-        android:typeface="monospace" />
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvSizeDetail"
@@ -178,11 +179,33 @@
         android:layout_below="@+id/tvDetailName"
         android:layout_alignStart="@+id/ivSellerProfile"
         android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="sans-serif"
         android:text="@string/size"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="14sp"
-        android:typeface="monospace" />
+        android:textStyle="bold"
+        android:typeface="sans"
+        />
+
+    <Button
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/btnBackDetailShoe"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/heart_outline" />
+
+    <TextView
+        android:id="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLike"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="23dp"
+        tools:text="12" />
 
 </RelativeLayout>

@@ -16,8 +16,10 @@ import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentDetailShoeSellerBinding;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.PagerAdapter;
 import com.project.reshoe_fbu.models.Post;
+import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -31,11 +33,16 @@ public class DetailShoeSellerFragment extends Fragment{
     private Post post;
     private PagerAdapter pagerAdapter;
 
+    private ViewGroup container;
+
+    private FragmentDetailShoeSellerBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
+        this.container = container;
         return inflater.inflate(R.layout.fragment_detail_shoe_seller, container,
                 false);
     }
@@ -45,7 +52,9 @@ public class DetailShoeSellerFragment extends Fragment{
             Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentDetailShoeSellerBinding binding = FragmentDetailShoeSellerBinding.bind(view);
+        User user = new User(ParseUser.getCurrentUser());
+
+        binding = FragmentDetailShoeSellerBinding.bind(view);
 
         try {
             String username = post.getUser().getUsername();
@@ -57,6 +66,8 @@ public class DetailShoeSellerFragment extends Fragment{
         binding.tvDetailCondition.setText(post.getCondition() + "/10");
         binding.tvDetailedDescription.setText(post.getDescription());
         binding.tvDetailName.setText(post.getShoeName());
+
+        checkLikes(post.getNumLikes());
 
         double size = post.getSize();
 
@@ -113,12 +124,46 @@ public class DetailShoeSellerFragment extends Fragment{
 
         try {
             pagerAdapter = new PagerAdapter(getActivity().getBaseContext(),
-                    post.getImageUrls(), false, post);
+                    post.getImageUrls(), false, post, container);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         binding.viewPager.setAdapter(pagerAdapter);
+
+        try {
+            if (post.didLike(user)) {
+                binding.btnLike.setBackgroundResource(R.drawable.heart_filled);
+            } else {
+                binding.btnLike.setBackgroundResource(R.drawable.heart_outline);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        binding.btnLike.setOnClickListener(v -> {
+            try {
+                // If the user has liked the post before then unlike it.
+                if (post.didLike(user)) {
+                    Log.i(TAG, "Unlike");
+                    binding.btnLike.setBackgroundResource(R.drawable.heart_outline);
+                    post.unlike();
+                    user.removeLike(post.getObjectId());
+                    int numLikes = post.getNumLikes();
+                    checkLikes(numLikes);
+                } else {
+                    Log.i(TAG, "Like");
+                    binding.btnLike.setBackgroundResource(R.drawable.heart_filled);
+                    post.like();
+                    user.addLike(post.getObjectId());
+                    int numLikes = post.getNumLikes();
+                    Log.i("TAG", "" + numLikes);
+                    checkLikes(numLikes);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private String checkSizing(String str) {
@@ -126,6 +171,14 @@ public class DetailShoeSellerFragment extends Fragment{
             return str.concat(getString(R.string.women));
         } else {
             return str.concat(getString(R.string.men));
+        }
+    }
+
+    public void checkLikes(int numLikes) {
+        if (numLikes == 0) {
+            binding.tvLikes.setText("");
+        } else {
+            binding.tvLikes.setText("" + numLikes);
         }
     }
 }

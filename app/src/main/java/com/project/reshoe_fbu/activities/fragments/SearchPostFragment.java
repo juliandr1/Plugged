@@ -113,7 +113,11 @@ public class SearchPostFragment extends Fragment {
                 sortPrice = false;
             }
 
-            querySearch(searchStr);
+            if (searchStr != null) {
+                querySearch(searchStr);
+            } else {
+                querySearch(" ");
+            }
 
         } else {
             filterApplied = false;
@@ -186,7 +190,7 @@ public class SearchPostFragment extends Fragment {
         Query for posts that contain the desired shoe.
      */
     private void querySearch(String str) {
-        if (!str.isEmpty()) {
+        if (str.length() != 0) {
             searchStr = str;
             query.whereContains("shoeNameSearch", str.toLowerCase());
             query.setLimit(20);
@@ -197,6 +201,7 @@ public class SearchPostFragment extends Fragment {
                     return;
                 }
                 queryItems.clear();
+                Log.i(TAG, newPosts.size() + " ");
                 queryItems.addAll(newPosts);
 
                 if (queryItems.size() == 0) {
@@ -239,7 +244,6 @@ public class SearchPostFragment extends Fragment {
                             if (queryItems.size() - 1 == i) {
                                 Collections.sort(searches.subList(start, i + 1));
                             } else {
-                                Log.i(TAG, start + " " + i);
                                 Collections.sort(searches.subList(start, i));
                             }
                             started = false;

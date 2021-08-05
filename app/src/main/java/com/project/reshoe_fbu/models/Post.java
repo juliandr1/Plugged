@@ -1,7 +1,10 @@
 package com.project.reshoe_fbu.models;
 
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.reshoe_fbu.R;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -114,6 +117,18 @@ public class Post extends ParseObject implements Comparable<Post> {
         }
     }
 
+    public void like(Button btnLike, TextView tvLikes) throws JSONException {
+        User currentUser = new User(ParseUser.getCurrentUser());
+
+        if (!didLike(currentUser)) {
+            add(KEY_USERS_LIKED, ParseUser.getCurrentUser().getObjectId());
+            setLikes(getNumLikes() + 1);
+            btnLike.setBackgroundResource(R.drawable.heart_filled);
+            checkLikes(getNumLikes(), tvLikes);
+            saveInBackground();
+        }
+    }
+
     public void unlike() {
         removeAll(KEY_USERS_LIKED, Arrays.asList(ParseUser.getCurrentUser().getObjectId()));
         if (getNumLikes() > 0) {
@@ -175,6 +190,14 @@ public class Post extends ParseObject implements Comparable<Post> {
             return -1;
         } else {
             return 0;
+        }
+    }
+
+    public void checkLikes(int numLikes, TextView tvLikes) {
+        if (numLikes == 0) {
+            tvLikes.setText("");
+        } else {
+            tvLikes.setText("" + numLikes);
         }
     }
 }

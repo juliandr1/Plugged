@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#F09472</color>
     <color name="primaryAlt">#F6BFAB</color>
+    <color name="secondary">#72CEF0</color>
+    <color name="secondaryAlt">#ABE2F6</color>
 </resources>

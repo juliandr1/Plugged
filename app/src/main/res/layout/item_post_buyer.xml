@@ -8,13 +8,14 @@
 
     <ImageView
         android:id="@+id/ivImage"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        tools:srcCompat="@tools:sample/avatars"
-        />
+        android:background="@drawable/border"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvShoeName"
@@ -23,10 +24,14 @@
         android:layout_below="@+id/ivImage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif"
         android:textAlignment="center"
-        android:textSize="12sp"
-        tools:text="yeezy 350 boost ICy Blue"
-        />
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        tools:text="yeezy 350 boost ICy Blue" />
 
     <TextView
         android:id="@+id/tvPrice"
@@ -36,9 +41,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/tvPriceTitle"
+        android:textColor="@color/primary"
         android:textSize="12sp"
-        tools:text="$90"
-        />
+        android:textStyle="bold"
+        tools:text="$90" />
 
     <TextView
         android:id="@+id/tvCondition"
@@ -48,31 +54,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/tvConditionTitle"
+        android:textColor="@color/primary"
         android:textSize="12sp"
-        tools:text="9/10"
-        />
-
-    <Button
-        android:id="@+id/btnLike"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_toEndOf="@+id/ivImage"
-        android:background="@drawable/heart_outline"
-        />
-
-    <TextView
-        android:id="@+id/tvLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLike"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="33dp"
-        tools:text="12"
-        />
+        android:textStyle="bold"
+        tools:text="9/10" />
 
     <TextView
         android:id="@+id/tvPriceTitle"
@@ -80,22 +65,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="3dp"
+        android:fontFamily="sans-serif"
         android:text="@string/price"
-        android:textSize="8sp"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvConditionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvShoeName"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/tvPrice"
+        android:fontFamily="sans-serif"
         android:text="@string/condition"
-        android:textSize="8sp"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
 </RelativeLayout>

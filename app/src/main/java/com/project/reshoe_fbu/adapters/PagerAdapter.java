@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,14 +44,18 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
 
     private Post post;
 
+    private ViewGroup containerP;
+
     // Viewpager Constructor
-    public PagerAdapter(Context context, List<String> images, boolean isPosting, Post post) {
+    public PagerAdapter(Context context, List<String> images, boolean isPosting, Post post,
+                        ViewGroup container) {
         this.mContext = context;
         this.images = images;
         this.mLayoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.isPosting = isPosting;
         this.post = post;
+        this.containerP = container;
     }
 
     public PagerAdapter(Context context, List<Bitmap> bitmaps) {
@@ -88,7 +94,10 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
             photoView.setImageBitmap(bitmaps.get(position));
         } else {
             Glide.with(mContext).
-                    load(images.get(position)).transform(new RoundedCorners(30)).into(photoView);
+                    load(images.get(position)).
+                    transform(new RoundedCorners(30)).
+                    into(photoView);
+
             photoView.getAttacher().setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -102,11 +111,14 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                     try {
                         if (!post.didLike(currentUser)) {
                             currentUser.addLike(post.getObjectId());
-                            post.like();
+                            Button btnLike = containerP.findViewById(R.id.btnLike);
+                            TextView tvLikes = containerP.findViewById(R.id.tvLikes);
+                            post.like(btnLike, tvLikes);
                             Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
                         } else {
                             // Add string resource
-                            Toast.makeText(mContext, "Already liked!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Already liked!",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException jsonException) {
                         jsonException.printStackTrace();
