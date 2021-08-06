@@ -14,7 +14,7 @@
         android:layout_below="@+id/tvTotal"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:clickable="true">
 
     </include>
@@ -29,15 +29,17 @@
 
     <TextView
         android:id="@+id/tvTotal"
-        android:layout_width="128dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rvItems"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/total_price"
-        android:textSize="24sp"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <Button
         android:id="@+id/btnBackCart"
@@ -53,14 +55,14 @@
     <TextView
         android:id="@+id/tvTotalCart"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/rvItems"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="153dp"
-        android:layout_marginTop="20dp"
-        android:textSize="24sp"
-        />
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvEmptyCart"

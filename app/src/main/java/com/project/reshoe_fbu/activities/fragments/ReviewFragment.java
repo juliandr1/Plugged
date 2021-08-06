@@ -2,6 +2,9 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,19 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentReviewBinding;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.CreateReviewActivity;
 import com.project.reshoe_fbu.adapters.ReviewsAdapter;
 import com.project.reshoe_fbu.models.Review;
@@ -70,23 +63,17 @@ public class ReviewFragment extends Fragment {
                 getSupportFragmentManager().
                 popBackStack());
 
+        binding.fabReview.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
+            intent.putExtra("seller", seller.getUser());
+            startActivity(intent);
+        });
+
         try {
             queryReviews();
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
-
-        if (item.getItemId() == R.id.post_review) {
-            Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
-            intent.putExtra("seller", seller.getUser());
-            startActivity(intent);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void queryReviews() throws ParseException {

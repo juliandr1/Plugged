@@ -1,9 +1,12 @@
 package com.project.reshoe_fbu.models;
 
+import android.os.Parcelable;
+
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import org.json.JSONException;
+import org.parceler.Parcel;
 
 import java.util.Comparator;
 import java.util.List;

@@ -41,11 +41,12 @@ public class FilterFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         FragmentFilterBinding binding = FragmentFilterBinding.bind(view);
 
-        str = getArguments().getString("str");
-
         binding.btnBackFilter.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putBoolean("filter", false);
+            bundle.putBoolean("posts", true);
+            ArrayList<Post> items = getArguments().getParcelableArrayList("items");
+            bundle.putParcelableArrayList("items", items);
 
             Fragment prevFragment = new SearchPostFragment();
             prevFragment.setArguments(bundle);
@@ -121,6 +122,8 @@ public class FilterFragment extends Fragment {
                 Fragment prevFragment = new SearchPostFragment();
                 Bundle bundle = new Bundle();
 
+                str = getArguments().getString("str");
+
                 boolean changed = false;
 
                 // Ternary operators ? enter here
@@ -128,7 +131,7 @@ public class FilterFragment extends Fragment {
                     bundle.putDouble("size", positionSize);
                     changed = true;
                 } else {
-                    bundle.putDouble("size", positionCondition);
+                    bundle.putDouble("size", positionSize);
                 }
 
                 if (positionCondition != NOT_CHANGED_CODE) {
@@ -163,6 +166,7 @@ public class FilterFragment extends Fragment {
                 }
 
                 bundle.putBoolean("filter", changed);
+                bundle.putBoolean("shoe", false);
                 bundle.putString("str", str);
                 prevFragment.setArguments(bundle);
 

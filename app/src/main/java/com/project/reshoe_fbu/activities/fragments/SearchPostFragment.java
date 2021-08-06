@@ -41,27 +41,25 @@ public class SearchPostFragment extends Fragment {
     private PostSearchAdapter adapter;
     private List<PostSort> searches;
     private List<Post> queryItems;
+
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
     private String searchStr;
 
     private FragmentSearchPostBinding binding;
 
-    private User currentUser;
-
-    private int condition, isWomenSizingCode, isHighToLowCode;
-    private double size;
+    private int isHighToLowCode;
 
     private List<String> likedPosts, likedUsers, usersBought;
 
-    private boolean filterApplied, sortPrice;
+    private boolean sortPrice;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        currentUser = new User(ParseUser.getCurrentUser());
+        User currentUser = new User(ParseUser.getCurrentUser());
 
         try {
             likedPosts = currentUser.getLikedPostsIds();
@@ -79,24 +77,24 @@ public class SearchPostFragment extends Fragment {
             e.printStackTrace();
         }
 
-        filterApplied = getArguments().getBoolean("filter");
+        boolean filterApplied = getArguments().getBoolean("filter");
+        boolean savePosts = getArguments().getBoolean("posts");
 
         if (filterApplied) {
             searchStr = getArguments().getString("str");
-            size = getArguments().getDouble("size");
+            double size = getArguments().getDouble("size");
             if (((int) size) != FilterFragment.NOT_CHANGED_CODE) {
                 query.whereEqualTo(Post.KEY_SIZE, size);
             }
 
-            condition = getArguments().getInt("condition");
+            int condition = getArguments().getInt("condition");
             if (condition != FilterFragment.NOT_CHANGED_CODE) {
                 query.whereEqualTo(Post.KEY_CONDITION, condition);
             }
 
-            isWomenSizingCode = getArguments().getInt("isWomenSizing");
+            int isWomenSizingCode = getArguments().getInt("isWomenSizing");
 
             if (isWomenSizingCode == FilterFragment.CHANGED_IS_WOMEN_SIZING_M) {
-                Log.i(TAG, "Filter mens sizing");
                 query.whereEqualTo(Post.KEY_IS_WOMEN_SIZING, false);
             } else if (isWomenSizingCode == FilterFragment.CHANGED_IS_WOMEN_SIZING_W) {
                 query.whereEqualTo(Post.KEY_IS_WOMEN_SIZING, true);
@@ -114,13 +112,25 @@ public class SearchPostFragment extends Fragment {
             }
 
             if (searchStr != null) {
+                Log.i(TAG, searchStr);
                 querySearch(searchStr);
             } else {
                 querySearch(" ");
             }
 
-        } else {
-            filterApplied = false;
+        } else if (savePosts) {
+            ArrayList<Post> items = getArguments().getParcelableArrayList("items");
+            queryItems = new ArrayList<>();
+            searches = new ArrayList<>();
+            queryItems.addAll(items);
+            adapter = new PostSearchAdapter(getActivity(), searches,
+                    getActivity().getSupportFragmentManager(), this);
+
+            try {
+                convertPosts();
+            } catch (JSONException | ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -131,9 +141,17 @@ public class SearchPostFragment extends Fragment {
 
         Context context = getActivity();
 
-        searches = new ArrayList<>();
-        queryItems = new ArrayList<>();
-        adapter = new PostSearchAdapter(context, searches, getActivity().getSupportFragmentManager());
+        if (searches == null) {
+            searches = new ArrayList<>();
+        }
+        if (queryItems == null) {
+            queryItems = new ArrayList<>();
+        }
+
+        if (adapter == null) {
+            adapter = new PostSearchAdapter(context, searches,
+                    getActivity().getSupportFragmentManager(), this);
+        }
         RecyclerView rvSearches = binding.rvSearches;
         rvSearches.setAdapter(adapter);
 
@@ -176,6 +194,9 @@ public class SearchPostFragment extends Fragment {
             Fragment filterFragment = new FilterFragment();
             Bundle bundle = new Bundle();
             bundle.putString("str", searchStr);
+            ArrayList<Post> items = new ArrayList<>();
+            items.addAll(queryItems);
+            bundle.putParcelableArrayList("items", items);
             filterFragment.setArguments(bundle);
             getActivity().
                     getSupportFragmentManager().
@@ -201,17 +222,19 @@ public class SearchPostFragment extends Fragment {
                     return;
                 }
                 queryItems.clear();
-                Log.i(TAG, newPosts.size() + " ");
                 queryItems.addAll(newPosts);
-
-                if (queryItems.size() == 0) {
-                    binding.tvNoSearchResults.setVisibility(View.VISIBLE);
-                }
 
                 try {
                     sortItems();
                 } catch (JSONException | ParseException jsonException) {
                     jsonException.printStackTrace();
+                }
+
+                if (queryItems.size() == 0) {
+                    adapter.clear();
+                    binding.tvNoSearchResults.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvNoSearchResults.setVisibility(View.INVISIBLE);
                 }
             });
         }
@@ -220,7 +243,6 @@ public class SearchPostFragment extends Fragment {
     private void sortItems() throws JSONException, ParseException {
         if (queryItems.size() != 0) {
             searches.clear();
-
             if (sortPrice) {
                 Collections.sort(queryItems);
                 if (isHighToLowCode == FilterFragment.CHANGED_IS_LOW_TO_HIGH) {
@@ -253,11 +275,7 @@ public class SearchPostFragment extends Fragment {
                     }
                 }
             } else {
-                for (int i = 0; i < queryItems.size(); i++) {
-                    searches.add(new PostSort(queryItems.get(i), likedPosts, likedUsers,
-                            usersBought));
-                    adapter.notifyDataSetChanged();
-                }
+                convertPosts();
 
                 Collections.sort(searches);
                 adapter.notifyDataSetChanged();
@@ -270,5 +288,25 @@ public class SearchPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search_post, container, false);
+    }
+
+    public String getSearchStr() {
+        return searchStr;
+    }
+
+    public List<Post> getSortedItems() {
+        List<Post> items = new ArrayList<>();
+        for (int i = 0; i < searches.size(); i++) {
+            items.add(searches.get(i).getPost());
+        }
+        return items;
+    }
+
+    private void convertPosts() throws JSONException, ParseException {
+        for (int i = 0; i < queryItems.size(); i++) {
+            searches.add(new PostSort(queryItems.get(i), likedPosts, likedUsers,
+                    usersBought));
+            adapter.notifyDataSetChanged();
+        }
     }
 }

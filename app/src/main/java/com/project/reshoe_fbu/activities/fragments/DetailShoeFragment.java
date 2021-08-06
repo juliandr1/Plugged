@@ -26,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DetailShoeFragment extends Fragment {
@@ -37,6 +39,10 @@ public class DetailShoeFragment extends Fragment {
 
     private FragmentDetailShoeBinding binding;
 
+    private String searchStr;
+
+    private List<Post> queryItems;
+
     private ViewGroup container;
 
     @Override
@@ -45,6 +51,8 @@ public class DetailShoeFragment extends Fragment {
         // Get the particular post that will be in detailed view
         post = getArguments().getParcelable("post");
         prevFragmentCode = getArguments().getInt("code");
+        searchStr = getArguments().getString("str");
+
         this.container = container;
 
         return inflater.inflate(R.layout.fragment_detail_shoe, container, false);
@@ -114,7 +122,12 @@ public class DetailShoeFragment extends Fragment {
                 prevFragment = new TimelineSellerFragment();
             } else {
                 Bundle bundle = new Bundle();
+
                 bundle.putBoolean("filter", false);
+                bundle.putBoolean("posts", true);
+                bundle.putString("str", searchStr);
+                ArrayList<Post> items = getArguments().getParcelableArrayList("items");
+                bundle.putParcelableArrayList("items", items);
                 prevFragment = new SearchPostFragment();
                 prevFragment.setArguments(bundle);
             }

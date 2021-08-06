@@ -124,8 +124,6 @@ public class CartActivity extends AppCompatActivity {
 
                         currentUser.setItemsSold(cartItems);
 
-                        Log.i(TAG, cartItems.get(0).getIsSold() + "");
-
                         try {
                             currentUser.clearCart(cartItems);
                         } catch (JSONException e) {

@@ -2,33 +2,26 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
+import com.example.reshoe_fbu.databinding.FragmentTimelineSellerBinding;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.PostActivity;
 import com.project.reshoe_fbu.adapters.PostsAdapter;
-import com.example.reshoe_fbu.databinding.FragmentTimelineSellerBinding;
 import com.project.reshoe_fbu.models.Post;
-import com.parse.ParseUser;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -123,5 +116,11 @@ public class TimelineSellerFragment extends Fragment {
             posts.addAll(newPosts);
             adapter.notifyDataSetChanged();
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        queryPosts();
     }
 }

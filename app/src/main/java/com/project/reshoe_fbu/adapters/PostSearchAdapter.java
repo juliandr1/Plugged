@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
+import com.project.reshoe_fbu.activities.fragments.SearchPostFragment;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.PostSort;
 import com.project.reshoe_fbu.models.User;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.ViewHolder>  {
@@ -39,11 +41,14 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
     private final Context mContext;
     private final List<PostSort> searchPosts;
     private final FragmentManager fragmentManager;
+    private SearchPostFragment fragment;
 
-    public PostSearchAdapter(Context context, List<PostSort> searchPosts, FragmentManager fm) {
+    public PostSearchAdapter(Context context, List<PostSort> searchPosts, FragmentManager fm,
+                             SearchPostFragment fragment) {
         this.mContext = context;
         this.searchPosts = searchPosts;
         this.fragmentManager = fm;
+        this.fragment = fragment;
     }
 
     @Override
@@ -107,6 +112,13 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("post", postSort.getPost());
                 bundle.putInt("code", SEARCH_CODE);
+                bundle.putString("str", fragment.getSearchStr());
+
+                ArrayList<Post> queryItems = new ArrayList<>();
+                queryItems.addAll(fragment.getSortedItems());
+
+                bundle.putParcelableArrayList("items", queryItems);
+
                 Fragment detailShoeFragment = new DetailShoeFragment();
                 detailShoeFragment.setArguments(bundle);
 
@@ -117,5 +129,10 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
                         .commit();
             }
         }
+    }
+
+    public void clear() {
+        searchPosts.clear();
+        notifyDataSetChanged();
     }
 }

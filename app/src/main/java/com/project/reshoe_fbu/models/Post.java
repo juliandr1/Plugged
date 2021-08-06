@@ -6,9 +6,11 @@ import android.widget.TextView;
 
 import com.example.reshoe_fbu.R;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +60,7 @@ public class Post extends ParseObject implements Comparable<Post> {
 
     public void setIsSold() {
         put(KEY_IS_SOLD, true);
-        saveInBackground(e -> Log.i(TAG, "Set as sold"));
+        saveInBackground(e -> { return; });
     }
 
     public int getCondition() {

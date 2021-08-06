@@ -79,6 +79,7 @@ public class TimelineBuyerFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("filter", false);
+                bundle.putBoolean("posts", false);
                 Fragment searchPost = new SearchPostFragment();
                 searchPost.setArguments(bundle);
                 getActivity().
@@ -136,5 +137,12 @@ public class TimelineBuyerFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.clear();
+        queryPosts();
     }
 }

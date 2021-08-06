@@ -27,7 +27,7 @@
         android:layout_marginTop="61dp"
         android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/ivPhotoPreview"
-        />
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/tvShoeTitle"
@@ -39,8 +39,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/ivPhotoPreview"
+        android:fontFamily="sans-serif"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        tools:text="YEEZY 350 BOOST BRED V2"
-        />
+        android:textStyle="bold"
+        android:typeface="sans"
+        tools:text="YEEZY 350 BOOST BRED V2" />
 
 </RelativeLayout>
