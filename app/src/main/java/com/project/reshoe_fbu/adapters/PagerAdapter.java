@@ -117,11 +117,12 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                             Button btnLike = containerP.findViewById(R.id.btnLike);
                             TextView tvLikes = containerP.findViewById(R.id.tvLikes);
                             post.like(btnLike, tvLikes);
-                            Toast.makeText(mContext, "Liked post!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, container.getContext().getString
+                                    (R.string.liked), Toast.LENGTH_SHORT).show();
                         } else {
                             // Add string resource
-                            Toast.makeText(mContext, "Already liked!",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, container.getContext().
+                                    getString(R.string.already_liked), Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException jsonException) {
                         jsonException.printStackTrace();

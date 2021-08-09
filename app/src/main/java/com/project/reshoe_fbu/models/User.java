@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -161,14 +162,12 @@ public class User  {
     public void addToCart(Post post, Context context) throws JSONException {
         List<String> cart = getCartIds();
         if (cart.contains(post.getObjectId())) {
-            // Add string resource
-            Toast.makeText(context, post.getShoeName() + " is already in the cart",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, post.getShoeName() + " " +
+                    context.getString(R.string.already_cart), Toast.LENGTH_SHORT).show();
         } else {
             user.add(KEY_CART, post.getObjectId());
-            // String resource needs to be added.
-            Toast.makeText(context, post.getShoeName() + " added to cart",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, post.getShoeName() + " " +
+                    context.getString(R.string.added_cart), Toast.LENGTH_SHORT).show();
 
             user.saveInBackground(e -> {
                 if (e != null) {

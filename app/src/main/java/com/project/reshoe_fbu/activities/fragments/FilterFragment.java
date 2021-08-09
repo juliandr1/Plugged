@@ -34,7 +34,8 @@ public class FilterFragment extends Fragment {
     private String str;
 
     @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable
+            @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         FragmentFilterBinding binding = FragmentFilterBinding.bind(view);
 
         binding.btnBackFilter.setOnClickListener(v -> {
@@ -177,7 +178,9 @@ public class FilterFragment extends Fragment {
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable
+        @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable
+        @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_filter, container,
                 false);
     }

@@ -97,7 +97,8 @@ public class MessagesFragment extends Fragment {
         ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
         parseQuery = parseQuery.whereEqualTo(Message.KEY_OTHER_ID, currentUser.getObjectID());
 
-        SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
+        SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.
+                subscribe(parseQuery);
 
         // Listen for CREATE events on the Message class
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {

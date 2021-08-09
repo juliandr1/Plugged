@@ -52,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
             if (e != null) {
                 Log.e(TAG, "Issue with login", e);
                 Toast.makeText(context,
-                        getString(R.string.error_login), Toast.LENGTH_SHORT).show();
+                        getString(R.string.error_login),
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
             goMainActivity();

@@ -109,5 +109,20 @@
     <string name="low_to_high">Low to High</string>
     <string name="high_to_low">High to Low</string>
     <string name="username1">Username:</string>
-    <string name="google_maps_api_key">"AIzaSyBwm_shJGDrXbkwZHF8k5wWfa7P1Bm07UU"</string>
+    <string name="google_maps_api_key">AIzaSyBwm_shJGDrXbkwZHF8k5wWfa7P1Bm07UU</string>
+    <string name="permission">Need Permission</string>
+    <string name="description_empty">Description cannot be empty</string>
+    <string name="insert_condition">Insert a condition</string>
+    <string name="insert_size">Insert a size</string>
+    <string name="insert_price">Insert a price</string>
+    <string name="no_image">There is no image!</string>
+    <string name="valid_condition">Enter a valid condition</string>
+    <string name="valid_size">Enter a valid size</string>
+    <string name="no_picture">Picture was not taken!</string>
+    <string name="no_images">No images were selected!</string>
+    <string name="liked">Liked post!</string>
+    <string name="already_liked">Already liked!</string>
+    <string name="already_cart"> is already in the cart</string>
+    <string name="added_cart"> added to cart</string>
+
 </resources>

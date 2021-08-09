@@ -1,6 +1,7 @@
 package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.ActivityCartBinding;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.activities.CartActivity;
+import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
+import com.project.reshoe_fbu.activities.fragments.DetailShoeSellerFragment;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.User;
 
@@ -25,7 +32,7 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
-    public static String TAG = "PostSearchAdapter";
+    public static String TAG = "CartAdapter";
 
     private final Context mContext;
 
@@ -33,10 +40,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private final ActivityCartBinding binding;
 
-    public CartAdapter(Context context, List<Post> cartItems, ActivityCartBinding binding) {
+    private final FragmentManager fragmentManager;
+
+    public CartAdapter(Context context, List<Post> cartItems, ActivityCartBinding binding,
+                       FragmentManager fragmentManager) {
         this.mContext = context;
         this.cartItems = cartItems;
         this.binding = binding;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -79,10 +90,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             tvPriceCart = itemView.findViewById(R.id.tvPriceCart);
             btnRemove = itemView.findViewById(R.id.btnRemove);
 
-            /* Maybe later
-            itemView.setOnClickListener(this);
-
-             */
         }
 
         public void bind(Post post) throws JSONException {

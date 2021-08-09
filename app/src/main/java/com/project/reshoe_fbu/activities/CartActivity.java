@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,9 +66,11 @@ public class CartActivity extends AppCompatActivity {
 
         Context context = this;
 
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
         cartItems = new ArrayList<>();
         RecyclerView rvItems = binding.rvItems;
-        adapter = new CartAdapter(this, cartItems, binding);
+        adapter = new CartAdapter(this, cartItems, binding, fragmentManager);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         rvItems.setLayoutManager(layoutManager);
@@ -161,7 +164,8 @@ public class CartActivity extends AppCompatActivity {
 
         // The call to isReadyToPay is asynchronous and returns a Task. We need to provide an
         // OnCompleteListener to be triggered when the result of the call is known.
-        IsReadyToPayRequest request = IsReadyToPayRequest.fromJson(isReadyToPayJson.get().toString());
+        IsReadyToPayRequest request = IsReadyToPayRequest.fromJson(isReadyToPayJson.get().
+                toString());
         Task<Boolean> task = paymentsClient.isReadyToPay(request);
         task.addOnCompleteListener(this,
                 task1 -> {
@@ -191,20 +195,23 @@ public class CartActivity extends AppCompatActivity {
         }
 
         try {
-            JSONObject paymentMethodData = new JSONObject(paymentInfo).getJSONObject("paymentMethodData");
+            JSONObject paymentMethodData = new JSONObject(paymentInfo).
+                    getJSONObject("paymentMethodData");
             // If the gateway is set to "example", no payment information is returned - instead, the
             // token will only consist of "examplePaymentMethodToken".
 
             final JSONObject tokenizationData = paymentMethodData.getJSONObject("tokenizationData");
             final String token = tokenizationData.getString("token");
             final JSONObject info = paymentMethodData.getJSONObject("info");
-            final String billingName = info.getJSONObject("billingAddress").getString("name");
+            final String billingName = info.getJSONObject("billingAddress").
+                    getString("name");
 
             // Logging token string.
             Log.d("Google Pay token: ", token);
 
         } catch (JSONException e) {
-            throw new RuntimeException("The selected garment cannot be parsed from the list of elements");
+            throw new RuntimeException("The selected garment cannot be parsed from the list of " +
+                    "elements");
         }
     }
 
@@ -238,5 +245,7 @@ public class CartActivity extends AppCompatActivity {
                     this, LOAD_PAYMENT_DATA_REQUEST_CODE);
         }
     }
+
+
 }
 

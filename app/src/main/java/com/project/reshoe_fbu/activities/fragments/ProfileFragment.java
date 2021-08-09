@@ -219,7 +219,7 @@ public class ProfileFragment extends Fragment {
                             // same time, respect the user's decision. Don't link to system
                             // settings in an effort to convince the user to change their
                             // decision.
-                            Toast.makeText(getActivity(), "Need Permission",
+                            Toast.makeText(getActivity(), getString(R.string.permission),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

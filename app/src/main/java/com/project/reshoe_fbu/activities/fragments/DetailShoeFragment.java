@@ -45,6 +45,7 @@ public class DetailShoeFragment extends Fragment {
 
     private ViewGroup container;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,7 +137,6 @@ public class DetailShoeFragment extends Fragment {
             }
 
             ft.replace(R.id.flContainer, prevFragment).commit();
-
         });
 
         if (!post.getIsSold()) {

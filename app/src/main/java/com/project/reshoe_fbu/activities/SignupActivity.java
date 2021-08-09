@@ -12,7 +12,7 @@ import com.project.reshoe_fbu.models.User;
 
 public class SignupActivity extends AppCompatActivity {
 
-    public static final String TAG = "CertifiedLover";
+    public static final String TAG = "SignupActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
