@@ -23,7 +23,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text="$190" />
+        tools:text="$190"
+        />
 
     <TextView
         android:id="@+id/tvDetailName"
@@ -38,7 +39,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text="YEEZY 350 BOOST" />
+        tools:text="YEEZY 350 BOOST"
+        />
 
     <TextView
         android:id="@+id/tvDetailCondition"
@@ -54,7 +56,8 @@
         android:textSize="14sp"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text="9/10" />
+        tools:text="9/10"
+        />
 
     <ImageView
         android:id="@+id/ivSellerProfile"
@@ -64,7 +67,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="17dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        />
 
     <TextView
         android:id="@+id/tvDetailedDescription"
@@ -80,7 +84,8 @@
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif"
         android:textAlignment="textStart"
-        android:typeface="sans" />
+        android:typeface="sans"
+        />
 
     <Button
         android:id="@+id/btnBackDetailShoe"
@@ -105,7 +110,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="14sp"
         android:typeface="monospace"
-        tools:text='"@David"' />
+        tools:text='"@David"'
+        />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
@@ -113,7 +119,8 @@
         android:layout_height="300dp"
         android:layout_below="@+id/ivSellerProfile"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        >
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -128,7 +135,8 @@
         android:textColor="@color/primary"
         android:textSize="14sp"
         android:textStyle="bold"
-        tools:text="8.5M" />
+        tools:text="8.5M"
+        />
 
     <TextView
         android:id="@+id/tvSold"
@@ -142,7 +150,8 @@
         android:textColor="@android:color/holo_red_dark"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddCart"
@@ -154,7 +163,8 @@
         android:layout_marginBottom="20dp"
         android:clickable="true"
         app:rippleColor="@color/white"
-        app:srcCompat="@drawable/add_cart" />
+        app:srcCompat="@drawable/add_cart"
+        />
 
     <TextView
         android:id="@+id/tvConditionDetail"
@@ -170,7 +180,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        />
 
     <TextView
         android:id="@+id/tvSizeDetail"
@@ -196,7 +207,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/heart_outline" />
+        android:background="@drawable/heart_outline"
+        />
 
     <TextView
         android:id="@+id/tvLikes"
@@ -206,6 +218,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="23dp"
-        tools:text="12" />
+        tools:text="12"
+        />
 
 </RelativeLayout>

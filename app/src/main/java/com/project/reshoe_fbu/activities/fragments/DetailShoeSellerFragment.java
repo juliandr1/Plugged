@@ -27,10 +27,12 @@ import org.json.JSONException;
 import java.text.NumberFormat;
 import java.util.Objects;
 
-public class DetailShoeSellerFragment extends Fragment{
+public class DetailShoeSellerFragment extends Fragment {
 
     private static final String TAG = "DetailShoeSellerFragment";
+
     private Post post;
+
     private PagerAdapter pagerAdapter;
 
     private ViewGroup container;
@@ -178,7 +180,7 @@ public class DetailShoeSellerFragment extends Fragment{
         if (numLikes == 0) {
             binding.tvLikes.setText("");
         } else {
-            binding.tvLikes.setText("" + numLikes);
+            binding.tvLikes.setText(String.valueOf(numLikes));
         }
     }
 }

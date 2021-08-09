@@ -38,19 +38,12 @@ public class AccountInfoFragment extends Fragment {
         binding.tvFirstNameInfo.setText(currentUser.getFirstName());
         binding.tvLastNameInfo.setText(currentUser.getLastName());
         binding.tvEmailInfo.setText(currentUser.getEmail());
+
         try {
             binding.tvUsernameInfo.setText(currentUser.getUsername());
         } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
-
-        binding.btnChangeUsername.setOnClickListener(v -> {
-            // To be implemented in strech
-        });
-
-        binding.btnChangePassword.setOnClickListener(v -> {
-            // To be implemented in stretch
-        });
 
         binding.btnBackInfo.setOnClickListener(v -> getActivity().getSupportFragmentManager().
                 popBackStack());

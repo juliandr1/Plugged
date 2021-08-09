@@ -108,5 +108,6 @@
     <string name="sold">SOLD</string>
     <string name="low_to_high">Low to High</string>
     <string name="high_to_low">High to Low</string>
-
+    <string name="username1">Username:</string>
+    <string name="google_maps_api_key">"AIzaSyBwm_shJGDrXbkwZHF8k5wWfa7P1Bm07UU"</string>
 </resources>

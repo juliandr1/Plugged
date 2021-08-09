@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.ActivityCartBinding;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.AutoResolveHelper;
 import com.google.android.gms.wallet.IsReadyToPayRequest;
@@ -42,9 +40,13 @@ public class CartActivity extends AppCompatActivity {
     public static String TAG = "CartActivity";
 
     private List<Post> cartItems;
+
     private CartAdapter adapter;
+
     private ActivityCartBinding binding;
+
     private View googlePayButton;
+
     private int totalPrice;
 
     // Arbitrarily-picked constant integer you define to track a request for payment data activity.
@@ -218,23 +220,23 @@ public class CartActivity extends AppCompatActivity {
         // The price provided to the API should include taxes and shipping.
         // This price is not displayed to the user.
 
-            Optional<JSONObject> paymentDataRequestJson = PaymentsUtil
-                    .getPaymentDataRequest(totalPrice);
-            if (!paymentDataRequestJson.isPresent()) {
-                return;
-            }
+        Optional<JSONObject> paymentDataRequestJson = PaymentsUtil
+                .getPaymentDataRequest(totalPrice);
+        if (!paymentDataRequestJson.isPresent()) {
+            return;
+        }
 
-            PaymentDataRequest request =
-                    PaymentDataRequest.fromJson(paymentDataRequestJson.get().toString());
+        PaymentDataRequest request =
+                PaymentDataRequest.fromJson(paymentDataRequestJson.get().toString());
 
-            // Since loadPaymentData may show the UI asking the user to select a payment method, we use
-            // AutoResolveHelper to wait for the user interacting with it. Once completed,
-            // onActivityResult will be called with the result.
-            if (request != null) {
-                AutoResolveHelper.resolveTask(
-                        paymentsClient.loadPaymentData(request),
-                        this, LOAD_PAYMENT_DATA_REQUEST_CODE);
-            }
+        // Since loadPaymentData may show the UI asking the user to select a payment method, we use
+        // AutoResolveHelper to wait for the user interacting with it. Once completed,
+        // onActivityResult will be called with the result.
+        if (request != null) {
+            AutoResolveHelper.resolveTask(
+                    paymentsClient.loadPaymentData(request),
+                    this, LOAD_PAYMENT_DATA_REQUEST_CODE);
+        }
     }
 }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,18 +38,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public static final int SELLER_CODE = 881;
 
     private final Context mContext;
+
     private final List<Post> posts;
+
     private final User user;
+
     private final FragmentManager fragmentManager;
-    private final boolean isDetailedSeller;
+
+    private final boolean isDetailedSeller, isBuyerTimeline;
 
     public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager
-            fragmentManager, boolean isDetailedSeller, boolean showLike) {
+            fragmentManager, boolean isDetailedSeller, boolean isBuyerTimeline) {
         this.mContext = context;
         this.posts = posts;
         this.user = user;
         this.fragmentManager = fragmentManager;
         this.isDetailedSeller = isDetailedSeller;
+        this.isBuyerTimeline = isBuyerTimeline;
     }
 
     // For each row, inflate the layout
@@ -86,6 +92,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         private final ImageView ivImage;
         private final TextView tvDescription, tvCondition, tvPrice;
+        private final FrameLayout sold;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +101,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvShoeName);
             tvCondition = itemView.findViewById(R.id.tvCondition);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            sold = itemView.findViewById(R.id.soldBackground);
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
@@ -112,6 +120,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     load(post.getImageUrls().get(0)).
                     transform(new CenterCrop(), new RoundedCorners(10)).
                     into(ivImage);
+
+            if (post.getIsSold() && isBuyerTimeline) {
+                sold.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
@@ -122,6 +134,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Post post = posts.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("post", post);
+                bundle.putInt("position", position);
 
                 Fragment detailShoeFragment;
 

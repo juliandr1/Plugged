@@ -34,7 +34,8 @@
             android:gravity="top"
             android:hint="@string/message_here"
             android:imeOptions="actionSend"
-            android:inputType="textShortMessage" />
+            android:inputType="textShortMessage"
+            />
 
         <ImageView
             android:id="@+id/ivSend"
@@ -49,7 +50,8 @@
             android:paddingRight="10dp"
             android:src="@drawable/ic_baseline_send_24"
             android:textSize="18sp"
-            app:tint="@color/secondary" />
+            app:tint="@color/secondary"
+            />
 
     </RelativeLayout>
 

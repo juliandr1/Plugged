@@ -1,10 +1,7 @@
 package com.project.reshoe_fbu.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -14,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.project.reshoe_fbu.models.Review;
 import com.project.reshoe_fbu.models.User;
 
@@ -60,7 +55,6 @@ public class CreateReviewActivity extends AppCompatActivity {
             });
 
         });
-
         binding.btnCancelReview.setOnClickListener(v -> finish());
     }
 }

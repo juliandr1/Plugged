@@ -46,6 +46,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
+
     public String photoFileName = "profile.jpg";
 
     public static int PICK_PHOTO_CODE = 291;
@@ -102,29 +103,10 @@ public class ProfileFragment extends Fragment {
                     commit();
         });
 
-        binding.tvUserPreferences.setOnClickListener(v -> {
-
-            Fragment userPreferenceFragment;
-            if (currentUser.getIsSeller()) {
-                userPreferenceFragment = new UserPreferencesSellerFragment();
-            } else {
-                userPreferenceFragment = new UserPreferencesBuyerFragment();
-            }
-            getActivity().
-                    getSupportFragmentManager().
-                    beginTransaction().
-                    replace(R.id.flContainer, userPreferenceFragment).
-                    addToBackStack("back").
-                    commit();
-        });
-
         if (currentUser.getIsSeller()) {
-            binding.btnChangeDescription.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), EditDescription.class);
-                    startActivity(intent);
-                }
+            binding.btnChangeDescription.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), EditDescription.class);
+                startActivity(intent);
             });
 
         } else {

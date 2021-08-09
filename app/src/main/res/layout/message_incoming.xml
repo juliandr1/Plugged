@@ -26,7 +26,8 @@
         android:layout_height="64dp"
         android:layout_alignParentLeft="true"
         android:contentDescription="other profile"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        />
 
     <TextView
         android:id="@+id/tvBody"
@@ -41,6 +42,7 @@
         android:paddingVertical="12dp"
         android:textColor="@color/white"
         android:textSize="18dp"
-        tools:text="Someone elses message" />
+        tools:text="Someone elses message"
+        />
 
 </RelativeLayout>

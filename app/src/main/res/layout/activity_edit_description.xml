@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.reshoe_fbu.activities.EditDescription">
+    tools:context="com.project.reshoe_fbu.activities.EditDescription"
+    >
 
     <EditText
         android:id="@+id/etDescriptionSeller"
@@ -23,7 +24,8 @@
         android:minLines="5"
         android:singleLine="false"
         android:textColor="#171616"
-        android:textStyle="normal" />
+        android:textStyle="normal"
+        />
 
     <Button
         android:id="@+id/btnEditDesc"

@@ -15,7 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:clickable="true">
+        android:clickable="true"
+        >
 
     </include>
 
@@ -39,7 +40,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:typeface="sans" />
+        android:typeface="sans"
+        />
 
     <Button
         android:id="@+id/btnBackCart"
@@ -62,7 +64,8 @@
         android:layout_marginStart="153dp"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvEmptyCart"
@@ -73,6 +76,5 @@
         android:textSize="20sp"
         android:visibility="invisible"
         />
-
 
 </RelativeLayout>

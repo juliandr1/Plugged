@@ -15,6 +15,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         tools:srcCompat="@tools:sample/avatars"
+        android:scaleType="centerCrop"
         />
 
     <TextView
@@ -27,7 +28,8 @@
         android:layout_toEndOf="@+id/tvPriceCart"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/primary"
-        android:typeface="sans" />
+        android:typeface="sans"
+        />
 
     <TextView
         android:id="@+id/tvPriceCart"
@@ -39,7 +41,8 @@
         android:layout_toEndOf="@+id/ivPhotoPreviewCart"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/primary"
-        android:typeface="sans" />
+        android:typeface="sans"
+        />
 
     <TextView
         android:id="@+id/tvShoeTitleCart"
@@ -57,7 +60,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text="YEEZY 350 BOOST BRED V2" />
+        tools:text="YEEZY 350 BOOST BRED V2"
+        />
 
     <Button
         android:id="@+id/btnRemove"

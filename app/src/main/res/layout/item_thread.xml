@@ -27,7 +27,8 @@
         android:layout_toEndOf="@+id/ivMessageProfilePic"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text='"@Username"' />
+        tools:text='"@Username"'
+        />
 
     <TextView
         android:id="@+id/tvMessagePreview"

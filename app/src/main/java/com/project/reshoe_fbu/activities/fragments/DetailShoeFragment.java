@@ -27,21 +27,21 @@ import org.json.JSONException;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class DetailShoeFragment extends Fragment {
 
     private static final String TAG = "DetailShoeFragment";
+
     private Post post;
+
     private PagerAdapter pagerAdapter;
+
     private int prevFragmentCode;
 
     private FragmentDetailShoeBinding binding;
 
     private String searchStr;
-
-    private List<Post> queryItems;
 
     private ViewGroup container;
 
@@ -117,7 +117,10 @@ public class DetailShoeFragment extends Fragment {
             Fragment prevFragment;
 
             if (prevFragmentCode == PostsAdapter.BUYER_CODE) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", getArguments().getInt("position"));
                 prevFragment = new TimelineBuyerFragment();
+                prevFragment.setArguments(bundle);
             } else if (prevFragmentCode == PostsAdapter.SELLER_CODE) {
                 prevFragment = new TimelineSellerFragment();
             } else {
@@ -141,7 +144,7 @@ public class DetailShoeFragment extends Fragment {
                 User currentUser = new User(ParseUser.getCurrentUser());
                 try {
                     currentUser.addToCart(post, getActivity());
-                } catch (JSONException | ParseException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             });

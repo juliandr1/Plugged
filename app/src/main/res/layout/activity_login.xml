@@ -21,7 +21,8 @@
         android:layout_marginTop="22dp"
         android:layout_marginEnd="33dp"
         app:srcCompat="@drawable/launcher_foreground"
-        tools:srcCompat="@drawable/launcher_foreground" />
+        tools:srcCompat="@drawable/launcher_foreground"
+        />
 
     <EditText
         android:id="@+id/etUsername"
@@ -53,7 +54,8 @@
         android:background="@drawable/border"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        />
 
     <Button
         android:id="@+id/btnsignup"
@@ -71,8 +73,10 @@
         android:text="@string/sign_up"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:typeface="sans"
-        app:cornerRadius="30dp" />
+        app:cornerRadius="30dp"
+        />
 
     <Button
         android:id="@+id/btnLogin"
@@ -90,7 +94,9 @@
         android:text="@string/log_in"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:typeface="sans"
-        app:cornerRadius="30dp" />
+        app:cornerRadius="30dp"
+        />
 
 </RelativeLayout>

@@ -19,8 +19,6 @@ public class Message extends ParseObject {
         setAuthorId(author.getObjectID());
     }
 
-    public User getOtherUser() { return new User(getParseUser(KEY_OTHER)); }
-
     public void setOtherUser(User otherUser) {
         put(KEY_OTHER, otherUser.getUser());
         setOtherId(otherUser.getObjectID());
@@ -29,8 +27,6 @@ public class Message extends ParseObject {
     public String getAuthorId() { return getString(KEY_AUTHOR_ID); }
 
     public void setAuthorId(String userId) { put(KEY_AUTHOR_ID, userId); }
-
-    public String getOtherId() { return getString(KEY_OTHER_ID); }
 
     public void setOtherId(String userId) { put(KEY_OTHER_ID, userId); }
 

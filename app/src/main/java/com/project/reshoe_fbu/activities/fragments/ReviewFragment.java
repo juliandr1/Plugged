@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentReviewBinding;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.CreateReviewActivity;
 import com.project.reshoe_fbu.adapters.ReviewsAdapter;
 import com.project.reshoe_fbu.models.Review;
@@ -30,8 +31,11 @@ public class ReviewFragment extends Fragment {
     public static String TAG = "ReviewFragment";
 
     private ReviewsAdapter adapter;
+
     private List<Review> reviews;
+
     private User seller;
+
     private FragmentReviewBinding binding;
 
     @Override
@@ -53,7 +57,7 @@ public class ReviewFragment extends Fragment {
         RecyclerView rvReviews = binding.rvReviews;
 
         reviews = new ArrayList<>();
-        adapter = new ReviewsAdapter(getActivity(), reviews, getFragmentManager());
+        adapter = new ReviewsAdapter(getActivity(), reviews);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvReviews.setLayoutManager(layoutManager);
@@ -63,11 +67,17 @@ public class ReviewFragment extends Fragment {
                 getSupportFragmentManager().
                 popBackStack());
 
-        binding.fabReview.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
-            intent.putExtra("seller", seller.getUser());
-            startActivity(intent);
-        });
+        User user = new User(ParseUser.getCurrentUser());
+
+        if (!user.getIsSeller()) {
+            binding.fabReview.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), CreateReviewActivity.class);
+                intent.putExtra("seller", seller.getUser());
+                startActivity(intent);
+            });
+        } else {
+            binding.fabReview.setVisibility(View.INVISIBLE);
+        }
 
         try {
             queryReviews();

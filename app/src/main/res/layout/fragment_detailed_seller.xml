@@ -46,21 +46,21 @@
 
     <Button
         android:id="@+id/btnMessage"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="55dp"
         android:layout_toEndOf="@+id/btnLikeSeller"
-        android:background="@drawable/ic_vector_messages"
+        android:background="@drawable/message_filled"
         />
 
     <Button
         android:id="@+id/btnLikeSeller"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="55dp"
         android:layout_toEndOf="@+id/ivSellerProfilePic"
         android:background="@drawable/heart_outline"
@@ -85,18 +85,17 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
+        android:textStyle="bold"
         tools:text='"@huncho"'
         />
 
     <Button
         android:id="@+id/btnReview"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="31dp"
         android:layout_toEndOf="@+id/btnMessage"
         android:background="@drawable/edit_text"
         />

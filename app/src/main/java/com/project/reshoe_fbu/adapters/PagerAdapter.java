@@ -34,7 +34,9 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
     private static final String TAG = "PagerAdapter";
 
     private final Context mContext;
+
     private List<Bitmap> bitmaps;
+
     private List<String> images;
 
     private final LayoutInflater mLayoutInflater;
@@ -98,7 +100,8 @@ public class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
                     transform(new RoundedCorners(30)).
                     into(photoView);
 
-            photoView.getAttacher().setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+            photoView.getAttacher().setOnDoubleTapListener(
+                    new GestureDetector.OnDoubleTapListener() {
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
                     return false;

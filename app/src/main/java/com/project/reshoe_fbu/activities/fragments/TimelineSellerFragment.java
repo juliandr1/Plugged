@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,6 +29,7 @@ import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +38,9 @@ public class TimelineSellerFragment extends Fragment {
     public static final String TAG = "TimelineSellerFragment";
 
     private PostsAdapter adapter;
+
     private List<Post> posts;
+
     private User user;
 
     @Override
@@ -84,22 +90,28 @@ public class TimelineSellerFragment extends Fragment {
             parseException.printStackTrace();
         }
 
-        String description = user.getDescription();
-        if (description != null) {
-            binding.tvSellerDescription.setText(description);
-        }
-
         binding.fabNewPost.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), PostActivity.class);
             startActivity(intent);
         });
 
+        DecimalFormat df = new DecimalFormat("#.##");
+        double rating = 0;
+        try {
+            rating = User.getRating(user);
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+        }
+        if (rating > 0.0) {
+            binding.tvRating.setText(df.format(rating));
+        } else {
+            binding.tvRating.setText("");
+            binding.ivStar.setVisibility(View.INVISIBLE);
+        }
+
         queryPosts();
     }
 
-      /*
-         Get all the current seller's posts
-      */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo("user", user.getUser());
@@ -119,8 +131,26 @@ public class TimelineSellerFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        queryPosts();
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
+            MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_review, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        if (item.getItemId() == R.id.reviews) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("seller", user.getUser());
+
+            Fragment reviewFragment = new ReviewFragment();
+            reviewFragment.setArguments(bundle);
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, reviewFragment).
+                    addToBackStack("back").
+                    commit();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

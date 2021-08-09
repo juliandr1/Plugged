@@ -1,36 +1,26 @@
 package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.reshoe_fbu.R;
-import com.parse.Parse;
+import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.adapters.ThreadAdapter;
-import com.example.reshoe_fbu.databinding.FragmentMessagePreviewBinding;
-import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.Thread;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +30,9 @@ public class ThreadFragment extends Fragment {
     public static final String TAG = "ThreadFragment";
 
     private ThreadAdapter adapter;
+
     private List<Thread> threads;
+
     private User currentUser;
 
     private SwipeRefreshLayout refresh;
@@ -76,23 +68,16 @@ public class ThreadFragment extends Fragment {
         }
 
         refresh = getActivity().findViewById(R.id.swipeContainer);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                try {
-                    queryThreads();
-                } catch (ParseException parseException) {
-                    parseException.printStackTrace();
-                }
-                refresh.setRefreshing(false);
+        refresh.setOnRefreshListener(() -> {
+            try {
+                queryThreads();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
             }
+            refresh.setRefreshing(false);
         });
     }
 
-    /*
-        If the user is a seller then check for threads where they have been messaged, if not
-        then get all of their known threads.
-     */
     public void queryThreads() throws ParseException {
         threads.clear();
         threads.addAll(currentUser.getUserThreads());

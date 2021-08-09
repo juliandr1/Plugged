@@ -18,24 +18,15 @@
         tools:src="@tools:sample/avatars"
         />
 
-    <TextView
-        android:id="@+id/tvSellerDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        tools:text="hello i sell jordans and yeezys"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSellerPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvSellerDescription"
+        android:layout_below="@+id/tvRating"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        />
 
     <TextView
         android:id="@+id/tvUserName"
@@ -55,6 +46,29 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
-        android:src="@drawable/ic_baseline_add_24" />
+        android:src="@drawable/ic_baseline_add_24"
+        />
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUserName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="5dp"
+        tools:text="4.8"
+        />
+
+    <ImageView
+        android:id="@+id/ivStar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/tvRating"
+        android:src="@drawable/rating"
+        />
 
 </RelativeLayout>

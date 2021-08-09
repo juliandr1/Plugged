@@ -29,7 +29,9 @@ public class LikedPostsFragment extends Fragment {
     public static final String TAG = "LikedPostsFragment";
 
     private List<Post> likedPosts;
+
     private User currentUser;
+
     private FragmentLikedPostsBinding binding;
 
     @Override

@@ -1,11 +1,7 @@
 package com.project.reshoe_fbu.helper;
 
 import android.app.Activity;
-import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.wallet.IsReadyToPayRequest;
 import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.Wallet;
 
@@ -21,7 +17,8 @@ public class PaymentsUtil {
     public static final BigDecimal CENTS_IN_A_UNIT = new BigDecimal(100d);
 
     private static JSONObject getBaseRequest() throws JSONException {
-        return new JSONObject().put("apiVersion", 2).put("apiVersionMinor", 0);
+        return new JSONObject().put("apiVersion", 2).put("apiVersionMinor",
+                0);
     }
 
     public static PaymentsClient createPaymentsClient(Activity activity) {

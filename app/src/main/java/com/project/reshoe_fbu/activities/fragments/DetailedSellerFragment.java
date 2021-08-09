@@ -36,13 +36,16 @@ public class DetailedSellerFragment extends Fragment {
     public static final String TAG = "DetailedSellerFragment";
 
     private User seller;
+
     private PostsAdapter adapter;
+
     private List<Post> posts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Get the particular seller that was selected
+        assert getArguments() != null;
         seller = new User(getArguments().getParcelable("seller"));
         return inflater.inflate(R.layout.fragment_detailed_seller, container, false);
     }
@@ -158,14 +161,12 @@ public class DetailedSellerFragment extends Fragment {
             binding.tvRating.setText(df.format(rating));
         } else {
             binding.tvRating.setText("");
+            binding.ivStar.setVisibility(View.INVISIBLE);
         }
 
         queryPosts();
     }
 
-    /*
-        Get all the current seller's posts
-     */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.whereEqualTo("user", seller.getUser());
@@ -175,7 +176,7 @@ public class DetailedSellerFragment extends Fragment {
         // Get the posts
         query.findInBackground((newPosts, e) -> {
             if (e != null) {
-                Log.e(TAG,"Issue with getting posts", e);
+                Log.e(TAG, "Issue with getting posts", e);
                 return;
             }
 

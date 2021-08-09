@@ -1,28 +1,21 @@
 package com.project.reshoe_fbu.models;
 
-import android.os.Parcelable;
-
-import com.parse.ParseException;
-import com.parse.ParseUser;
-
-import org.json.JSONException;
-import org.parceler.Parcel;
-
-import java.util.Comparator;
 import java.util.List;
 
 public class PostSort implements Comparable<PostSort> {
 
-    public static int COEFFICIENT_LIKED_POST = 10;
-    public static int COEFFICIENT_BOUGHT_FROM_USER = 5;
-    public static int COEFFICIENT_LIKED_USER = 3;
+    public static final int COEFFICIENT_LIKED_POST = 10;
+    public static final int COEFFICIENT_BOUGHT_FROM_USER = 5;
+    public static final int COEFFICIENT_LIKED_USER = 3;
+
     private List<String> likedPosts, likedUsers, usersBought;
 
     private Post post;
+
     private int score;
 
     public PostSort(Post post, List<String> likedPosts, List<String> likedUsers,
-                    List<String> usersBought) throws JSONException, ParseException {
+                    List<String> usersBought) {
         this.post = post;
         this.likedPosts = likedPosts;
         this.likedUsers = likedUsers;

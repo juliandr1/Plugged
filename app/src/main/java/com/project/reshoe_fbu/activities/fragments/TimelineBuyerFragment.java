@@ -2,13 +2,6 @@ package com.project.reshoe_fbu.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,14 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.reshoe_fbu.R;
-import com.parse.ParseQuery;
-import com.project.reshoe_fbu.activities.CartActivity;
-import com.project.reshoe_fbu.activities.TimelineActivity;
-import com.project.reshoe_fbu.adapters.PostsAdapter;
 import com.example.reshoe_fbu.databinding.FragmentTimelineBuyerBinding;
-import com.project.reshoe_fbu.models.Post;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.project.reshoe_fbu.activities.CartActivity;
+import com.project.reshoe_fbu.adapters.PostsAdapter;
+import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +35,7 @@ public class TimelineBuyerFragment extends Fragment {
     public static final String TAG = "TimelineBuyerFragment";
 
     private PostsAdapter adapter;
+
     private List<Post> posts;
 
     public TimelineBuyerFragment() {}
@@ -74,29 +73,25 @@ public class TimelineBuyerFragment extends Fragment {
         rvPosts.setLayoutManager(layoutManager);
         rvPosts.setAdapter(adapter);
 
-        binding.fabSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("filter", false);
-                bundle.putBoolean("posts", false);
-                Fragment searchPost = new SearchPostFragment();
-                searchPost.setArguments(bundle);
-                getActivity().
-                        getSupportFragmentManager().
-                        beginTransaction().
-                        replace(R.id.flContainer, searchPost).
-                        addToBackStack("back").
-                        commit();
-            }
+        binding.fabSearch.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("filter", false);
+            bundle.putBoolean("posts", false);
+            Fragment searchPost = new SearchPostFragment();
+            searchPost.setArguments(bundle);
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, searchPost).
+                    addToBackStack("back").
+                    commit();
         });
 
-        queryPosts();
+        if (posts == null) {
+            queryPosts();
+        }
     }
 
-    /*
-        Get all the posts in the database.
-     */
     private void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
 
@@ -116,7 +111,8 @@ public class TimelineBuyerFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull
+            MenuInflater inflater) {
         inflater.inflate(R.menu.menu_buyer, menu);
     }
 

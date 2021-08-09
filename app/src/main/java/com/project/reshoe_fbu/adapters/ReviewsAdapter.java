@@ -1,33 +1,23 @@
 package com.project.reshoe_fbu.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.reshoe_fbu.R;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
-import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.Review;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -36,13 +26,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public static String TAG = "ReviewsAdapter";
 
     private final Context mContext;
-    private final List<Review> reviews;
-    private final FragmentManager fragmentManager;
 
-    public ReviewsAdapter(Context context, List<Review> reviews, FragmentManager fragmentManager) {
+    private final List<Review> reviews;
+
+
+    public ReviewsAdapter(Context context, List<Review> reviews) {
         this.mContext = context;
         this.reviews = reviews;
-        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -67,7 +57,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         return reviews.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView ivReviewerProfile;
         private final TextView tvReviewerUser, tvReview;
@@ -80,8 +70,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             tvReviewerUser = itemView.findViewById(R.id.tvReviewerUser);
             tvReview = itemView.findViewById(R.id.tvReview);
             ratingBar = itemView.findViewById(R.id.ratingBar);
-
-            itemView.setOnClickListener(this);
         }
 
         public void bind(Review review) throws ParseException {
@@ -94,11 +82,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                     .getProfilePicURL())
                     .circleCrop()
                     .into(ivReviewerProfile);
-        }
-
-        @Override
-        public void onClick(View v) {
-            // Detailed review with timestamp will be added later
         }
     }
 

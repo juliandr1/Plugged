@@ -15,6 +15,7 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
 
     public static String TAG = "LoginActivity";
+
     private Context context;
 
     @Override
@@ -50,7 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, (user, e) -> {
             if (e != null) {
                 Log.e(TAG, "Issue with login", e);
-                Toast.makeText(context, getString(R.string.error_login), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,
+                        getString(R.string.error_login), Toast.LENGTH_SHORT).show();
                 return;
             }
             goMainActivity();

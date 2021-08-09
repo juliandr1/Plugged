@@ -2,35 +2,24 @@ package com.project.reshoe_fbu.models;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.reshoe_fbu.R;
-import com.example.reshoe_fbu.databinding.ActivityCreateReviewBinding;
-import com.example.reshoe_fbu.databinding.ActivitySignupBinding;
 import com.example.reshoe_fbu.databinding.FragmentProfileBinding;
-import com.parse.FindCallback;
-import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
+
 public class User  {
     public static final String TAG = "User";
 
@@ -49,7 +38,7 @@ public class User  {
     public static final String KEY_LIKED_POSTS = "likedPosts";
     public static final String KEY_USERS_BOUGHT_FROM = "users_bought_from";
 
-    private ParseUser user;
+    private final ParseUser user;
 
     public User (ParseUser user) {
         this.user = user;
@@ -99,15 +88,12 @@ public class User  {
 
     public void setProfilePic(ParseFile file, FragmentProfileBinding binding, Context context) {
         user.put(KEY_PROFILE_PIC, file);
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Log.i(TAG, "Changed profile pic");
-                Glide.with(context).
-                        load(file.getUrl()).
-                        circleCrop().
-                        into(binding.ivProfile);
-            }
+        user.saveInBackground(e -> {
+            Log.i(TAG, "Changed profile pic");
+            Glide.with(context).
+                    load(file.getUrl()).
+                    circleCrop().
+                    into(binding.ivProfile);
         });
     }
 
@@ -172,7 +158,7 @@ public class User  {
         });
     }
 
-    public void addToCart(Post post, Context context) throws JSONException, ParseException {
+    public void addToCart(Post post, Context context) throws JSONException {
         List<String> cart = getCartIds();
         if (cart.contains(post.getObjectId())) {
             // Add string resource
@@ -214,7 +200,7 @@ public class User  {
 
         for (int i = 0; i < cartItems.size(); i++) {
             String id = cartItems.get(i).getUser().getObjectID();
-            if (!usersBought.contains(i)) {
+            if (!usersBought.contains(id)) {
                 Log.i(TAG, "add bought user");
                 // For local usage
                 usersBought.add(id);
@@ -293,7 +279,7 @@ public class User  {
         List<String> userIds = new ArrayList<>();
 
         if (jsonArray == null) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
 
         for (int i = 0; i < jsonArray.length(); i++) {

@@ -8,22 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.reshoe_fbu.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.project.reshoe_fbu.activities.fragments.MessagesFragment;
-import com.project.reshoe_fbu.models.Message;
-import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.Thread;
-import com.project.reshoe_fbu.models.User;
-
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -32,8 +29,11 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     public static String TAG = "ThreadAdapter";
 
     private final Context mContext;
+
     private final List<Thread> threads;
-    private FragmentManager fragmentManager;
+
+    private final FragmentManager fragmentManager;
+
     private boolean isAuthor;
 
     public ThreadAdapter(Context context, List<Thread> threads, FragmentManager fragmentManager) {
@@ -52,11 +52,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Thread thread = threads.get(position);
-        try {
-            holder.bind(thread);
-        } catch (JSONException | ParseException e) {
-            e.printStackTrace();
-        }
+        holder.bind(thread);
     }
 
     @Override
@@ -81,7 +77,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Thread thread) throws JSONException, ParseException {
+        public void bind(Thread thread) {
             // Used for checking if isAuthor and binding information on the thread adapter
             ParseUser otherUserTemp = thread.getOtherUser().getUser();
 
@@ -102,7 +98,7 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
                             getParseFile("profilePic");
                     thread.otherUser = thread.getOtherUser().getUser();
                     isAuthor = false;
-                };
+                }
                 tvOtherUsername.setText("@" + username);
                 Glide.with(mContext).
                         load(profilePic.getUrl()).

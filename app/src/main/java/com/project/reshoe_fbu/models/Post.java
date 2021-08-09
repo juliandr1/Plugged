@@ -6,11 +6,9 @@ import android.widget.TextView;
 
 import com.example.reshoe_fbu.R;
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +20,7 @@ import java.util.List;
 
 @ParseClassName("Post")
 public class Post extends ParseObject implements Comparable<Post> {
+
     public static final String TAG = "Post";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGES = "images";

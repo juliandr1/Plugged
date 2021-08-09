@@ -22,11 +22,14 @@ import java.util.List;
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder> {
 
     public static String TAG = "MessagesAdapter";
+
     private static final int MESSAGE_OUTGOING = 123;
     private static final int MESSAGE_INCOMING = 321;
 
     private final Context mContext;
+
     private final List<Message> mMessages;
+
     private final User mUser;
 
     public MessagesAdapter(Context context, List<Message> messages, User user) {

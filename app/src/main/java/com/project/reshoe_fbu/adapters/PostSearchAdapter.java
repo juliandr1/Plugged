@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,25 +21,25 @@ import com.project.reshoe_fbu.activities.fragments.DetailShoeFragment;
 import com.project.reshoe_fbu.activities.fragments.SearchPostFragment;
 import com.project.reshoe_fbu.models.Post;
 import com.project.reshoe_fbu.models.PostSort;
-import com.project.reshoe_fbu.models.User;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.ViewHolder>  {
 
     public static String TAG = "PostSearchAdapter";
+
     public static int SEARCH_CODE = 771;
 
     private final Context mContext;
+
     private final List<PostSort> searchPosts;
+
     private final FragmentManager fragmentManager;
+
     private SearchPostFragment fragment;
 
     public PostSearchAdapter(Context context, List<PostSort> searchPosts, FragmentManager fm,

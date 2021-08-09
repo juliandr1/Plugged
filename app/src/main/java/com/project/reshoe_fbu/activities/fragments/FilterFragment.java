@@ -1,7 +1,6 @@
 package com.project.reshoe_fbu.activities.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +14,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.reshoe_fbu.R;
 import com.example.reshoe_fbu.databinding.FragmentFilterBinding;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.project.reshoe_fbu.models.Post;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FilterFragment extends Fragment {
 
@@ -85,7 +81,8 @@ public class FilterFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // Create an ArrayAdapter using the string array and a default spinner
@@ -112,70 +109,68 @@ public class FilterFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
 
-        binding.btnApply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment prevFragment = new SearchPostFragment();
-                Bundle bundle = new Bundle();
+        binding.btnApply.setOnClickListener(v -> {
+            Fragment prevFragment = new SearchPostFragment();
+            Bundle bundle = new Bundle();
 
-                str = getArguments().getString("str");
+            str = getArguments().getString("str");
 
-                boolean changed = false;
+            boolean changed = false;
 
-                // Ternary operators ? enter here
-                if (((int) positionSize) != NOT_CHANGED_CODE) {
-                    bundle.putDouble("size", positionSize);
-                    changed = true;
-                } else {
-                    bundle.putDouble("size", positionSize);
-                }
-
-                if (positionCondition != NOT_CHANGED_CODE) {
-                    bundle.putInt("condition", positionCondition);
-                    changed = true;
-                } else {
-                    bundle.putInt("condition", positionCondition);
-                }
-
-                if (binding.rgGroupFilterSize.getCheckedRadioButtonId() ==
-                        binding.rbMenFilter.getId()) {
-                    bundle.putInt("isWomenSizing", CHANGED_IS_WOMEN_SIZING_M);
-                    changed = true;
-                } else if (binding.rgGroupFilterSize.getCheckedRadioButtonId() ==
-                        binding.rbWomenFilter.getId()) {
-                    bundle.putInt("isWomenSizing", CHANGED_IS_WOMEN_SIZING_W);
-                    changed = true;
-                } else {
-                    bundle.putInt("isWomenSizing", NOT_CHANGED_CODE);
-                }
-
-                if (binding.rgGroupFilterPrice.getCheckedRadioButtonId() ==
-                        binding.rbHighToLow.getId()) {
-                    bundle.putInt("isHighToLow", CHANGED_IS_HIGH_TO_LOW);
-                    changed = true;
-                } else if (binding.rgGroupFilterPrice.getCheckedRadioButtonId() ==
-                        binding.rbLowToHigh.getId()) {
-                    bundle.putInt("isHighToLow", CHANGED_IS_LOW_TO_HIGH);
-                    changed = true;
-                } else {
-                    bundle.putInt("isHighToLow", NOT_CHANGED_CODE);
-                }
-
-                bundle.putBoolean("filter", changed);
-                bundle.putBoolean("shoe", false);
-                bundle.putString("str", str);
-                prevFragment.setArguments(bundle);
-
-                getActivity().
-                        getSupportFragmentManager().
-                        beginTransaction().
-                        replace(R.id.flContainer, prevFragment).
-                        commit();
+            // Ternary operators ? enter here
+            if (((int) positionSize) != NOT_CHANGED_CODE) {
+                bundle.putDouble("size", positionSize);
+                changed = true;
+            } else {
+                bundle.putDouble("size", positionSize);
             }
+
+            if (positionCondition != NOT_CHANGED_CODE) {
+                bundle.putInt("condition", positionCondition);
+                changed = true;
+            } else {
+                bundle.putInt("condition", positionCondition);
+            }
+
+            if (binding.rgGroupFilterSize.getCheckedRadioButtonId() ==
+                    binding.rbMenFilter.getId()) {
+                bundle.putInt("isWomenSizing", CHANGED_IS_WOMEN_SIZING_M);
+                changed = true;
+            } else if (binding.rgGroupFilterSize.getCheckedRadioButtonId() ==
+                    binding.rbWomenFilter.getId()) {
+                bundle.putInt("isWomenSizing", CHANGED_IS_WOMEN_SIZING_W);
+                changed = true;
+            } else {
+                bundle.putInt("isWomenSizing", NOT_CHANGED_CODE);
+            }
+
+            if (binding.rgGroupFilterPrice.getCheckedRadioButtonId() ==
+                    binding.rbHighToLow.getId()) {
+                bundle.putInt("isHighToLow", CHANGED_IS_HIGH_TO_LOW);
+                changed = true;
+            } else if (binding.rgGroupFilterPrice.getCheckedRadioButtonId() ==
+                    binding.rbLowToHigh.getId()) {
+                bundle.putInt("isHighToLow", CHANGED_IS_LOW_TO_HIGH);
+                changed = true;
+            } else {
+                bundle.putInt("isHighToLow", NOT_CHANGED_CODE);
+            }
+
+            bundle.putBoolean("filter", changed);
+            bundle.putBoolean("shoe", false);
+            bundle.putString("str", str);
+            prevFragment.setArguments(bundle);
+
+            getActivity().
+                    getSupportFragmentManager().
+                    beginTransaction().
+                    replace(R.id.flContainer, prevFragment).
+                    commit();
         });
     }
 

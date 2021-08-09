@@ -25,15 +25,6 @@ public class Constants {
     public static final String CURRENCY_CODE = "USD";
     public static final List<String> SHIPPING_SUPPORTED_COUNTRIES = Arrays.asList("US", "GB");
 
-    public static final String PAYMENT_GATEWAY_TOKENIZATION_NAME = "example";
-
-    public static final HashMap<String, String> PAYMENT_GATEWAY_TOKENIZATION_PARAMETERS =
-            new HashMap<String, String>() {{
-                put("gateway", PAYMENT_GATEWAY_TOKENIZATION_NAME);
-                put("gatewayMerchantId", "exampleGatewayMerchantId");
-                // Your processor may require additional parameters.
-            }};
-
     public static final String DIRECT_TOKENIZATION_PUBLIC_KEY = "REPLACE_ME";
 
     public static final HashMap<String, String> DIRECT_TOKENIZATION_PARAMETERS =

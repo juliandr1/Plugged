@@ -114,6 +114,7 @@
         android:backgroundTint="@color/secondary"
         android:text="@string/sign_up"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
         android:typeface="sans"
         app:cornerRadius="30dp" />
 

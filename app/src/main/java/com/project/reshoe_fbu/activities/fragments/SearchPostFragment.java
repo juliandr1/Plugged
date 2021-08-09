@@ -39,7 +39,9 @@ public class SearchPostFragment extends Fragment {
     public static final String TAG = "SearchPostActivity";
 
     private PostSearchAdapter adapter;
+
     private List<PostSort> searches;
+
     private List<Post> queryItems;
 
     private ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
@@ -195,7 +197,7 @@ public class SearchPostFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("str", searchStr);
             ArrayList<Post> items = new ArrayList<>();
-            items.addAll(queryItems);
+            items.addAll(getSortedItems());
             bundle.putParcelableArrayList("items", items);
             filterFragment.setArguments(bundle);
             getActivity().

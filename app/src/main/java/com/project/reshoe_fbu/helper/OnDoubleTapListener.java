@@ -9,7 +9,7 @@ import org.json.JSONException;
 
 public class OnDoubleTapListener implements View.OnTouchListener {
 
-    private GestureDetector gestureDetector;
+    private final GestureDetector gestureDetector;
 
     public OnDoubleTapListener(Context c) {
         gestureDetector = new GestureDetector(c, new GestureListener());
@@ -28,16 +28,12 @@ public class OnDoubleTapListener implements View.OnTouchListener {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            try {
-                OnDoubleTapListener.this.onDoubleTap(e);
-            } catch (JSONException jsonException) {
-                jsonException.printStackTrace();
-            }
+            OnDoubleTapListener.this.onDoubleTap();
             return super.onDoubleTap(e);
         }
     }
 
-    public void onDoubleTap(MotionEvent e) throws JSONException {
+    public void onDoubleTap() {
         // To be overridden when implementing listener
     }
 }

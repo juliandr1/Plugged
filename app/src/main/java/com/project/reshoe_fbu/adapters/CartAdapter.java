@@ -28,7 +28,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public static String TAG = "PostSearchAdapter";
 
     private final Context mContext;
+
     private final List<Post> cartItems;
+
     private final ActivityCartBinding binding;
 
     public CartAdapter(Context context, List<Post> cartItems, ActivityCartBinding binding) {

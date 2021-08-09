@@ -27,7 +27,8 @@
         android:layout_toEndOf="@+id/ivReviewerProfile"
         android:textStyle="bold"
         android:typeface="sans"
-        tools:text='"@huncho"' />
+        tools:text='"@huncho"'
+        />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -55,6 +56,7 @@
         android:layout_toEndOf="@+id/ivReviewerProfile"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:typeface="sans"
-        tools:text="hello" />
+        tools:text="hello"
+        />
 
 </RelativeLayout>
