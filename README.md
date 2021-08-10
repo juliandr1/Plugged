@@ -1,7 +1,7 @@
 Original App Design Project 
 ===
 
-# Reshoe
+# Plugged
 
 ## Table of Contents
 1. [Overview](#Overview)
