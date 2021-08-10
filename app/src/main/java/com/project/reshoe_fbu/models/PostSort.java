@@ -26,16 +26,22 @@ public class PostSort implements Comparable<PostSort> {
     public void calculateScore() {
         score = 0;
 
-        if (likedPosts.contains(post.getObjectId())) {
-            score += COEFFICIENT_LIKED_POST;
+        if (likedPosts != null) {
+            if (likedPosts.contains(post.getObjectId())) {
+                score += COEFFICIENT_LIKED_POST;
+            }
         }
 
-        if (usersBought.contains(post.getUser().getObjectID())) {
-            score += COEFFICIENT_BOUGHT_FROM_USER;
+        if (usersBought != null) {
+            if (usersBought.contains(post.getUser().getObjectID())) {
+                score += COEFFICIENT_BOUGHT_FROM_USER;
+            }
         }
 
-        if (likedUsers.contains(post.getUser().getObjectID())) {
-            score += COEFFICIENT_LIKED_USER;
+        if (likedUsers != null) {
+            if (likedUsers.contains(post.getUser().getObjectID())) {
+                score += COEFFICIENT_LIKED_USER;
+            }
         }
     }
 

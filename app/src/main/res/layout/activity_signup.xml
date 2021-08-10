@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     >
 
 
@@ -116,7 +117,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         android:typeface="sans"
-        app:cornerRadius="30dp" />
+        android:textColor="@color/white"
+        app:cornerRadius="30dp"
+        />
 
     <RadioGroup
         android:id="@+id/rgGroup"
@@ -125,7 +128,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
 
         <RadioButton
             android:id="@+id/rbBuyer"
@@ -136,7 +140,8 @@
             android:fontFamily="sans-serif"
             android:text="@string/buyer"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:typeface="sans" />
+            android:typeface="sans"
+            />
 
         <RadioButton
             android:id="@+id/rbSeller"
@@ -147,7 +152,8 @@
             android:fontFamily="sans-serif"
             android:text="@string/seller"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:typeface="sans" />
+            android:typeface="sans"
+            />
 
     </RadioGroup>
 

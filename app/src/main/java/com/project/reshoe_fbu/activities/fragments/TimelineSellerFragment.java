@@ -70,7 +70,7 @@ public class TimelineSellerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity().getBaseContext(), posts, user, getActivity().
-                getSupportFragmentManager(), false, false);
+                getSupportFragmentManager(), false);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rvSellerPosts.setLayoutManager(layoutManager);

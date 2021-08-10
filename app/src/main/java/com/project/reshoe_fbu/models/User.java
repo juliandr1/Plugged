@@ -130,7 +130,9 @@ public class User  {
 
         userThreads.addAll(query.find());
 
-        Collections.sort(userThreads);
+        if (userThreads.size() > 1) {
+            Collections.sort(userThreads);
+        }
 
         return userThreads;
     }
@@ -230,8 +232,10 @@ public class User  {
         JSONArray jsonArray = user.getJSONArray(KEY_CART);
         List<String> postIds = new ArrayList<>();
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            postIds.add(jsonArray.get(i).toString());
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                postIds.add(jsonArray.get(i).toString());
+            }
         }
 
         return postIds;

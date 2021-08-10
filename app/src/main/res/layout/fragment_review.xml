@@ -54,6 +54,8 @@
         android:clickable="true"
         android:src="@drawable/addreview"
         app:rippleColor="@color/white"
+        android:background="@color/primary"
+        android:backgroundTint="@color/primary"
         />
 
 </RelativeLayout>

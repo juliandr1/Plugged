@@ -164,6 +164,8 @@
         android:clickable="true"
         app:rippleColor="@color/white"
         app:srcCompat="@drawable/add_cart"
+        android:background="@color/primary"
+        android:backgroundTint="@color/primary"
         />
 
     <TextView

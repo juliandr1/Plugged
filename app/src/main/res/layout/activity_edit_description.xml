@@ -35,6 +35,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="73dp"
         android:text="@string/apply"
+        android:textColor="@color/white"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/primary"
         />
 
     <Button

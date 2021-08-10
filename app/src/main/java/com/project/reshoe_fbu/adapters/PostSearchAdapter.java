@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
 
         private final ImageView ivPhotoPreview;
         private final TextView tvShoeTitle, tvSearchDescription;
+        private final FrameLayout sold;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +88,7 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
             ivPhotoPreview = itemView.findViewById(R.id.ivPhotoPreview);
             tvShoeTitle = itemView.findViewById(R.id.tvShoeTitle);
             tvSearchDescription = itemView.findViewById(R.id.tvSearchDescription);
+            sold = itemView.findViewById(R.id.soldBackground);
 
             // Set an onClickListener for individual post
             itemView.setOnClickListener(this);
@@ -100,6 +103,10 @@ public class PostSearchAdapter extends RecyclerView.Adapter<PostSearchAdapter.Vi
                     getImageUrls().
                     get(0)).
                     into(ivPhotoPreview);
+
+            if (postSort.getPost().getIsSold()) {
+                sold.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

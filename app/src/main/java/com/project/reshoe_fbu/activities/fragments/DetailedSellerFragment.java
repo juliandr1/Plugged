@@ -63,7 +63,7 @@ public class DetailedSellerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager(), true, false);
+                getSupportFragmentManager(), true);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 

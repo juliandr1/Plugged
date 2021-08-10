@@ -134,8 +134,10 @@
         android:layout_below="@+id/rgGroupFilterPrice"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/primary"
         android:text="@string/apply"
-        />
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btnBackFilter"

@@ -45,16 +45,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     private final FragmentManager fragmentManager;
 
-    private final boolean isDetailedSeller, isBuyerTimeline;
+    private final boolean isDetailedSeller;
 
     public PostsAdapter(Context context, List<Post> posts, User user, FragmentManager
-            fragmentManager, boolean isDetailedSeller, boolean isBuyerTimeline) {
+            fragmentManager, boolean isDetailedSeller) {
         this.mContext = context;
         this.posts = posts;
         this.user = user;
         this.fragmentManager = fragmentManager;
         this.isDetailedSeller = isDetailedSeller;
-        this.isBuyerTimeline = isBuyerTimeline;
     }
 
     // For each row, inflate the layout
@@ -121,7 +120,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     transform(new CenterCrop(), new RoundedCorners(10)).
                     into(ivImage);
 
-            if (post.getIsSold() && isBuyerTimeline) {
+            if (post.getIsSold()) {
                 sold.setVisibility(View.VISIBLE);
             }
         }

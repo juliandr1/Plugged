@@ -88,12 +88,24 @@ public class Thread extends ParseObject implements Comparable<Thread> {
 
     @Override
     public int compareTo(Thread o) {
-        if (this.getLastMessageSentOtherUser().after(o.getLastMessageSentOtherUser())) {
-            return -1;
-        } else if (this.getLastMessageSentOtherUser().before(o.getLastMessageSentOtherUser())) {
-            return 1;
+        User currentUser = new User(ParseUser.getCurrentUser());
+
+        if (this.getUser().equals(currentUser)) {
+            if (this.getLastMessageSentOtherUser().after(o.getLastMessageSentOtherUser())) {
+                return -1;
+            } else if (this.getLastMessageSentOtherUser().before(o.getLastMessageSentOtherUser())) {
+                return 1;
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            if (this.getLastMessageSentUser().after(o.getLastMessageSentUser())) {
+                return -1;
+            } else if (this.getLastMessageSentUser().before(o.getLastMessageSentUser())) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }

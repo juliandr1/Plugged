@@ -67,7 +67,7 @@ public class TimelineBuyerFragment extends Fragment {
 
         posts = new ArrayList<>();
         adapter = new PostsAdapter(getActivity(), posts, currentUser, getActivity().
-                getSupportFragmentManager(), false, true);
+                getSupportFragmentManager(), false);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setLayoutManager(layoutManager);

@@ -128,11 +128,7 @@ public class SearchPostFragment extends Fragment {
             adapter = new PostSearchAdapter(getActivity(), searches,
                     getActivity().getSupportFragmentManager(), this);
 
-            try {
-                convertPosts();
-            } catch (JSONException | ParseException e) {
-                e.printStackTrace();
-            }
+            convertPosts();
         }
     }
 
@@ -304,7 +300,7 @@ public class SearchPostFragment extends Fragment {
         return items;
     }
 
-    private void convertPosts() throws JSONException, ParseException {
+    private void convertPosts() {
         for (int i = 0; i < queryItems.size(); i++) {
             searches.add(new PostSort(queryItems.get(i), likedPosts, likedUsers,
                     usersBought));
